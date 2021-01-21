@@ -1,27 +1,33 @@
 import React from 'react';
 import styles from '../styles/Link.module.scss';
 
-import { Nav } from 'react-bootstrap';
+import { Nav, Container } from 'react-bootstrap';
 
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import Link from 'next/link'; 
 
 interface Props {
   href: string;
-  children: JSX.Element;
+  icon: JSX.Element;
+  title: string;
 }
 
-const CustomLink: React.FC<Props> = ({ href, children }) => {
+const CustomLink: React.FC<Props> = ({ href, icon, title }) => {
   const router = useRouter();
 
-  let className = children.props.className || '';
+  let className = '';
   if (router.pathname === href) {
-    className = `${className} selected`;
+    className = styles.active;
   }
 
   return (
     <Link href={href} passHref>
-      <Nav.Link>{React.cloneElement(children, { className })}</Nav.Link>
+      <Nav.Link className={className}>
+        <Container>
+          {icon}
+          <span className='mx-2'>{title}</span>
+        </Container>
+      </Nav.Link>
     </Link>
   );
 };

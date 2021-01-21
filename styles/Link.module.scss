@@ -1,3 +1,9 @@
-.Link {
-	
+@import './variables.scss';
+
+.active {
+  border-bottom: 2px solid $white-color;
+
+  span {
+    color: $white-color;
+  }
 }

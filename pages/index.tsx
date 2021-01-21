@@ -1,16 +1,12 @@
-import Head from 'next/head';
-
 import { Container } from 'react-bootstrap';
+import Head from '../components/Head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 export default function Home() {
   return (
     <div>
-      <Head>
-        <title>Next app</title>
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
-      </Head>
+      <Head title='home' />
       <Header />
 
       <main className='py-3'>
