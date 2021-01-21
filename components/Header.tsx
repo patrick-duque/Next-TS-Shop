@@ -1,5 +1,7 @@
+import Link from './Link';
+
+import { FiShoppingCart, FiUser } from 'react-icons/fi';
 import { Container, Navbar, Nav } from 'react-bootstrap';
-import Link from 'next/link';
 
 interface Props {}
 
@@ -14,10 +16,14 @@ const Header: React.FC<Props> = () => {
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='ml-auto'>
             <Link href='/cart'>
-              <Nav.Link>Cart</Nav.Link>
+              <Container>
+                <FiShoppingCart /> Cart
+              </Container>
             </Link>
             <Link href='/login'>
-              <Nav.Link>Login</Nav.Link>
+              <Container>
+                <FiUser /> Login
+              </Container>
             </Link>
           </Nav>
         </Navbar.Collapse>

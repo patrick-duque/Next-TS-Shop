@@ -7,8 +7,7 @@ export default class CustomDocument extends Document {
       <Html>
         <Head>
           <link rel='preconnect' href='https://fonts.gstatic.com' />
-          <link href='https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap' rel='stylesheet' />
-          <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+          <link href='https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap' rel='stylesheet' /> 
         </Head>
         <body>
           <Main />
