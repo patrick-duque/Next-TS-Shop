@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import Head from '../../components/Head';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -7,14 +8,14 @@ interface Props {}
 
 const Cart: React.FC<Props> = () => {
   return (
-    <div>
+    <Fragment>
       <Head title='Cart' />
       <Header />
       <Main>
         <h1>Cart</h1>
       </Main>
       <Footer />
-    </div>
+    </Fragment>
   );
 };
 

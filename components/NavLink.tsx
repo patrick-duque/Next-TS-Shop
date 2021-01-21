@@ -4,7 +4,7 @@ import styles from '../styles/Link.module.scss';
 import { Nav, Container } from 'react-bootstrap';
 
 import { useRouter } from 'next/router';
-import Link from 'next/link'; 
+import Link from 'next/link';
 
 interface Props {
   href: string;
@@ -12,7 +12,7 @@ interface Props {
   title: string;
 }
 
-const CustomLink: React.FC<Props> = ({ href, icon, title }) => {
+const NavLink: React.FC<Props> = ({ href, icon, title }) => {
   const router = useRouter();
 
   let className = '';
@@ -32,4 +32,4 @@ const CustomLink: React.FC<Props> = ({ href, icon, title }) => {
   );
 };
 
-export default CustomLink;
+export default NavLink;

@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import Head from '../../components/Head';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
@@ -7,14 +8,14 @@ interface Props {}
 
 const Login: React.FC<Props> = () => {
   return (
-    <div>
+    <Fragment>
       <Head title='Login' />
       <Header />
       <Main>
         <h1>Login</h1>
       </Main>
       <Footer />
-    </div>
+    </Fragment>
   );
 };
 
