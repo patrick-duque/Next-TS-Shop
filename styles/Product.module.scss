@@ -1,0 +1,13 @@
+.Product {
+  height: 60vh;
+
+  .ProductImage {
+    cursor: pointer;
+  }
+}
+
+@media only screen and (max-width: 770px) {
+  .Product {
+    height: 70vh;
+  }
+}
