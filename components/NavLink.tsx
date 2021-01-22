@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from '../styles/Link.module.scss';
+import styles from '../styles/NavLink.module.scss';
+import { IconContext } from 'react-icons';
 
 import { Nav, Container, Col } from 'react-bootstrap';
 
@@ -25,7 +26,13 @@ const NavLink: React.FC<Props> = ({ href, icon, title }) => {
       <Nav.Link className={className}>
         <Container>
           <Col>
-            {icon}
+            <IconContext.Provider
+              value={{
+                color: className === styles.active ? '#fff' : '#B8B8B9',
+                size: className === styles.active ? '1.11em' : '1em'
+              }}>
+              {icon}
+            </IconContext.Provider>
             <span className='mx-2'>{title}</span>
           </Col>
         </Container>

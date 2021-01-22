@@ -40,6 +40,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const ProductDetails: React.FC<Props> = ({ product }) => {
+  const stock = product.countInStock === 0;
   return (
     <Fragment>
       <Head title={product.name} />
@@ -85,14 +86,14 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
                 <Row>
                   <Col>Stocks:</Col>
                   <Col>
-                    <strong>{product.countInStock}</strong>
+                    <strong>{stock ? 'Out of stock' : 'In stock'}</strong>
                   </Col>
                 </Row>
               </div>
               <div className='bg-dark my-5'>
                 <Row>
                   <Col>
-                    <Button variant='primary' className='btn-block' disabled={product.countInStock === 0}>
+                    <Button variant='primary' className='btn-block' disabled={stock}>
                       ADD TO CART
                     </Button>
                   </Col>
