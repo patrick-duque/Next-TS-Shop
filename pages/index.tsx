@@ -11,7 +11,7 @@ import products from '../assets/products';
 export default function Home() {
   return (
     <Fragment>
-      <Head title='home' />
+      <Head title='Home' />
       <Header />
 
       <Main>
