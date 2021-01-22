@@ -1,9 +1,10 @@
 @import './variables.scss';
 
 .active {
-  border-bottom: 2px solid $white-color;
+  border-bottom: 2px solid $white;
+  background-color: $nav-tabs-border-color;
 
   span {
-    color: $white-color;
+    color: $white;
   }
 }
