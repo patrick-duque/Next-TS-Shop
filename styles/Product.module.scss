@@ -1,8 +1,15 @@
+@import './variables.scss';
+
 .Product {
   height: 90vh;
 
-  .ProductImage {
+  .image {
     cursor: pointer;
+  }
+
+  .title {
+    cursor: pointer;
+    color: $gray-200;
   }
 }
 

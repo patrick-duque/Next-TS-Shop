@@ -2,10 +2,11 @@ import styles from '../styles/Rating.module.scss';
 
 import { IconContext } from 'react-icons';
 import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs';
+import { Row, Col } from 'react-bootstrap';
 
 interface Props {
   value: number;
-  text?: string;
+  numOfReview: number;
 }
 
 const createStar = (value: number) => {
@@ -24,16 +25,20 @@ const createStar = (value: number) => {
   );
 };
 
-const Rating: React.FC<Props> = ({ text, value }) => {
+const Rating: React.FC<Props> = ({ numOfReview, value }) => {
   return (
-    <div className={styles.Rating}>
-      {createStar(value)}
-      {createStar(value - 1)}
-      {createStar(value - 2)}
-      {createStar(value - 3)}
-      {createStar(value - 4)}
-      <span>{text && text}</span>
-    </div>
+    <Row className={`${styles.Rating} mt-auto`}>
+      <Col sm={6} md={12} lg={12} xl={6} className='d-flex justify-content-center align-items-center'>
+        {createStar(value)}
+        {createStar(value - 1)}
+        {createStar(value - 2)}
+        {createStar(value - 3)}
+        {createStar(value - 4)}
+      </Col>
+      <Col sm={6} md={12} lg={12} xl={6} className='d-flex justify-content-center align-items-center'>
+        <span>{numOfReview > 1 ? `${numOfReview} reviews` : `${numOfReview} review`}</span>
+      </Col>
+    </Row>
   );
 };
 

@@ -5,8 +5,9 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Head from '../../components/Head';
 import Main from '../../components/Main';
-import Router from 'next/router';
+import Rating from '../../components/Rating';
 import { RiArrowGoBackLine } from 'react-icons/ri';
+import { IconContext } from 'react-icons';
 
 import products from '../../assets/products';
 import Product from '../../models/product';
@@ -14,6 +15,10 @@ import { GetStaticProps, GetStaticPaths } from 'next';
 
 interface Routes {
   params: { _id: string };
+}
+
+interface Props {
+  product: Product;
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
@@ -34,7 +39,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-const ProductDetails = ({ product }) => {
+const ProductDetails: React.FC<Props> = ({ product }) => {
   return (
     <Fragment>
       <Head title={product.name} />
@@ -43,14 +48,58 @@ const ProductDetails = ({ product }) => {
 
       <Main>
         <Container fluid>
-          <Link href='/'>
-            <a>
-              <RiArrowGoBackLine /> Go Back
-            </a>
-          </Link>
-          <Container>
-            <h1>Product</h1>
-          </Container>
+          <div className='my-3 mx-0'>
+            <Link href='/'>
+              <a>
+                <IconContext.Provider value={{ size: '2em' }}>
+                  <RiArrowGoBackLine />
+                </IconContext.Provider>
+              </a>
+            </Link>
+          </div>
+          <Row>
+            <Col md={5} className='text-center'>
+              <Image src={product.image} alt={product.name} fluid />
+            </Col>
+            <Col md={3}>
+              <div className='bg-dark'>
+                <h3>{product.name}</h3>
+              </div>
+              <div className='bg-dark my-5'>
+                <Rating value={product.rating} numOfReview={product.numReviews} />
+              </div>
+              <div className='bg-dark my-5'>
+                Description: <div className='mt-2'>{product.description}</div>
+              </div>
+            </Col>
+            <Col md={3}>
+              <div className='bg-dark'>
+                <Row>
+                  <Col>Price:</Col>
+                  <Col>
+                    <strong>₱{product.price}</strong>
+                  </Col>
+                </Row>
+              </div>
+              <div className='bg-dark my-5'>
+                <Row>
+                  <Col>Stocks:</Col>
+                  <Col>
+                    <strong>{product.countInStock}</strong>
+                  </Col>
+                </Row>
+              </div>
+              <div className='bg-dark my-5'>
+                <Row>
+                  <Col>
+                    <Button variant='primary' className='btn-block' disabled={product.countInStock === 0}>
+                      ADD TO CART
+                    </Button>
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </Main>
 

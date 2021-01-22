@@ -1,11 +1,10 @@
-import { Card, Row, Col } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import Link from 'next/link';
 import Rating from './Rating';
 
 import ProductModel from '../models/product';
 
 import styles from '../styles/Product.module.scss';
-import path from 'path';
 
 interface Props {
   product: ProductModel;
@@ -15,20 +14,15 @@ const Product: React.FC<Props> = ({ product }) => {
   return (
     <Card className={`my-3 ${styles.Product}`}>
       <Link href={`/products/${product._id}`}>
-        <Card.Img variant='top' src={path.join(__dirname, `${product.image}`)} className={styles.ProductImage} />
+        <Card.Img variant='top' src={product.image} className={styles.image} />
       </Link>
       <Card.Body className='d-flex flex-column'>
-        <Card.Title>{product.name}</Card.Title>
+        <Link href={`/products/${product._id}`}>
+          <Card.Title className={styles.title}>{product.name}</Card.Title>
+        </Link>
         <Card.Subtitle className='my-2'>₱{product.price}</Card.Subtitle>
         <Card.Text>{product.description}</Card.Text>
-        <Row className='mt-auto'>
-          <Col sm={6} md={12} lg={12} xl={6} className='d-flex justify-content-center align-items-center'>
-            <Rating value={product.rating} />
-          </Col>
-          <Col sm={6} md={12} lg={12} xl={6} className='d-flex justify-content-center align-items-center'>
-            <span>{product.numReviews} reviews</span>
-          </Col>
-        </Row>
+        <Rating value={product.rating} numOfReview={product.numReviews} />
       </Card.Body>
     </Card>
   );

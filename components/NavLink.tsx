@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/Link.module.scss';
 
-import { Nav, Container } from 'react-bootstrap';
+import { Nav, Container, Col } from 'react-bootstrap';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -24,8 +24,10 @@ const NavLink: React.FC<Props> = ({ href, icon, title }) => {
     <Link href={href} passHref>
       <Nav.Link className={className}>
         <Container>
-          {icon}
-          <span className='mx-2'>{title}</span>
+          <Col>
+            {icon}
+            <span className='mx-2'>{title}</span>
+          </Col>
         </Container>
       </Nav.Link>
     </Link>

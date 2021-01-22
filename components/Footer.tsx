@@ -4,13 +4,13 @@ interface Props {}
 
 const Footer: React.FC<Props> = () => {
   return (
-    <header>
+    <footer className='bg-primary'>
       <Container>
         <Row>
           <Col className='text-center py-3'>Copyright &copy; Pro Shop</Col>
         </Row>
       </Container>
-    </header>
+    </footer>
   );
 };
 
