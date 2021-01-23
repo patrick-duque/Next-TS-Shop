@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../helpers/api/axios';
 
 import { Fragment, useState, useEffect } from 'react';
 import Head from '../components/Head';
@@ -15,7 +15,7 @@ export default function Home() {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const response: { products: ProductModel[] } = (await axios.get('http://localhost:8080/products')).data;
+      const response: { products: ProductModel[] } = (await axios.get('/products')).data;
       setProducts(response.products);
     };
 

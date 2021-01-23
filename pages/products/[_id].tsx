@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../helpers/api/axios';
 
 //Components
 import { Fragment } from 'react';
@@ -25,7 +25,7 @@ interface Props {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const response: { product: Product } = (await axios.get(`http://localhost:8080/products/${params._id}`)).data;
+  const response: { product: Product } = (await axios.get(`/products/${params._id}`)).data;
   return {
     props: { product: response.product }
   };
@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const route: Routes[] = [];
-  const response: { products: Product[] } = (await axios.get('http://localhost:8080/products')).data;
+  const response: { products: Product[] } = (await axios.get('/products')).data;
   response.products.forEach(prod => {
     route.push({ params: { _id: prod._id } });
   });
