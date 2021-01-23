@@ -1,4 +1,6 @@
-import { Fragment } from 'react';
+import axios from 'axios';
+
+import { Fragment, useState, useEffect } from 'react';
 import Head from '../components/Head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -6,9 +8,20 @@ import Main from '../components/Main';
 import Product from '../components/Product';
 import { Row, Container, Col } from 'react-bootstrap';
 
-import products from '../assets/products';
+import ProductModel from '../models/product';
 
 export default function Home() {
+  const [ products, setProducts ] = useState<ProductModel[]>([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const response: { products: ProductModel[] } = (await axios.get('http://localhost:8080/products')).data;
+      setProducts(response.products);
+    };
+
+    fetchProduct();
+  }, []);
+
   return (
     <Fragment>
       <Head title='Home' />
@@ -16,7 +29,7 @@ export default function Home() {
 
       <Main>
         <Container>
-          <h1>Latest Products</h1>
+          <h1 className='text-white'>LATEST PRODUCTS</h1>
           <Row>
             {products.map(product => {
               return (

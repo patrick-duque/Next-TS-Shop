@@ -1,17 +1,20 @@
+import axios from 'axios';
+
+//Components
 import { Fragment } from 'react';
 import Link from 'next/link';
-import { Container, Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
+import { RiArrowGoBackLine } from 'react-icons/ri';
+import { Container, Row, Col, Image, Button } from 'react-bootstrap';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Head from '../../components/Head';
 import Main from '../../components/Main';
 import Rating from '../../components/Rating';
-import { RiArrowGoBackLine } from 'react-icons/ri';
 import { IconContext } from 'react-icons';
 
-import products from '../../assets/products';
-import Product from '../../models/product';
+//Models
 import { GetStaticProps, GetStaticPaths } from 'next';
+import Product from '../../models/product';
 
 interface Routes {
   params: { _id: string };
@@ -22,15 +25,16 @@ interface Props {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const product: Product = products.find(product => product._id === params._id);
+  const response: { product: Product } = (await axios.get(`http://localhost:8080/products/${params._id}`)).data;
   return {
-    props: { product }
+    props: { product: response.product }
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const route: Routes[] = [];
-  products.forEach(prod => {
+  const response: { products: Product[] } = (await axios.get('http://localhost:8080/products')).data;
+  response.products.forEach(prod => {
     route.push({ params: { _id: prod._id } });
   });
   return {

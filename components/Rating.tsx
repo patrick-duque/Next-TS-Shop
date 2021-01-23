@@ -20,7 +20,7 @@ const createStar = (value: number) => {
   }
   return (
     <IconContext.Provider value={{ className: styles.star, size: '1.1em' }}>
-      <span>{star}</span>
+      <span className='mx-1'>{star}</span>
     </IconContext.Provider>
   );
 };
