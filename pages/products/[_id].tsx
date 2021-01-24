@@ -13,33 +13,38 @@ import Rating from '../../components/Rating';
 import { IconContext } from 'react-icons';
 
 //Models
-import { GetStaticProps, GetStaticPaths } from 'next';
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next';
 import Product from '../../models/product';
-
-interface Routes {
-  params: { _id: string };
-}
 
 interface Props {
   product: Product;
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const response: { product: Product } = (await axios.get(`/products/${params._id}`)).data;
+// export const getStaticProps: GetStaticProps = async ({ params }) => {
+//   const response: { product: Product } = (await axios.get(`/products/${params._id}`)).data;
+//   return {
+//     props: { product: response.product }
+//   };
+// };
+
+// export const getStaticPaths: GetStaticPaths = async () => {
+//   const response: { products: Product[] } = (await axios.get('/products')).data;
+//   const route = response.products.map(prod => ({ params: { _id: prod._id } }));
+//   return {
+//     paths: route,
+//     fallback: false
+//   };
+// };
+
+export const getServerSideProps: GetServerSideProps = async ({ res, params }) => {
+  const response: { product: Product | undefined } = (await axios.get(`/products/${params._id}`)).data;
+  if (!response.product) {
+    res.writeHead(302, { Location: '/' });
+    res.end();
+    return;
+  }
   return {
     props: { product: response.product }
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const route: Routes[] = [];
-  const response: { products: Product[] } = (await axios.get('/products')).data;
-  response.products.forEach(prod => {
-    route.push({ params: { _id: prod._id } });
-  });
-  return {
-    paths: route,
-    fallback: false
   };
 };
 

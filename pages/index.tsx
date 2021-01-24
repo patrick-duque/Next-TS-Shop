@@ -9,19 +9,13 @@ import Product from '../components/Product';
 import { Row, Container, Col } from 'react-bootstrap';
 
 import ProductModel from '../models/product';
+import { GetServerSideProps } from 'next';
 
-export default function Home() {
-  const [ products, setProducts ] = useState<ProductModel[]>([]);
+interface Props {
+  products: ProductModel[];
+}
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const response: { products: ProductModel[] } = (await axios.get('/products')).data;
-      setProducts(response.products);
-    };
-
-    fetchProduct();
-  }, []);
-
+const Home: React.FC<Props> = ({ products }) => {
   return (
     <Fragment>
       <Head title='Home' />
@@ -45,4 +39,15 @@ export default function Home() {
       <Footer />
     </Fragment>
   );
-}
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const response: { products: ProductModel[] } = (await axios.get('/products')).data;
+  return {
+    props: {
+      products: response.products
+    }
+  };
+};
+
+export default Home;
