@@ -42,10 +42,10 @@ const Home: React.FC<Props> = ({ products }) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const response: ProductModel[] = (await axios.get('/products')).data;
+  const products: ProductModel[] = (await axios.get('/products')).data;
   return {
     props: {
-      products: response
+      products
     }
   };
 };

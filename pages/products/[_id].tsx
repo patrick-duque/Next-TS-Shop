@@ -21,15 +21,15 @@ interface Props {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const response: Product = (await axios.get(`/products/${params._id}`)).data;
+  const product: Product = (await axios.get(`/products/${params._id}`)).data;
   return {
-    props: { product: response }
+    props: { product }
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response: Product[] = (await axios.get('/products')).data;
-  const route = response.map(prod => ({ params: { _id: prod._id } }));
+  const products: Product[] = (await axios.get('/products')).data;
+  const route = products.map(prod => ({ params: { _id: prod._id } }));
   return {
     paths: route,
     fallback: false
