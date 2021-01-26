@@ -1,12 +1,14 @@
 import { FiShoppingCart, FiUser } from 'react-icons/fi';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Image } from 'react-bootstrap';
 import NavLink from './NavLink';
 import Link from 'next/link';
 
 const HomeButton = () => {
   return (
     <Link href='/' passHref>
-      <Navbar.Brand>Pro-Shop</Navbar.Brand>
+      <Navbar.Brand>
+        <Image src='/images/icons.png' /> Pro-Shop
+      </Navbar.Brand>
     </Link>
   );
 };

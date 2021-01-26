@@ -20,31 +20,19 @@ interface Props {
   product: Product;
 }
 
-// export const getStaticProps: GetStaticProps = async ({ params }) => {
-//   const response: { product: Product } = (await axios.get(`/products/${params._id}`)).data;
-//   return {
-//     props: { product: response.product }
-//   };
-// };
-
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const response: { products: Product[] } = (await axios.get('/products')).data;
-//   const route = response.products.map(prod => ({ params: { _id: prod._id } }));
-//   return {
-//     paths: route,
-//     fallback: false
-//   };
-// };
-
-export const getServerSideProps: GetServerSideProps = async ({ res, params }) => {
-  const response: { product: Product | undefined } = (await axios.get(`/products/${params._id}`)).data;
-  if (!response.product) {
-    res.writeHead(302, { Location: '/' });
-    res.end();
-    return;
-  }
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const response: Product = (await axios.get(`/products/${params._id}`)).data;
   return {
-    props: { product: response.product }
+    props: { product: response }
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const response: Product[] = (await axios.get('/products')).data;
+  const route = response.map(prod => ({ params: { _id: prod._id } }));
+  return {
+    paths: route,
+    fallback: false
   };
 };
 
