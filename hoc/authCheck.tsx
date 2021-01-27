@@ -1,5 +1,7 @@
 import Router from 'next/router'; 
-import { NextPage, NextPageContext } from 'next';
+import { NextPageContext } from 'next';
+import {useSelector} from 'react-redux'
+import {RootStore} from '../store/index'
 
 const path = '/'; 
 
@@ -10,7 +12,7 @@ interface Context extends NextPageContext {}
  * @returns {{auth: null}}
  */
 const checkUserAuthentication = () => {
-  return { auth: true }; // change null to { isAdmin: true } for test it.
+  return useSelector<RootStore>(state => state.user.user)
 };
 
 const AuthCheck = WrappedComponent => {
@@ -20,7 +22,7 @@ const AuthCheck = WrappedComponent => {
 		const userAuth = await checkUserAuthentication();
 		
     // Are you an authorized user or not?
-    if (!userAuth?.auth) {
+    if (!userAuth) {
       // Handle server-side and client-side rendering.
       if (context.res) {
         context.res?.writeHead(302, {

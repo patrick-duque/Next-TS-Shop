@@ -5,10 +5,10 @@ import userReducer from './user/userReducer';
 
 const reducer = combineReducers({ user: userReducer });
 
-const initialState = {};
-
 const middleware = [ thunk ];
 
-const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
+const store = createStore(reducer, composeWithDevTools(applyMiddleware(...middleware)));
+
+export type RootStore = ReturnType<typeof reducer>;
 
 export default store;
