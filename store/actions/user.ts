@@ -12,6 +12,6 @@ export const loginAction = (action: { username: string; password: string }) => a
     const user = (await axios.post('/login', action)) as User;
     dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: user });
   } catch (error) {
-    dispatch({ type: actionTypes.LOGIN_FAILED, payload: error as Error });
+    dispatch({ type: actionTypes.LOGIN_FAILED, payload: (error as Error).message });
   }
 };

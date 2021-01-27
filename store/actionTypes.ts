@@ -19,7 +19,7 @@ export const REGISTER = 'REGISTER';
 
 export interface LoginFailed {
   type: typeof LOGIN_FAILED;
-  payload: Error;
+  payload: string;
 }
 
 export interface LoginSuccess {

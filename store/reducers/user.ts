@@ -10,7 +10,7 @@ export interface User {
 export interface UserState {
   user?: User;
   loading: boolean;
-  error?: Error;
+  error?: string;
 }
 
 const initialState: UserState = {
