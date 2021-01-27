@@ -41,9 +41,6 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
   return (
     <Fragment>
       <Head title={product.name} />
-
-      <Header />
-
       <Main>
         <Container fluid>
           <div className='my-3 mx-0'>
@@ -100,8 +97,6 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
           </Row>
         </Container>
       </Main>
-
-      <Footer />
     </Fragment>
   );
 };

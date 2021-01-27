@@ -10,11 +10,9 @@ const Login: React.FC<Props> = () => {
   return (
     <Fragment>
       <Head title='Login' />
-      <Header />
       <Main>
         <h1>Login</h1>
       </Main>
-      <Footer />
     </Fragment>
   );
 };

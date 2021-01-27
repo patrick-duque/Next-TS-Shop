@@ -10,11 +10,9 @@ const Cart: React.FC<Props> = () => {
   return (
     <Fragment>
       <Head title='Cart' />
-      <Header />
       <Main>
         <h1>Cart</h1>
       </Main>
-      <Footer />
     </Fragment>
   );
 };

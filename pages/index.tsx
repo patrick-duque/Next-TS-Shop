@@ -2,8 +2,6 @@ import axios from '../helpers/api/axios';
 
 import { Fragment, useState, useEffect } from 'react';
 import Head from '../components/Head';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Main from '../components/Main';
 import Product from '../components/Product';
 import { Row, Container, Col } from 'react-bootstrap';
@@ -19,8 +17,6 @@ const Home: React.FC<Props> = ({ products }) => {
   return (
     <Fragment>
       <Head title='Home' />
-      <Header />
-
       <Main>
         <Container>
           <h1 className='text-white'>LATEST PRODUCTS</h1>
@@ -35,8 +31,6 @@ const Home: React.FC<Props> = ({ products }) => {
           </Row>
         </Container>
       </Main>
-
-      <Footer />
     </Fragment>
   );
 };
