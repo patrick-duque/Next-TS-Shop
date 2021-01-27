@@ -1,7 +1,5 @@
-import { Container } from 'react-bootstrap';
-
 interface Props {
-  children: JSX.Element;
+  children: any;
 }
 
 const Main: React.FC<Props> = ({ children }) => {

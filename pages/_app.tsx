@@ -10,7 +10,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
       <Header />
-      <Component {...pageProps} />;
+      <Main>
+        <Component {...pageProps} />
+      </Main>
       <Footer />
     </Fragment>
   );
