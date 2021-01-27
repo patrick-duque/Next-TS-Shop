@@ -1,4 +1,4 @@
-import { User } from './reducers/user';
+import { User } from './userReducer';
 
 /* ============================
 							AUTH
