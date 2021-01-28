@@ -1,13 +1,15 @@
+import { useState } from 'react';
 import axios from '../../helpers/api/axios';
 
 //Components
 import { Fragment } from 'react';
 import Link from 'next/link';
 import { RiArrowGoBackLine } from 'react-icons/ri';
-import { Container, Row, Col, Image, Button } from 'react-bootstrap';
+import { Container, Row, Col, Image, Button, Form } from 'react-bootstrap';
 import Head from '../../components/Head';
 import Rating from '../../components/Rating';
 import { IconContext } from 'react-icons';
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 
 //Models
 import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next';
@@ -34,7 +36,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const ProductDetails: React.FC<Props> = ({ product }) => {
-  const stock = product.countInStock === 0;
+  const [ qty, setQty ] = useState<number>(1);
+
   return (
     <Fragment>
       <Head title={product.name} />
@@ -76,14 +79,46 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
               <Row>
                 <Col>Stocks:</Col>
                 <Col>
-                  <strong>{stock ? 'Out of stock' : 'In stock'}</strong>
+                  <strong>{product.countInStock === 0 ? 'Out of stock' : 'In stock'}</strong>
                 </Col>
               </Row>
             </div>
+            {product.countInStock > 0 && (
+              <div className='bg-dark my-5'>
+                <Row>
+                  <Col sm={5}>Quantity:</Col>
+                  <Col sm={7} md={12} lg={7} className='text-center'>
+                    <Row className='d-flex justify-content-between text-center'>
+                      <Col sm={4}>
+                        <Button
+                          variant='dark'
+                          className='ml-sm-2 ml-md-0'
+                          onClick={() => setQty(qty + 1)}
+                          disabled={qty === product.countInStock}>
+                          <AiOutlinePlus />
+                        </Button>
+                      </Col>
+                      <Col sm={2} className='text-center d-flex justify-content-center align-items-center'>
+                        <strong>{qty}</strong>
+                      </Col>
+                      <Col sm={4}>
+                        <Button
+                          variant='dark'
+                          className='mr-sm-2 mr-md-0'
+                          onClick={() => setQty(qty - 1)}
+                          disabled={qty <= 1}>
+                          <AiOutlineMinus />
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </div>
+            )}
             <div className='bg-dark my-5'>
               <Row>
                 <Col>
-                  <Button variant='primary' className='btn-block' disabled={stock}>
+                  <Button variant='light' className='btn-block' disabled={product.countInStock === 0}>
                     ADD TO CART
                   </Button>
                 </Col>
