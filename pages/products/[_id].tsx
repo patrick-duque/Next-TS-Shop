@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from '../../helpers/api/axios';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../../store/cart/cartActions';
 
 //Components
 import { Fragment } from 'react';
@@ -36,7 +38,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const ProductDetails: React.FC<Props> = ({ product }) => {
+  const dispatch = useDispatch();
   const [ qty, setQty ] = useState<number>(1);
+
+  const handleAddToCart = () => {
+    dispatch(addToCart({ ...product, quantity: qty }));
+  };
 
   return (
     <Fragment>
@@ -118,7 +125,11 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
             <div className='bg-dark my-5'>
               <Row>
                 <Col>
-                  <Button variant='light' className='btn-block' disabled={product.countInStock === 0}>
+                  <Button
+                    variant='light'
+                    className='btn-block'
+                    onClick={handleAddToCart}
+                    disabled={product.countInStock === 0}>
                     ADD TO CART
                   </Button>
                 </Col>

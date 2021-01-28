@@ -1,7 +1,7 @@
 import Router from 'next/router'; 
 import { NextPageContext } from 'next';
-import {useSelector} from 'react-redux'
-import {RootStore} from '../store/index'
+import { useSelector } from 'react-redux'
+import { RootStore } from '../store/index'
 
 const path = '/'; 
 
