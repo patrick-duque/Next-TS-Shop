@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import Head from '../../components/Head';
 import { RootStore } from '../../store/index';
 import { useSelector, useDispatch } from 'react-redux';
-import { Col, Row, Alert, Container, ListGroup, Image } from 'react-bootstrap';
+import { Col, Row, Alert, Container, ListGroup } from 'react-bootstrap';
 import { CartItem } from '../../store/cart/cartReducer';
 import Link from 'next/link';
 
@@ -33,8 +33,13 @@ const Cart: React.FC<Props> = () => {
               </ListGroup>
             )}
           </Col>
-          <Col md={2} />
-          <Col md={2} />
+          <Col md={4}>
+            <ListGroup variant='flush'>
+              <ListGroup.Item>
+                <h2>Subtotal: ({cartItems.reduce((acc, item) => acc + item.quantity, 0)}) items</h2>
+              </ListGroup.Item>
+            </ListGroup>
+          </Col>
         </Row>
       </Container>
     </Fragment>
