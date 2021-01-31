@@ -29,7 +29,7 @@ const cartReducer = (state: CartState = initialState, action: actionTypes.CartDi
       }
       break;
     case actionTypes.CART_REMOVE_ITEM:
-      newState.items.filter(p => p._id !== action.payload);
+      newState.items = newState.items.filter(p => p._id !== action.payload);
       break;
   }
 

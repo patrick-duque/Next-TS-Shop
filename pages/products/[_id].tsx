@@ -94,10 +94,11 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
               <div className='bg-dark my-5'>
                 <Row>
                   <Col sm={5}>Quantity:</Col>
-                  <Col sm={7} md={12} lg={7} className='text-center'>
-                    <Row className='d-flex justify-content-between text-center'>
+                  <Col sm={7} md={7} lg={7} className='text-center'>
+                    <Row>
                       <Col sm={4}>
                         <Button
+                          size='sm'
                           variant='dark'
                           className='ml-sm-2 ml-md-0'
                           onClick={() => setQty(qty + 1)}
@@ -105,11 +106,14 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
                           <AiOutlinePlus />
                         </Button>
                       </Col>
-                      <Col sm={2} className='text-center d-flex justify-content-center align-items-center'>
-                        <strong>{qty}</strong>
+                      <Col sm={2}>
+                        <p>
+                          <strong>{qty}</strong>
+                        </p>
                       </Col>
                       <Col sm={4}>
                         <Button
+                          size='sm'
                           variant='dark'
                           className='mr-sm-2 mr-md-0'
                           onClick={() => setQty(qty - 1)}
