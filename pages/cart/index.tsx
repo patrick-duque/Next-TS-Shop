@@ -36,7 +36,8 @@ const Cart: React.FC<Props> = () => {
           <Col md={4}>
             <ListGroup variant='flush'>
               <ListGroup.Item>
-                <h2>Subtotal: ({cartItems.reduce((acc, item) => acc + item.quantity, 0)}) items</h2>
+                <h4>Subtotal: ({cartItems.reduce((acc, item) => acc + item.quantity, 0)}) items</h4>
+                <h2 className='text-right'>₱{cartItems.reduce((acc, item) => acc + item.price, 0)}</h2>
               </ListGroup.Item>
             </ListGroup>
           </Col>

@@ -33,7 +33,7 @@ const Item: React.FC<Props> = ({ item }) => {
         <Link href={`/products/${item._id}`}>{item.name}</Link>
       </Col>
       <Col md={3} lg={2}>
-        {item.price}
+        ₱{item.price}
       </Col>
       <Col md={4} lg={4}>
         <Row>
