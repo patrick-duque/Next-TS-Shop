@@ -11,6 +11,8 @@ export const loginAction = (credentials: { email: string; password: string }) =>
   try {
     const user: User = (await axios.post('/users/login', credentials)).data;
     dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: user });
+    console.log(user);
+    localStorage.setItem('token', user.token);
     Router.push('/');
   } catch (error) {
     let payload = '';

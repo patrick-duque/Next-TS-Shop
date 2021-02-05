@@ -6,14 +6,14 @@ import Spinner from '../../components/Spinner';
 import { Button, Form, Row, Col, Container, Alert } from 'react-bootstrap';
 import Link from 'next/link';
 import { loginAction } from '../../store/user/userActions';
-import { RootStore } from '../../store/index'; 
+import { RootStore } from '../../store/index';
 
 interface Props {}
 
 const Login: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const [ email, setEmail ] = useState<string>('');
-  const [ password, setPassword ] = useState<string>(''); 
+  const [ password, setPassword ] = useState<string>('');
   const loading = useSelector<RootStore>(state => state.user.loading) as boolean;
   const error = useSelector<RootStore>(state => state.user.error) as string;
 

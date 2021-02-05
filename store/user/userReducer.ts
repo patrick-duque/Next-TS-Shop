@@ -8,6 +8,7 @@ export interface User {
   email: string;
   name: string;
   cart: CartItem[];
+  token: string;
 }
 
 export interface UserState {

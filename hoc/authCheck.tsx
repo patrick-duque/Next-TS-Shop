@@ -2,7 +2,9 @@ import Router from 'next/router';
 import { NextPageContext } from 'next'; 
 import axios from '../helpers/api/axios'
 
-const path = '/'; 
+const path = '/';
+
+const server = typeof window === 'undefined';
 
 interface Context extends NextPageContext {}
 /**
@@ -10,8 +12,12 @@ interface Context extends NextPageContext {}
  * @returns {{user: null}}
  */
 const checkUserAuthentication = async () => {
-	const user = await axios.get(`/users/user`)
-	return user.data.auth; 
+	// const user = await axios.get(`/users/user`)
+	// return user.data.auth;
+	if(!server) {
+		return localStorage.getItem('token')
+	}
+	return null
 };
 
 const AuthCheck = WrappedComponent => {
