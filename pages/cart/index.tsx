@@ -7,6 +7,8 @@ import { CartItem } from '../../store/cart/cartReducer';
 
 import Item from '../../components/CartItem';
 
+import authCheck from '../../hoc/authCheck';
+
 interface Props {}
 
 const Cart: React.FC<Props> = () => {
@@ -51,4 +53,4 @@ const Cart: React.FC<Props> = () => {
   );
 };
 
-export default Cart;
+export default authCheck(Cart);

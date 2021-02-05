@@ -1,10 +1,13 @@
 import * as actionTypes from './userActionTypes';
 
+import { CartItem } from '../cart/cartReducer';
+
 export interface User {
   _id: string;
   isAdmin: boolean;
   email: string;
   name: string;
+  cart: CartItem[];
 }
 
 export interface UserState {
@@ -14,7 +17,9 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  loading: false
+  loading: false,
+  user: null,
+  error: null
 };
 
 const userReducer = (state: UserState = initialState, action: actionTypes.LoginDispatchType): UserState => {

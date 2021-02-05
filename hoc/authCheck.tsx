@@ -1,29 +1,25 @@
 import Router from 'next/router'; 
-import { NextPageContext } from 'next';
-import { useSelector } from 'react-redux'
-import { RootStore } from '../store/index'
+import { NextPageContext } from 'next'; 
+import axios from '../helpers/api/axios'
 
 const path = '/'; 
 
 interface Context extends NextPageContext {}
 /**
- * Check user authentication and authorization
- * It depends on you and your auth service provider.
- * @returns {{auth: null}}
+ * Check user authentication and authorization 
+ * @returns {{user: null}}
  */
-const checkUserAuthentication = () => {
-  return useSelector<RootStore>(state => state.user.user)
+const checkUserAuthentication = async () => {
+	const user = await axios.get(`/users/user`)
+	return user.data.auth; 
 };
 
 const AuthCheck = WrappedComponent => {
-  const hocComponent = ({ ...props }) => <WrappedComponent {...props } />;
+  const hocComponent = ({ ...props }) => <WrappedComponent {...props } />
 
   hocComponent.getInitialProps = async (context: Context) => {
-		const userAuth = await checkUserAuthentication();
-		
-    // Are you an authorized user or not?
-    if (!userAuth) {
-      // Handle server-side and client-side rendering.
+		const userAuth = await checkUserAuthentication(); 
+    if (!userAuth) { 
       if (context.res) {
         context.res?.writeHead(302, {
           Location: path,
