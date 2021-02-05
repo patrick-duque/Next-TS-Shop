@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FiShoppingCart, FiUser } from 'react-icons/fi';
+import { FiShoppingCart, FiUser, FiUserPlus } from 'react-icons/fi';
 import { Navbar, Nav, Image, Modal, Button, Col, Container } from 'react-bootstrap';
 import NavLink from './NavLink';
 import Link from 'next/link';
@@ -32,20 +32,27 @@ const Header: React.FC = () => {
     setShowLogoutModal(true);
   };
 
-  let link = <NavLink href='/login' icon={<FiUser />} title='Login' />;
+  let link = (
+    <Fragment>
+      <NavLink href='/login' icon={<FiUser />} title='Login' />
+      <NavLink href='/register' icon={<FiUserPlus />} title='Register' />
+    </Fragment>
+  );
 
   if (user) {
     link = (
       <Fragment>
         <NavLink href='/cart' icon={<FiShoppingCart />} title='Cart' />
-        <Nav.Link>
-          <Container onClick={handleShowModal}>
-            <Col>
-              <FiUser />
-              <span className='mx-2'>Logout</span>
-            </Col>
-          </Container>
-        </Nav.Link>
+        <Nav.Item>
+          <Nav.Link>
+            <Container onClick={handleShowModal}>
+              <Col>
+                <FiUser />
+                <span className='mx-2'>Logout</span>
+              </Col>
+            </Container>
+          </Nav.Link>
+        </Nav.Item>
       </Fragment>
     );
   }

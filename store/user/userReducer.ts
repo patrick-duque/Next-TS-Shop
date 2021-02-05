@@ -43,8 +43,20 @@ const userReducer = (state: UserState = initialState, action: actionTypes.UserDi
       break;
     case actionTypes.LOGOUT:
       newState.error = null;
-      newState.loading = null;
+      newState.loading = false;
       newState.user = null;
+      break;
+    case actionTypes.REGISTER_START:
+      newState.loading = true;
+      break;
+    case actionTypes.REGISTER_SUCCESS:
+      newState.user = action.payload;
+      newState.loading = false;
+      newState.error = null;
+      break;
+    case actionTypes.REGISTER_FAILED:
+      newState.error = action.payload;
+      newState.loading = false;
       break;
   }
 

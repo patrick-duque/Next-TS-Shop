@@ -23,22 +23,24 @@ const NavLink: React.FC<Props> = ({ href, icon, title, onClick }) => {
   }
 
   return (
-    <Link href={href} passHref>
-      <Nav.Link className={className}>
-        <Container onClick={onClick && onClick}>
-          <Col>
-            <IconContext.Provider
-              value={{
-                color: className === styles.active ? '#fff' : '#B8B8B9',
-                size: className === styles.active ? '1.11em' : '1em'
-              }}>
-              {icon}
-            </IconContext.Provider>
-            <span className='mx-2'>{title}</span>
-          </Col>
-        </Container>
-      </Nav.Link>
-    </Link>
+    <Nav.Item>
+      <Link href={href} passHref>
+        <Nav.Link className={className}>
+          <Container onClick={onClick && onClick}>
+            <Col>
+              <IconContext.Provider
+                value={{
+                  color: className === styles.active ? '#fff' : '#B8B8B9',
+                  size: className === styles.active ? '1.11em' : '1em'
+                }}>
+                {icon}
+              </IconContext.Provider>
+              <span className='mx-2'>{title}</span>
+            </Col>
+          </Container>
+        </Nav.Link>
+      </Link>
+    </Nav.Item>
   );
 };
 

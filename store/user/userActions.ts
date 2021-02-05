@@ -11,7 +11,6 @@ export const loginAction = (credentials: { email: string; password: string }) =>
   try {
     const user: User = (await axios.post('/users/login', credentials)).data;
     dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: user });
-    console.log(user);
     localStorage.setItem('token', user.token);
     Router.push('/');
   } catch (error) {
@@ -29,4 +28,24 @@ export const logoutAction = () => async (dispatch: Dispatch<actionTypes.LogoutDi
   dispatch({ type: actionTypes.LOGOUT });
   localStorage.removeItem('token');
   Router.push('/login');
+};
+
+export const registerAction = (userDetails: { email: string; password: string; name: string }) => async (
+  dispatch: Dispatch<actionTypes.RegisterDispatchType>
+) => {
+  dispatch({ type: actionTypes.REGISTER_START });
+  try {
+    const newUser: User = (await axios.post('/users/register', userDetails)).data;
+    dispatch({ type: actionTypes.REGISTER_SUCCESS, payload: newUser });
+    localStorage.setItem('token', newUser.token);
+    Router.push('/');
+  } catch (error) {
+    let payload = '';
+    if ((error.message as string).includes('400')) {
+      payload = 'User already exist.';
+    } else {
+      payload = 'Something went wrong.';
+    }
+    dispatch({ type: actionTypes.REGISTER_FAILED, payload });
+  }
 };
