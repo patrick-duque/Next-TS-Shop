@@ -11,9 +11,10 @@ interface Props {
   href: string;
   icon: JSX.Element;
   title: string;
+  onClick?: () => void;
 }
 
-const NavLink: React.FC<Props> = ({ href, icon, title }) => {
+const NavLink: React.FC<Props> = ({ href, icon, title, onClick }) => {
   const router = useRouter();
 
   let className = '';
@@ -24,7 +25,7 @@ const NavLink: React.FC<Props> = ({ href, icon, title }) => {
   return (
     <Link href={href} passHref>
       <Nav.Link className={className}>
-        <Container>
+        <Container onClick={onClick && onClick}>
           <Col>
             <IconContext.Provider
               value={{

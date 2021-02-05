@@ -24,3 +24,9 @@ export const loginAction = (credentials: { email: string; password: string }) =>
     dispatch({ type: actionTypes.LOGIN_FAILED, payload });
   }
 };
+
+export const logoutAction = () => async (dispatch: Dispatch<actionTypes.LogoutDispatchType>) => {
+  dispatch({ type: actionTypes.LOGOUT });
+  localStorage.removeItem('token');
+  Router.push('/login');
+};

@@ -23,7 +23,7 @@ const initialState: UserState = {
   error: null
 };
 
-const userReducer = (state: UserState = initialState, action: actionTypes.LoginDispatchType): UserState => {
+const userReducer = (state: UserState = initialState, action: actionTypes.UserDispatchType): UserState => {
   const newState = { ...state };
 
   switch (action.type) {
@@ -39,6 +39,11 @@ const userReducer = (state: UserState = initialState, action: actionTypes.LoginD
     case actionTypes.LOGIN_FAILED:
       newState.error = action.payload;
       newState.loading = false;
+      newState.user = null;
+      break;
+    case actionTypes.LOGOUT:
+      newState.error = null;
+      newState.loading = null;
       newState.user = null;
       break;
   }
