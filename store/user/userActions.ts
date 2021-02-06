@@ -12,6 +12,7 @@ export const loginAction = (credentials: { email: string; password: string }) =>
     const user: User = (await axios.post('/users/login', credentials)).data;
     dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: user });
     localStorage.setItem('token', user.token);
+    localStorage.setItem('user', JSON.stringify(user));
     Router.push('/');
   } catch (error) {
     let payload = '';
@@ -27,6 +28,7 @@ export const loginAction = (credentials: { email: string; password: string }) =>
 export const logoutAction = () => async (dispatch: Dispatch<actionTypes.LogoutDispatchType>) => {
   dispatch({ type: actionTypes.LOGOUT });
   localStorage.removeItem('token');
+  localStorage.removeItem('user');
   Router.push('/login');
 };
 
@@ -38,6 +40,7 @@ export const registerAction = (userDetails: { email: string; password: string; n
     const newUser: User = (await axios.post('/users/register', userDetails)).data;
     dispatch({ type: actionTypes.REGISTER_SUCCESS, payload: newUser });
     localStorage.setItem('token', newUser.token);
+    localStorage.setItem('user', JSON.stringify(newUser));
     Router.push('/');
   } catch (error) {
     let payload = '';

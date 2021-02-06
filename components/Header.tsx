@@ -1,11 +1,12 @@
 import { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FiShoppingCart, FiUser, FiUserPlus } from 'react-icons/fi';
-import { Navbar, Nav, Image, Modal, Button, Col, Container } from 'react-bootstrap';
+import { FiShoppingCart, FiUser, FiUserPlus, FiUserX } from 'react-icons/fi';
+import { Navbar, Nav, Image, Modal, Button, Col, Container, NavDropdown } from 'react-bootstrap';
 import NavLink from './NavLink';
 import Link from 'next/link';
 import { RootStore } from '../store';
 import { logoutAction } from '../store/user/userActions';
+import { User } from '../store/user/userReducer';
 
 const HomeButton = () => {
   return (
@@ -18,7 +19,7 @@ const HomeButton = () => {
 };
 
 const Header: React.FC = () => {
-  const user = useSelector<RootStore>(state => state.user.user);
+  const user = useSelector<RootStore>(state => state.user.user) as User;
   const [ showLogoutModal, setShowLogoutModal ] = useState<boolean>(false);
 
   const dispatch = useDispatch();
@@ -42,17 +43,29 @@ const Header: React.FC = () => {
   if (user) {
     link = (
       <Fragment>
-        <NavLink href='/cart' icon={<FiShoppingCart />} title='Cart' />
         <Nav.Item>
-          <Nav.Link>
-            <Container onClick={handleShowModal}>
-              <Col>
-                <FiUser />
-                <span className='mx-2'>Logout</span>
-              </Col>
-            </Container>
-          </Nav.Link>
+          <NavDropdown title={user.name} id='username'>
+            <NavDropdown.Item>
+              <Link href='/profile'>
+                <Container>
+                  <Col>
+                    <FiUser />
+                    <span className='mx-2'>Profile</span>
+                  </Col>
+                </Container>
+              </Link>
+            </NavDropdown.Item>
+            <NavDropdown.Item>
+              <Container onClick={handleShowModal}>
+                <Col>
+                  <FiUserX />
+                  <span className='mx-2'>Logout</span>
+                </Col>
+              </Container>
+            </NavDropdown.Item>
+          </NavDropdown>
         </Nav.Item>
+        <NavLink href='/cart' icon={<FiShoppingCart />} title='Cart' />
       </Fragment>
     );
   }
