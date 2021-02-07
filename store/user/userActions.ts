@@ -52,3 +52,23 @@ export const registerAction = (userDetails: { email: string; password: string; n
     dispatch({ type: actionTypes.REGISTER_FAILED, payload });
   }
 };
+
+export const editUserAction = (id: string) => async (dispatch: Dispatch<actionTypes.EditUserDispatchType>) => {
+  dispatch({ type: actionTypes.EDIT_USER_START });
+  try {
+    const editedUser: User = (await axios.put(`/users/user/${id}`)).data;
+    dispatch({ type: actionTypes.EDIT_USER_SUCCESS, payload: editedUser });
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.setItem('user', JSON.stringify(editedUser));
+    localStorage.setItem('token', editedUser.token);
+  } catch (error) {
+    let payload = '';
+    if ((error.message as string).includes('404')) {
+      payload = 'User not found.';
+    } else {
+      payload = 'Something went wrong.';
+    }
+    dispatch({ type: actionTypes.EDIT_USER_FAILED, payload });
+  }
+};

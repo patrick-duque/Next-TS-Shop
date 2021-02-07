@@ -58,6 +58,18 @@ const userReducer = (state: UserState = initialState, action: actionTypes.UserDi
       newState.error = action.payload;
       newState.loading = false;
       break;
+    case actionTypes.EDIT_USER_START:
+      newState.loading = true;
+      break;
+    case actionTypes.EDIT_USER_SUCCESS:
+      newState.error = null;
+      newState.user = action.payload;
+      newState.loading = false;
+      break;
+    case actionTypes.EDIT_USER_FAILED:
+      newState.error = action.payload;
+      newState.loading = false;
+      break;
   }
 
   return newState;
