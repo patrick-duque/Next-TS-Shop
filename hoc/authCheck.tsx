@@ -12,12 +12,23 @@ interface Context extends NextPageContext {}
  * @returns {{user: null}}
  */
 const checkUserAuthentication = async () => {
-	// const user = await axios.get(`/users/user`)
-	// return user.data.auth;
-	if(!server) {
-		return localStorage.getItem('token')
+	try {
+		if(!server) {
+			axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+			const user = await axios.get(`/users/user`)
+			return user.data.auth;
+		} else {
+			return null
+		}
+	} catch (error) {
+		console.log(error.message)
+		return null
 	}
-	return null
+
+	// if(!server) {
+	// 	return localStorage.getItem('user')
+	// }
+	// return null
 };
 
 const AuthCheck = WrappedComponent => {

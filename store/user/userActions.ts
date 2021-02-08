@@ -4,6 +4,9 @@ import { Dispatch } from 'redux';
 import { User } from './userReducer';
 import Router from 'next/router';
 
+// @desc Login User
+// @route POST /api/users/login
+// @access Public
 export const loginAction = (credentials: { email: string; password: string }) => async (
   dispatch: Dispatch<actionTypes.LoginDispatchType>
 ) => {
@@ -25,13 +28,19 @@ export const loginAction = (credentials: { email: string; password: string }) =>
   }
 };
 
+// @desc Logout User
+// @route None
+// @access Public
 export const logoutAction = () => async (dispatch: Dispatch<actionTypes.LogoutDispatchType>) => {
   dispatch({ type: actionTypes.LOGOUT });
+  Router.push('/login');
   localStorage.removeItem('token');
   localStorage.removeItem('user');
-  Router.push('/login');
 };
 
+// @desc Register new User
+// @route POST /api/users/register
+// @access Public
 export const registerAction = (userDetails: { email: string; password: string; name: string }) => async (
   dispatch: Dispatch<actionTypes.RegisterDispatchType>
 ) => {
@@ -53,10 +62,16 @@ export const registerAction = (userDetails: { email: string; password: string; n
   }
 };
 
-export const editUserAction = (id: string) => async (dispatch: Dispatch<actionTypes.EditUserDispatchType>) => {
+// @desc Edit User
+// @route PUT /api/users/editUser
+// @access Private
+export const editUserAction = (body: { name?: string; email?: string }) => async (
+  dispatch: Dispatch<actionTypes.EditUserDispatchType>
+) => {
   dispatch({ type: actionTypes.EDIT_USER_START });
   try {
-    const editedUser: User = (await axios.put(`/users/user/${id}`)).data;
+    axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    const editedUser: User = (await axios.put(`/users/editUser`, body)).data;
     dispatch({ type: actionTypes.EDIT_USER_SUCCESS, payload: editedUser });
     localStorage.removeItem('user');
     localStorage.removeItem('token');

@@ -1,9 +1,8 @@
+import dynamic from 'next/dynamic';
 import { Provider } from 'react-redux';
-
-import Header from '../components/Header';
+const Header = dynamic(() => import('../components/Header'), { ssr: false });
 import Footer from '../components/Footer';
 import Main from '../components/Main';
-
 import store from '../store/index';
 
 import '../styles/globals.scss';
