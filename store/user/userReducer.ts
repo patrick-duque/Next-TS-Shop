@@ -32,35 +32,35 @@ const userReducer = (state: UserState = initialState, action: actionTypes.UserDi
       newState.error = null;
       break;
     case actionTypes.LOGIN_SUCCESS:
+      newState.error = null;
       newState.user = action.payload;
       newState.loading = false;
-      newState.error = null;
       break;
     case actionTypes.LOGIN_FAILED:
+      newState.user = null;
       newState.error = action.payload;
       newState.loading = false;
-      newState.user = null;
       break;
     case actionTypes.LOGOUT:
       newState.error = null;
-      newState.loading = false;
       newState.user = null;
+      newState.loading = false;
       break;
     case actionTypes.REGISTER_START:
       newState.loading = true;
       break;
     case actionTypes.REGISTER_SUCCESS:
+      newState.error = null;
       newState.user = action.payload;
       newState.loading = false;
-      newState.error = null;
       break;
     case actionTypes.REGISTER_FAILED:
       newState.error = action.payload;
       newState.loading = false;
       break;
     case actionTypes.EDIT_USER_START:
-      newState.loading = true;
       newState.error = null;
+      newState.loading = true;
       break;
     case actionTypes.EDIT_USER_SUCCESS:
       newState.error = null;
@@ -70,6 +70,25 @@ const userReducer = (state: UserState = initialState, action: actionTypes.UserDi
     case actionTypes.EDIT_USER_FAILED:
       newState.error = action.payload;
       newState.loading = false;
+      break;
+    case actionTypes.ADD_TO_CART_START:
+      newState.error = null;
+      const product = newState.user.cart.find(item => item._id === action.payload._id);
+      if (product) {
+        product.quantity += action.payload.quantity;
+        newState.user.cart = newState.user.cart.map(item => (item._id === product._id ? product : item));
+      } else {
+        newState.user.cart.push(action.payload);
+      }
+      break;
+    case actionTypes.ADD_TO_CART_FAILED:
+      const productIndex = newState.user.cart.findIndex(item => item._id === action.item._id);
+      const removeProduct = newState.user.cart[productIndex];
+      removeProduct.quantity -= action.item.quantity;
+      if (removeProduct.quantity <= 0) {
+        newState.user.cart.splice(productIndex, 1);
+      }
+      newState.error = action.payload;
       break;
   }
 

@@ -3,6 +3,8 @@ import axios from '../../helpers/api/axios';
 import { Dispatch } from 'redux';
 import { User } from './userReducer';
 import Router from 'next/router';
+import Product from '../../models/product';
+import { CartItem } from '../cart/cartReducer';
 
 // @desc Login User
 // @route POST /api/users/login
@@ -85,5 +87,22 @@ export const editUserAction = (body: { name?: string; email?: string }) => async
       payload = 'Something went wrong.';
     }
     dispatch({ type: actionTypes.EDIT_USER_FAILED, payload });
+  }
+};
+
+// @desc Edit User
+// @route POST /api/users/cart
+// @access Private
+export const addToCartItem = (newProduct: CartItem) => async (
+  dispatch: Dispatch<actionTypes.AddToCartDispatchType>
+) => {
+  dispatch({ type: actionTypes.ADD_TO_CART_START, payload: newProduct });
+  try {
+    await axios.post('/users/cart', { product: newProduct._id, quantity: newProduct.quantity });
+    axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    dispatch({ type: actionTypes.ADD_TO_CART_SUCCESS, payload: 'Added to cart' });
+  } catch (error) {
+    let payload = 'Something went wrong';
+    dispatch({ type: actionTypes.ADD_TO_CART_FAILED, payload, item: newProduct });
   }
 };

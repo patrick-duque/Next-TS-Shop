@@ -1,8 +1,5 @@
+import { CartItem } from '../cart/cartReducer';
 import { User } from './userReducer';
-
-/* ============================
-							AUTH
-============================= */
 
 // LOGIN
 export const LOGIN_START = 'LOGIN_START';
@@ -21,6 +18,11 @@ export const REGISTER_FAILED = 'REGISTER_FAILED';
 export const EDIT_USER_START = 'EDIT_USER_START';
 export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
 export const EDIT_USER_FAILED = 'EDIT_USER_FAILED';
+
+// ADD TO CART
+export const ADD_TO_CART_START = 'ADD_TO_CART_START';
+export const ADD_TO_CART_SUCCESS = 'ADD_TO_CART_SUCCESS';
+export const ADD_TO_CART_FAILED = 'ADD_TO_CART_FAILED';
 
 /* ============================
 							LOGIN
@@ -93,13 +95,37 @@ export interface EditUserFailed {
 					EDIT USER
 ============================= */
 
+/* ============================
+							LOGIN
+============================= */
+export interface AddToCartStart {
+  type: typeof ADD_TO_CART_START;
+  payload: CartItem;
+}
+
+export interface AddToCartSuccess {
+  type: typeof ADD_TO_CART_SUCCESS;
+  payload: string;
+}
+
+export interface AddToCartFailed {
+  type: typeof ADD_TO_CART_FAILED;
+  payload: string;
+  item: CartItem;
+}
+/* ============================
+							LOGIN
+============================= */
+
 export type LoginDispatchType = LoginFailed | LoginStart | LoginSuccess;
 export type LogoutDispatchType = Logout;
 export type RegisterDispatchType = RegisterStart | RegisterFailed | RegisterSuccess;
 export type EditUserDispatchType = EditUserStart | EditUserSuccess | EditUserFailed;
+export type AddToCartDispatchType = AddToCartStart | AddToCartSuccess | AddToCartFailed;
 
-export type UserDispatchType = LoginDispatchType | LogoutDispatchType | RegisterDispatchType | EditUserDispatchType;
-
-/* ============================
-							AUTH
-============================= */
+export type UserDispatchType =
+  | LoginDispatchType
+  | LogoutDispatchType
+  | RegisterDispatchType
+  | EditUserDispatchType
+  | AddToCartDispatchType;

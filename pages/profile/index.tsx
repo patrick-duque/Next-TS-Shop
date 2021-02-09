@@ -3,6 +3,7 @@ import { Col, Row, Container, Button, Form, Alert } from 'react-bootstrap';
 import authCheck from '../../hoc/authCheck';
 import { useSelector, useDispatch } from 'react-redux';
 import Head from '../../components/Head';
+import Spinner from '../../components/Spinner';
 import { RootStore } from '../../store';
 import { User } from '../../store/user/userReducer';
 import { editUserAction } from '../../store/user/userActions';
@@ -14,6 +15,7 @@ const Profile: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const user = useSelector<RootStore>(state => state.user.user) as User;
   const error = useSelector<RootStore>(state => state.user.error) as string;
+  const loading = useSelector<RootStore>(state => state.user.loading) as boolean;
   const [ email, setEmail ] = useState('');
   const [ name, setName ] = useState('');
 
@@ -40,6 +42,29 @@ const Profile: React.FC<Props> = () => {
     dispatch(editUserAction(body));
   };
 
+  let editForm = <Spinner />;
+
+  if (!loading) {
+    editForm = (
+      <Form onSubmit={handleEditProfile}>
+        {error && <Alert variant='danger'>{error}</Alert>}
+        <Form.Group controlId='email'>
+          <Form.Label>Email Address</Form.Label>
+          <Form.Control type='email' value={email} onChange={e => setEmail(e.target.value)} />
+        </Form.Group>
+
+        <Form.Group controlId='Name'>
+          <Form.Label>Name</Form.Label>
+          <Form.Control type='text' value={name} onChange={e => setName(e.target.value)} />
+        </Form.Group>
+
+        <div className='text-right'>
+          <Button type='submit'>EDIT PROFILE</Button>
+        </div>
+      </Form>
+    );
+  }
+
   return (
     <Fragment>
       <Head title='User Profile' />
@@ -47,23 +72,7 @@ const Profile: React.FC<Props> = () => {
         <Col sm={12} lg={3}>
           <Container>
             <h1>Profile</h1>
-
-            <Form onSubmit={handleEditProfile}>
-              {error && <Alert variant='danger'>{error}</Alert>}
-              <Form.Group controlId='email'>
-                <Form.Label>Email Address</Form.Label>
-                <Form.Control type='email' value={email} onChange={e => setEmail(e.target.value)} />
-              </Form.Group>
-
-              <Form.Group controlId='Name'>
-                <Form.Label>Name</Form.Label>
-                <Form.Control type='text' value={name} onChange={e => setName(e.target.value)} />
-              </Form.Group>
-
-              <div className='text-right'>
-                <Button type='submit'>EDIT PROFILE</Button>
-              </div>
-            </Form>
+            {editForm}
           </Container>
         </Col>
         <Col>
