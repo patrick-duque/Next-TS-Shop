@@ -9,12 +9,16 @@ const reducer = combineReducers({ user, cart });
 const server = typeof window === 'undefined';
 
 let userFromStorage = null;
+let cartFromStorage = null;
+let localUser = null;
 if (!server) {
   userFromStorage = JSON.parse(localStorage.getItem('user'));
+  cartFromStorage = JSON.parse(localStorage.getItem('cart'));
+  localUser = (userFromStorage || cartFromStorage) && { ...userFromStorage, cart: cartFromStorage };
 }
 
 const initialState = {
-  user: { user: userFromStorage, loading: false }
+  user: { user: localUser, loading: false }
 };
 
 const middleware = [ thunk ];

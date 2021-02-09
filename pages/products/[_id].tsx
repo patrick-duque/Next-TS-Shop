@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from '../../helpers/api/axios';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '../../store/cart/cartActions';
+import { addToCartItem } from '../../store/user/userActions';
 
 //Components
 import { Fragment } from 'react';
@@ -42,7 +42,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
   const [ qty, setQty ] = useState<number>(1);
 
   const handleAddToCart = () => {
-    dispatch(addToCart({ ...product, quantity: qty }));
+    dispatch(addToCartItem({ product:{...product}, quantity: qty }));
   };
 
   return (

@@ -8,7 +8,7 @@ export interface User {
   email: string;
   name: string;
   cart: CartItem[];
-  token: string;
+  token?: string;
 }
 
 export interface UserState {
@@ -73,16 +73,18 @@ const userReducer = (state: UserState = initialState, action: actionTypes.UserDi
       break;
     case actionTypes.ADD_TO_CART_START:
       newState.error = null;
-      const product = newState.user.cart.find(item => item._id === action.payload._id);
+      const product = newState.user.cart.find(item => item.product._id === action.payload.product._id);
       if (product) {
         product.quantity += action.payload.quantity;
-        newState.user.cart = newState.user.cart.map(item => (item._id === product._id ? product : item));
+        newState.user.cart = newState.user.cart.map(
+          item => (item.product._id === product.product._id ? product : item)
+        );
       } else {
         newState.user.cart.push(action.payload);
       }
       break;
     case actionTypes.ADD_TO_CART_FAILED:
-      const productIndex = newState.user.cart.findIndex(item => item._id === action.item._id);
+      const productIndex = newState.user.cart.findIndex(item => item.product._id === action.item.product._id);
       const removeProduct = newState.user.cart[productIndex];
       removeProduct.quantity -= action.item.quantity;
       if (removeProduct.quantity <= 0) {

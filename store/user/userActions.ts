@@ -15,9 +15,14 @@ export const loginAction = (credentials: { email: string; password: string }) =>
   dispatch({ type: actionTypes.LOGIN_START });
   try {
     const user: User = (await axios.post('/users/login', credentials)).data;
+    console.log(user);
     dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: user });
     localStorage.setItem('token', user.token);
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem(
+      'user',
+      JSON.stringify({ email: user.email, name: user.name, isAdmin: user.isAdmin, _id: user._id })
+    );
+    localStorage.setItem('cart', JSON.stringify(user.cart));
     Router.push('/');
   } catch (error) {
     let payload = '';
@@ -34,10 +39,11 @@ export const loginAction = (credentials: { email: string; password: string }) =>
 // @route None
 // @access Public
 export const logoutAction = () => async (dispatch: Dispatch<actionTypes.LogoutDispatchType>) => {
-  dispatch({ type: actionTypes.LOGOUT });
   Router.push('/login');
+  dispatch({ type: actionTypes.LOGOUT });
   localStorage.removeItem('token');
   localStorage.removeItem('user');
+  localStorage.removeItem('cart');
 };
 
 // @desc Register new User
@@ -51,7 +57,11 @@ export const registerAction = (userDetails: { email: string; password: string; n
     const newUser: User = (await axios.post('/users/register', userDetails)).data;
     dispatch({ type: actionTypes.REGISTER_SUCCESS, payload: newUser });
     localStorage.setItem('token', newUser.token);
-    localStorage.setItem('user', JSON.stringify(newUser));
+    localStorage.setItem(
+      'user',
+      JSON.stringify({ email: newUser.email, name: newUser.name, isAdmin: newUser.isAdmin, _id: newUser._id })
+    );
+    localStorage.setItem('cart', JSON.stringify(newUser.cart));
     Router.push('/');
   } catch (error) {
     let payload = '';
@@ -77,7 +87,15 @@ export const editUserAction = (body: { name?: string; email?: string }) => async
     dispatch({ type: actionTypes.EDIT_USER_SUCCESS, payload: editedUser });
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    localStorage.setItem('user', JSON.stringify(editedUser));
+    localStorage.setItem(
+      'user',
+      JSON.stringify({
+        email: editedUser.email,
+        name: editedUser.name,
+        isAdmin: editedUser.isAdmin,
+        _id: editedUser._id
+      })
+    );
     localStorage.setItem('token', editedUser.token);
   } catch (error) {
     let payload = '';
@@ -90,7 +108,7 @@ export const editUserAction = (body: { name?: string; email?: string }) => async
   }
 };
 
-// @desc Edit User
+// @desc Add to User cart
 // @route POST /api/users/cart
 // @access Private
 export const addToCartItem = (newProduct: CartItem) => async (
@@ -98,9 +116,15 @@ export const addToCartItem = (newProduct: CartItem) => async (
 ) => {
   dispatch({ type: actionTypes.ADD_TO_CART_START, payload: newProduct });
   try {
-    await axios.post('/users/cart', { product: newProduct._id, quantity: newProduct.quantity });
     axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    const newCart = (await axios.post('/users/cart', {
+      product: newProduct.product._id,
+      quantity: newProduct.quantity
+    })).data;
+    localStorage.removeItem('cart');
     dispatch({ type: actionTypes.ADD_TO_CART_SUCCESS, payload: 'Added to cart' });
+    localStorage.setItem('cart', JSON.stringify(newCart));
+    Router.push('/cart');
   } catch (error) {
     let payload = 'Something went wrong';
     dispatch({ type: actionTypes.ADD_TO_CART_FAILED, payload, item: newProduct });

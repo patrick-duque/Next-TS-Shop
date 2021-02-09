@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Row, Image, Button, Col } from 'react-bootstrap';
 import { AiOutlinePlus, AiOutlineMinus, AiTwotoneDelete } from 'react-icons/ai';
 import Link from 'next/link';
-import { addToCart, removeToCart } from '../store/cart/cartActions';
+import { addToCartItem } from '../store/user/userActions';
 import { CartItem } from '../store/cart/cartReducer';
 
 interface Props {
@@ -16,24 +16,24 @@ const Item: React.FC<Props> = ({ item }) => {
 
   const handleAddQuantity = () => {
     setQty(qty + 1);
-    dispatch(addToCart({ ...item, quantity: 1 }));
+    dispatch(addToCartItem({ ...item, quantity: 1 }));
   };
 
   const handleMinusQuantity = () => {
     setQty(qty - 1);
-    dispatch(addToCart({ ...item, quantity: -1 }));
+    dispatch(addToCartItem({ ...item, quantity: -1 }));
   };
 
   return (
     <Row>
       <Col md={6} lg={2}>
-        <Image src={item.image} alt={item.name} fluid rounded />
+        <Image src={item.product.image} alt={item.product.name} fluid rounded />
       </Col>
       <Col md={3} lg={2}>
-        <Link href={`/products/${item._id}`}>{item.name}</Link>
+        <Link href={`/products/${item.product._id}`}>{item.product.name}</Link>
       </Col>
       <Col md={3} lg={2}>
-        ₱{item.price}
+        ₱{item.product.price}
       </Col>
       <Col md={4} lg={4}>
         <Row>
@@ -48,7 +48,7 @@ const Item: React.FC<Props> = ({ item }) => {
                   variant='dark'
                   className='ml-sm-2 ml-md-0'
                   onClick={handleAddQuantity}
-                  disabled={qty === item.countInStock}>
+                  disabled={qty === item.product.countInStock}>
                   <AiOutlinePlus />
                 </Button>
               </Col>
@@ -70,7 +70,12 @@ const Item: React.FC<Props> = ({ item }) => {
         </Row>
       </Col>
       <Col lg={2}>
-        <Button block variant='danger' className='text-dark' onClick={() => dispatch(removeToCart(item._id))}>
+        <Button
+          block
+          variant='danger'
+          className='text-dark'
+          onClick={() => dispatch(addToCartItem({ ...item, quantity: -item.quantity }))}
+					>
           <AiTwotoneDelete />
         </Button>
       </Col>
