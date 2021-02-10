@@ -9,6 +9,7 @@ export interface User {
   name: string;
   cart: CartItem[];
   token?: string;
+  expiry?: number;
 }
 
 export interface UserState {

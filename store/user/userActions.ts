@@ -22,6 +22,7 @@ export const loginAction = (credentials: { email: string; password: string }) =>
       JSON.stringify({ email: user.email, name: user.name, isAdmin: user.isAdmin, _id: user._id })
     );
     localStorage.setItem('cart', JSON.stringify(user.cart));
+    localStorage.setItem('expiry', user.expiry.toString());
     Router.push('/');
   } catch (error) {
     let payload = '';
@@ -43,6 +44,7 @@ export const logoutAction = () => async (dispatch: Dispatch<actionTypes.LogoutDi
   localStorage.removeItem('token');
   localStorage.removeItem('user');
   localStorage.removeItem('cart');
+  localStorage.removeItem('expiry');
 };
 
 // @desc Register new User
@@ -61,6 +63,7 @@ export const registerAction = (userDetails: { email: string; password: string; n
       JSON.stringify({ email: newUser.email, name: newUser.name, isAdmin: newUser.isAdmin, _id: newUser._id })
     );
     localStorage.setItem('cart', JSON.stringify(newUser.cart));
+    localStorage.setItem('expiry', newUser.expiry.toString());
     Router.push('/');
   } catch (error) {
     let payload = '';
@@ -96,6 +99,7 @@ export const editUserAction = (body: { name?: string; email?: string }) => async
       })
     );
     localStorage.setItem('token', editedUser.token);
+    localStorage.setItem('expiry', editedUser.expiry.toString());
   } catch (error) {
     let payload = '';
     if ((error.message as string).includes('404')) {

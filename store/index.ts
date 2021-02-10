@@ -12,9 +12,16 @@ let userFromStorage = null;
 let cartFromStorage = null;
 let localUser = null;
 if (!server) {
-  userFromStorage = JSON.parse(localStorage.getItem('user'));
-  cartFromStorage = JSON.parse(localStorage.getItem('cart'));
-  localUser = (userFromStorage || cartFromStorage) && { ...userFromStorage, cart: cartFromStorage };
+  if (+localStorage.getItem('expiry') >= Date.now()) {
+    userFromStorage = JSON.parse(localStorage.getItem('user'));
+    cartFromStorage = JSON.parse(localStorage.getItem('cart'));
+    localUser = (userFromStorage || cartFromStorage) && { ...userFromStorage, cart: cartFromStorage };
+  } else {
+    localStorage.removeItem('user');
+    localStorage.removeItem('cart');
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiry');
+  }
 }
 
 const initialState = {
