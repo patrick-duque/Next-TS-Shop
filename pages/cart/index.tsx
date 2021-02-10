@@ -4,7 +4,6 @@ import Head from '../../components/Head';
 import { RootStore } from '../../store/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row, Alert, Container, ListGroup, Button } from 'react-bootstrap';
-import { CartItem } from '../../store/cart/cartReducer';
 
 import Item from '../../components/CartItem';
 
@@ -15,6 +14,7 @@ interface Props {}
 
 const Cart: React.FC<Props> = () => {
   const user = useSelector<RootStore>(state => state.user.user) as User;
+  const error = useSelector<RootStore>(state => state.user.error) as boolean;
   const cartItems = user ? user.cart : [];
 
   useEffect(
@@ -25,6 +25,7 @@ const Cart: React.FC<Props> = () => {
     },
     [ user ]
   );
+
   return (
     <Fragment>
       <Head title='Cart' />
@@ -32,6 +33,7 @@ const Cart: React.FC<Props> = () => {
         <Row>
           <Col md={8}>
             <h1>Shopping Cart</h1>
+            {error && <Alert variant='danger'>{error}</Alert>}
             {cartItems.length === 0 ? (
               <Alert variant='light'>Your Cart is Empty</Alert>
             ) : (

@@ -92,6 +92,14 @@ const userReducer = (state: UserState = initialState, action: actionTypes.UserDi
       }
       newState.error = action.payload;
       break;
+    case actionTypes.REMOVE_FROM_CART_START:
+      newState.error = null;
+      newState.user.cart = newState.user.cart.filter(item => item.product._id !== action.payload.product._id);
+      break;
+    case actionTypes.REMOVE_FROM_CART_FAILED:
+      newState.error = action.payload;
+      newState.user.cart.push(action.item);
+      break;
   }
 
   return newState;

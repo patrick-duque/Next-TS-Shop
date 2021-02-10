@@ -24,6 +24,11 @@ export const ADD_TO_CART_START = 'ADD_TO_CART_START';
 export const ADD_TO_CART_SUCCESS = 'ADD_TO_CART_SUCCESS';
 export const ADD_TO_CART_FAILED = 'ADD_TO_CART_FAILED';
 
+// REMOVE FROM CART
+export const REMOVE_FROM_CART_START = 'REMOVE_FROM_CART_START';
+export const REMOVE_FROM_CART_SUCCESS = 'REMOVE_FROM_CART_SUCCESS';
+export const REMOVE_FROM_CART_FAILED = 'REMOVE_FROM_CART_FAILED';
+
 /* ============================
 							LOGIN
 ============================= */
@@ -96,7 +101,7 @@ export interface EditUserFailed {
 ============================= */
 
 /* ============================
-							LOGIN
+					ADD TO CART
 ============================= */
 export interface AddToCartStart {
   type: typeof ADD_TO_CART_START;
@@ -114,7 +119,28 @@ export interface AddToCartFailed {
   item: CartItem;
 }
 /* ============================
-							LOGIN
+					ADD TO CART
+============================= */
+
+/* ============================
+				REMOVE FROM CART
+============================= */
+export interface RemoveFromCartStart {
+  type: typeof REMOVE_FROM_CART_START;
+  payload: CartItem;
+}
+
+export interface RemoveFromCartSuccess {
+  type: typeof REMOVE_FROM_CART_SUCCESS;
+}
+
+export interface RemoveFromCartFailed {
+  type: typeof REMOVE_FROM_CART_FAILED;
+  payload: string;
+  item: CartItem;
+}
+/* ============================
+				REMOVE FROM CART
 ============================= */
 
 export type LoginDispatchType = LoginFailed | LoginStart | LoginSuccess;
@@ -122,10 +148,12 @@ export type LogoutDispatchType = Logout;
 export type RegisterDispatchType = RegisterStart | RegisterFailed | RegisterSuccess;
 export type EditUserDispatchType = EditUserStart | EditUserSuccess | EditUserFailed;
 export type AddToCartDispatchType = AddToCartStart | AddToCartSuccess | AddToCartFailed;
+export type RemoveFromCartDispatchType = RemoveFromCartStart | RemoveFromCartSuccess | RemoveFromCartFailed;
 
 export type UserDispatchType =
   | LoginDispatchType
   | LogoutDispatchType
   | RegisterDispatchType
   | EditUserDispatchType
-  | AddToCartDispatchType;
+  | AddToCartDispatchType
+  | RemoveFromCartDispatchType;

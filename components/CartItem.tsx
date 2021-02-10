@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Row, Image, Button, Col } from 'react-bootstrap';
 import { AiOutlinePlus, AiOutlineMinus, AiTwotoneDelete } from 'react-icons/ai';
 import Link from 'next/link';
-import { addToCartItem } from '../store/user/userActions';
+import { addToCartItem, removeFromCart } from '../store/user/userActions';
 import { CartItem } from '../store/cart/cartReducer';
 
 interface Props {
@@ -70,12 +70,7 @@ const Item: React.FC<Props> = ({ item }) => {
         </Row>
       </Col>
       <Col lg={2}>
-        <Button
-          block
-          variant='danger'
-          className='text-dark'
-          onClick={() => dispatch(addToCartItem({ ...item, quantity: -item.quantity }))}
-					>
+        <Button block variant='danger' className='text-dark' onClick={() => dispatch(removeFromCart(item))}>
           <AiTwotoneDelete />
         </Button>
       </Col>

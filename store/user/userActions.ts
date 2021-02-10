@@ -15,7 +15,6 @@ export const loginAction = (credentials: { email: string; password: string }) =>
   dispatch({ type: actionTypes.LOGIN_START });
   try {
     const user: User = (await axios.post('/users/login', credentials)).data;
-    console.log(user);
     dispatch({ type: actionTypes.LOGIN_SUCCESS, payload: user });
     localStorage.setItem('token', user.token);
     localStorage.setItem(
@@ -123,10 +122,29 @@ export const addToCartItem = (newProduct: CartItem) => async (
     })).data;
     localStorage.removeItem('cart');
     dispatch({ type: actionTypes.ADD_TO_CART_SUCCESS, payload: 'Added to cart' });
-    localStorage.setItem('cart', JSON.stringify(newCart));
+    localStorage.setItem('cart', JSON.stringify(newCart.cart));
     Router.push('/cart');
   } catch (error) {
     let payload = 'Something went wrong';
     dispatch({ type: actionTypes.ADD_TO_CART_FAILED, payload, item: newProduct });
+  }
+};
+
+// @desc Add to User cart
+// @route GET /api/users/cart/:id
+// @access Private
+export const removeFromCart = (product: CartItem) => async (
+  dispatch: Dispatch<actionTypes.RemoveFromCartDispatchType>
+) => {
+  dispatch({ type: actionTypes.REMOVE_FROM_CART_START, payload: product });
+  try {
+    axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+    const newCart = (await axios.get(`/users/cart/${product.product._id}`)).data;
+    dispatch({ type: actionTypes.REMOVE_FROM_CART_SUCCESS, payload: 'Added to cart' });
+    localStorage.setItem('cart', JSON.stringify(newCart.cart));
+    Router.push('/cart');
+  } catch (error) {
+    let payload = 'Something went wrong';
+    dispatch({ type: actionTypes.REMOVE_FROM_CART_FAILED, payload, item: product });
   }
 };
