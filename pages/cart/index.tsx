@@ -4,6 +4,7 @@ import Head from '../../components/Head';
 import { RootStore } from '../../store/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row, Alert, Container, ListGroup, Button } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 
 import Item from '../../components/CartItem';
 
@@ -16,15 +17,16 @@ const Cart: React.FC<Props> = () => {
   const user = useSelector<RootStore>(state => state.user.user) as User;
   const error = useSelector<RootStore>(state => state.user.error) as boolean;
   const cartItems = user ? user.cart : [];
+  const router = useRouter();
 
-  useEffect(
-    () => {
-      if (!user) {
-        Router.push('/login');
-      }
-    },
-    [ user ]
-  );
+  // useEffect(
+  //   () => {
+  //     if (!user) {
+  //       Router.push('/login');
+  //     }
+  //   },
+  //   [ user ]
+  // );
 
   return (
     <Fragment>
@@ -53,7 +55,10 @@ const Cart: React.FC<Props> = () => {
                 <h2 className='text-right'>
                   ₱{cartItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0).toFixed(2)}
                 </h2>
-                <Button block disabled={cartItems.reduce((acc, item) => acc + item.quantity, 0) === 0}>
+                <Button
+                  block
+                  disabled={cartItems.reduce((acc, item) => acc + item.quantity, 0) === 0}
+                  onClick={() => router.push('/shipping')}>
                   PROCEED TO CHECKOUT
                 </Button>
               </ListGroup.Item>
