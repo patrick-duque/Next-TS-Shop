@@ -8,81 +8,85 @@ import { RootStore } from '../../store';
 import { User } from '../../store/user/userReducer';
 import { editUserAction } from '../../store/user/userActions';
 import Router from 'next/router';
+import { useForm } from 'react-hook-form';
 
 interface Props {}
 
+interface ProfileData {
+	name: string;
+	email: string;
+}
+
 const Profile: React.FC<Props> = () => {
-  const dispatch = useDispatch();
-  const user = useSelector<RootStore>(state => state.user.user) as User;
-  const error = useSelector<RootStore>(state => state.user.error) as string;
-  const loading = useSelector<RootStore>(state => state.user.loading) as boolean;
-  const [ email, setEmail ] = useState('');
-  const [ name, setName ] = useState('');
+	const dispatch = useDispatch();
+	const user = useSelector<RootStore>(state => state.user.user) as User;
+	const error = useSelector<RootStore>(state => state.user.error) as string;
+	const loading = useSelector<RootStore>(state => state.user.loading) as boolean;
+	const { register, handleSubmit, setValue } = useForm<ProfileData>();
 
-  useEffect(
-    () => {
-      if (!user || !user.email || !user.name) {
-        Router.push('/login');
-      } else {
-        setEmail(user.email);
-        setName(user.name);
-      }
-    },
-    [ user ]
-  );
+	useEffect(
+		() => {
+			if (!user || !user.email || !user.name) {
+				Router.push('/login');
+			} else {
+				setValue('email', user.email);
+				setValue('name', user.name);
+			}
+		},
+		[ user ]
+	);
 
-  const handleEditProfile = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newName = name !== user.name ? name : user.name;
-    const newEmail = email !== user.email ? email : user.email;
-    const body = {
-      email: newEmail,
-      name: newName
-    };
-    dispatch(editUserAction(body));
-  };
+	const handleEditProfile = (data: ProfileData) => {
+		const newName = data.name !== '' ? data.name : user.name;
+		const newEmail = data.email !== '' ? data.email : user.email;
+		const body = {
+			email: newEmail,
+			name: newName
+		};
+		dispatch(editUserAction(body));
+	};
 
-  let editForm = <Spinner />;
+	let editForm = <Spinner />;
 
-  if (!loading) {
-    editForm = (
-      <Form onSubmit={handleEditProfile}>
-        {error && <Alert variant='danger'>{error}</Alert>}
-        <Form.Group controlId='email'>
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control type='email' value={email} onChange={e => setEmail(e.target.value)} />
-        </Form.Group>
+	if (!loading) {
+		editForm = (
+			<Form onSubmit={handleSubmit(handleEditProfile)}>
+				{error && <Alert variant='danger'>{error}</Alert>}
+				<Form.Group controlId='email'>
+					<Form.Label>Email Address</Form.Label>
+					<Form.Control type='email' name='email' ref={register({ required: true })} />
+				</Form.Group>
 
-        <Form.Group controlId='Name'>
-          <Form.Label>Name</Form.Label>
-          <Form.Control type='text' value={name} onChange={e => setName(e.target.value)} />
-        </Form.Group>
+				<Form.Group controlId='Name'>
+					<Form.Label>Name</Form.Label>
+					<Form.Control type='text' name='name' ref={register({ required: true })} />
+				</Form.Group>
 
-        <div className='text-right'>
-          <Button type='submit'>EDIT PROFILE</Button>
-        </div>
-      </Form>
-    );
-  }
+				<div className='text-right'>
+					<Button type='submit'>EDIT PROFILE</Button>
+				</div>
+			</Form>
+		);
+	}
 
-  return (
-    <Fragment>
-      <Head title='User Profile' />
-      <Row className='w-100'>
-        <Col sm={12} lg={3}>
-          <Container>
-            <h1>Profile</h1>
-            {editForm}
-          </Container>
-        </Col>
-        <Col>
-          <Container>
-            <h1>My Orders</h1>
-          </Container>
-        </Col>
-      </Row>
-    </Fragment>
-  );
+	return (
+		<Fragment>
+			<Head title='User Profile' />
+			<Row className='w-100'>
+				<Col sm={12} lg={3}>
+					<Container>
+						<h1>Profile</h1>
+						{editForm}
+					</Container>
+				</Col>
+				<Col>
+					<Container>
+						<h1>My Orders</h1>
+					</Container>
+				</Col>
+			</Row>
+		</Fragment>
+	);
 };
 
 export default authCheck(Profile);

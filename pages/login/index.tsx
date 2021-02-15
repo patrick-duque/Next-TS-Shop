@@ -20,9 +20,10 @@ const Login: React.FC<Props> = () => {
 	const dispatch = useDispatch();
 	const loading = useSelector<RootStore>(state => state.user.loading) as boolean;
 	const error = useSelector<RootStore>(state => state.user.error) as string;
-	const { register, handleSubmit, errors } = useForm<LoginData>();
+	const { register, handleSubmit } = useForm<LoginData>();
 
 	const handleLoginSubmit = (data: LoginData) => {
+		console.log(data);
 		dispatch(loginAction({ email: data.email, password: data.password }));
 	};
 
