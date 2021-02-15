@@ -9,6 +9,7 @@ import authCheck from '../../hoc/authCheck';
 import { RootStore } from '../../store';
 import { addAddress } from '../../store/address/addressActions';
 
+
 interface Props {}
 
 const Shipping: React.FC<Props> = () => {
@@ -27,7 +28,7 @@ const Shipping: React.FC<Props> = () => {
 
   return (
     <Fragment>
-      <Head title='Ship' />
+      <Head title='Shipping' />
       <FormContainer>
         <Form onSubmit={handleSubmitShippingForm}>
           <Form.Group controlId='address'>
