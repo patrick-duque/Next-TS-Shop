@@ -20,7 +20,7 @@ const initialState: AddressState = {
   postalCode: null
 };
 
-const cartReducer = (state: AddressState = initialState, action: actionTypes.AddressDispatchType): AddressState => {
+const addressReducer = (state: AddressState = initialState, action: actionTypes.AddressDispatchType): AddressState => {
   const newState = { ...state };
 
   switch (action.type) {
@@ -39,4 +39,4 @@ const cartReducer = (state: AddressState = initialState, action: actionTypes.Add
   return newState;
 };
 
-export default cartReducer;
+export default addressReducer;

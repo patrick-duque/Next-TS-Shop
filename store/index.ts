@@ -3,15 +3,19 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import user from './user/userReducer';
 import cart from './cart/cartReducer';
+import address from './address/addressReducer';
+import { AddressType } from './address/addressActionTypes';
 
-const reducer = combineReducers({ user, cart });
+const reducer = combineReducers({ user, cart, address });
 
 const server = typeof window === 'undefined';
 
 let userFromStorage = null;
 let cartFromStorage = null;
+let addressFromStorage: AddressType = null;
 let localUser = null;
 if (!server) {
+  addressFromStorage = JSON.parse(localStorage.getItem('address'));
   if (+localStorage.getItem('expiry') >= Date.now()) {
     userFromStorage = JSON.parse(localStorage.getItem('user'));
     cartFromStorage = JSON.parse(localStorage.getItem('cart'));
@@ -25,7 +29,13 @@ if (!server) {
 }
 
 const initialState = {
-  user: { user: localUser, loading: false }
+  user: { user: localUser, loading: false },
+  address: {
+    loading: false,
+    address: addressFromStorage.address,
+    city: addressFromStorage.city,
+    postalCode: addressFromStorage.postalCode
+  }
 };
 
 const middleware = [ thunk ];
