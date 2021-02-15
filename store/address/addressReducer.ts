@@ -6,11 +6,8 @@ export interface CartItem {
   product: Product;
 }
 
-export interface AddressState {
-  address: string;
+export interface AddressState extends actionTypes.AddressType {
   loading?: boolean;
-  city: string;
-  postalCode: number;
 }
 
 const initialState: AddressState = {

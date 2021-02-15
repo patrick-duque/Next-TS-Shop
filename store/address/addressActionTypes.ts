@@ -4,7 +4,7 @@ export const REMOVE_ADDRESS = 'REMOVE_ADDRESS';
 export interface AddressType {
   address: string;
   city: string;
-  postalCode: number;
+  postalCode: string;
 }
 
 export interface addAddress {

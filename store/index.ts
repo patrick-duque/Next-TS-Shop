@@ -15,7 +15,7 @@ let cartFromStorage = null;
 let addressFromStorage: AddressType = null;
 let localUser = null;
 if (!server) {
-  addressFromStorage = JSON.parse(localStorage.getItem('address'));
+  addressFromStorage = localStorage.getItem('address') && JSON.parse(localStorage.getItem('address'));
   if (+localStorage.getItem('expiry') >= Date.now()) {
     userFromStorage = JSON.parse(localStorage.getItem('user'));
     cartFromStorage = JSON.parse(localStorage.getItem('cart'));
@@ -30,7 +30,7 @@ if (!server) {
 
 const initialState = {
   user: { user: localUser, loading: false },
-  address: {
+  address: addressFromStorage && {
     loading: false,
     address: addressFromStorage.address,
     city: addressFromStorage.city,
