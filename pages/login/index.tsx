@@ -58,7 +58,11 @@ const Login: React.FC<Props> = () => {
 	);
 
 	if (loading) {
-		form = <Spinner />;
+		form = (
+			<Fragment>
+				<Spinner />
+			</Fragment>
+		);
 	}
 
 	return (
