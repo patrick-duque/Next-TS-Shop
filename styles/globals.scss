@@ -2,32 +2,46 @@
 
 html,
 body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
-    Helvetica Neue, sans-serif;
+	padding: 0;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+		Helvetica Neue, sans-serif;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 main {
-  min-height: 88vh;
-  background-color: $dark;
+	min-height: 88vh;
+	background-color: $dark;
 
-  font-family: 'Nunito', sans-serif;
+	font-family: 'Nunito', sans-serif;
 }
 
 header {
-  font-family: 'Nunito', sans-serif;
+	font-family: 'Nunito', sans-serif;
 }
 
 footer {
-  font-family: 'Nunito', sans-serif;
+	font-family: 'Nunito', sans-serif;
+}
+
+input[type='radio']:checked:after {
+	width: 15px;
+	height: 15px;
+	border-radius: 15px;
+	top: -2px;
+	left: -1px;
+	position: relative;
+	background-color: $primary;
+	content: '';
+	display: inline-block;
+	visibility: visible;
+	border: 2px solid $white;
 }

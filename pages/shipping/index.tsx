@@ -1,7 +1,8 @@
 import { FormEvent, Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CheckoutSteps from '../../components/CheckoutSteps';
+import Router from 'next/router';
 
+import CheckoutSteps from '../../components/CheckoutSteps';
 import { Form, Button } from 'react-bootstrap';
 import Head from '../../components/Head';
 import FormContainer from '../../components/FormContainer';
@@ -23,6 +24,7 @@ const Shipping: React.FC<Props> = () => {
 	const handleSubmitShippingForm = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		dispatch(addAddress({ address, city, postalCode }));
+		Router.push('/payments');
 	};
 
 	return (
@@ -30,6 +32,7 @@ const Shipping: React.FC<Props> = () => {
 			<Head title='Shipping' />
 			<CheckoutSteps step1 />
 			<FormContainer>
+				<h1>Shipping Info</h1>
 				<Form onSubmit={handleSubmitShippingForm}>
 					<Form.Group controlId='address'>
 						<Form.Label>Address</Form.Label>
