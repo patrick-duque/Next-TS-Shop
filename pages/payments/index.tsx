@@ -1,6 +1,7 @@
 import { FormEvent, Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
+import { changePaymentMethod } from '../../store/payment/paymentActions';
 
 import CheckoutSteps from '../../components/CheckoutSteps';
 import { Form, Button, Col } from 'react-bootstrap';
@@ -14,7 +15,8 @@ interface Props {}
 const Payment: React.FC<Props> = () => {
 	const dispatch = useDispatch();
 	const address = useSelector<RootStore>(state => state.address.address);
-	const [ paymendMethod, setPaymentMethod ] = useState<string>('PayPal');
+	const userMethod = useSelector<RootStore>(state => state.payment.paymentMethod) as string;
+	const [ paymentMethod, setPaymentMethod ] = useState<string>(userMethod ? userMethod : 'PayPal');
 
 	useEffect(() => {
 		if (!address) {
@@ -24,6 +26,8 @@ const Payment: React.FC<Props> = () => {
 
 	const handleSubmitPaymentMethod = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		dispatch(changePaymentMethod(paymentMethod));
+		Router.push('/placeorder');
 	};
 
 	return (
@@ -35,7 +39,6 @@ const Payment: React.FC<Props> = () => {
 				<Form onSubmit={handleSubmitPaymentMethod}>
 					<Form.Group controlId='city'>
 						<Form.Label as='legend'>Payment Method</Form.Label>
-						{/* <Form.Control type='text' placeholder='Enter city' value={city} onChange={e => setCity(e.target.value)} /> */}
 					</Form.Group>
 					<Col>
 						<Form.Check
@@ -44,7 +47,7 @@ const Payment: React.FC<Props> = () => {
 							id='PayPal'
 							name='paymentMethod'
 							value='PayPal'
-							checked
+							checked={paymentMethod === 'PayPal'}
 							onChange={e => setPaymentMethod(e.target.value)}
 						/>
 						<Form.Check
@@ -53,6 +56,7 @@ const Payment: React.FC<Props> = () => {
 							id='stripe'
 							name='paymentMethod'
 							value='Stripe'
+							checked={paymentMethod === 'Stripe'}
 							onChange={e => setPaymentMethod(e.target.value)}
 						/>
 					</Col>

@@ -15,13 +15,13 @@ let userFromStorage = null;
 let cartFromStorage = null;
 let addressFromStorage: AddressType = null;
 let localUser = null;
-let paymentMethodFromStorage = 'PayPal';
+let paymentMethodFromStorage = null;
 if (!server) {
 	addressFromStorage = localStorage.getItem('address') && JSON.parse(localStorage.getItem('address'));
 	if (+localStorage.getItem('expiry') >= Date.now()) {
 		userFromStorage = JSON.parse(localStorage.getItem('user'));
 		cartFromStorage = JSON.parse(localStorage.getItem('cart'));
-		paymentMethodFromStorage = localStorage.getItem('paymentMethod');
+		paymentMethodFromStorage = localStorage.getItem('paymentMethod') ? localStorage.getItem('paymentMethod') : 'PayPal';
 		localUser = (userFromStorage || cartFromStorage) && { ...userFromStorage, cart: cartFromStorage };
 	} else {
 		localStorage.removeItem('user');

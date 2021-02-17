@@ -1,12 +1,10 @@
 import * as actionTypes from './paymentActionTypes';
 
 export interface PaymentState {
-	paymentMethod: string;
+	paymentMethod?: string;
 }
 
-const initialState: PaymentState = {
-	paymentMethod: null
-};
+const initialState: PaymentState = {};
 
 const paymentMethodReducer = (
 	state: PaymentState = initialState,

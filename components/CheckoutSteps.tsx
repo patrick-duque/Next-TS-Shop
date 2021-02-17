@@ -31,7 +31,7 @@ const CheckoutSteps: React.FC<Props> = ({ step1, step2, step3 }) => {
 
 			<Nav.Item>
 				{step3 ? (
-					<NavLink href='/shipping/placeorder' title='Place Order' icon={<FiArchive />} />
+					<NavLink href='/placeorder' title='Place Order' icon={<FiArchive />} />
 				) : (
 					<Nav.Link disabled>Place Order</Nav.Link>
 				)}
