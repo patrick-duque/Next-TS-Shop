@@ -5,9 +5,10 @@ import user from './user/userReducer';
 import cart from './cart/cartReducer';
 import address from './address/addressReducer';
 import payment from './payment/paymentReducer';
+import order from './order/orderReducer';
 import { AddressType } from './address/addressActionTypes';
 
-const reducer = combineReducers({ user, cart, address, payment });
+const reducer = combineReducers({ user, cart, address, payment, order });
 
 const server = typeof window === 'undefined';
 
