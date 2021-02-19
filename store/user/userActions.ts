@@ -65,7 +65,6 @@ export const registerAction = (userDetails: { email: string; password: string; n
 		localStorage.setItem('expiry', newUser.expiry.toString());
 		Router.push('/');
 	} catch (error) {
-		console.log(error.message);
 		let payload = 'User already exist.';
 		if ((error.message as string).includes('400')) {
 			payload = 'User already exist.';
