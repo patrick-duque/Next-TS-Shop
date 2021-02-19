@@ -62,7 +62,7 @@ const Payment: React.FC<Props> = () => {
 					</Col>
 
 					<Button className='mt-3' type='submit'>
-						Place Order
+						Add Payment
 					</Button>
 				</Form>
 			</FormContainer>
