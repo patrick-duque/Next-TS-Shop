@@ -29,21 +29,23 @@ export const REMOVE_FROM_CART_START = 'REMOVE_FROM_CART_START';
 export const REMOVE_FROM_CART_SUCCESS = 'REMOVE_FROM_CART_SUCCESS';
 export const REMOVE_FROM_CART_FAILED = 'REMOVE_FROM_CART_FAILED';
 
+export const CLEAR_CART = 'CLEAR_CART';
+
 /* ============================
 							LOGIN
 ============================= */
 export interface LoginFailed {
-  type: typeof LOGIN_FAILED;
-  payload: string;
+	type: typeof LOGIN_FAILED;
+	payload: string;
 }
 
 export interface LoginSuccess {
-  type: typeof LOGIN_SUCCESS;
-  payload: User;
+	type: typeof LOGIN_SUCCESS;
+	payload: User;
 }
 
 export interface LoginStart {
-  type: typeof LOGIN_START;
+	type: typeof LOGIN_START;
 }
 /* ============================
 							LOGIN
@@ -54,7 +56,7 @@ export interface LoginStart {
 ============================= */
 
 export interface Logout {
-  type: typeof LOGOUT;
+	type: typeof LOGOUT;
 }
 /* ============================
 							LOGOUT
@@ -64,17 +66,17 @@ export interface Logout {
 						REGISTER
 ============================= */
 export interface RegisterStart {
-  type: typeof REGISTER_START;
+	type: typeof REGISTER_START;
 }
 
 export interface RegisterSuccess {
-  type: typeof REGISTER_SUCCESS;
-  payload: User;
+	type: typeof REGISTER_SUCCESS;
+	payload: User;
 }
 
 export interface RegisterFailed {
-  type: typeof REGISTER_FAILED;
-  payload: string;
+	type: typeof REGISTER_FAILED;
+	payload: string;
 }
 /* ============================
 						REGISTER
@@ -84,17 +86,17 @@ export interface RegisterFailed {
 					EDIT USER
 ============================= */
 export interface EditUserStart {
-  type: typeof EDIT_USER_START;
+	type: typeof EDIT_USER_START;
 }
 
 export interface EditUserSuccess {
-  type: typeof EDIT_USER_SUCCESS;
-  payload: User;
+	type: typeof EDIT_USER_SUCCESS;
+	payload: User;
 }
 
 export interface EditUserFailed {
-  type: typeof EDIT_USER_FAILED;
-  payload: string;
+	type: typeof EDIT_USER_FAILED;
+	payload: string;
 }
 /* ============================
 					EDIT USER
@@ -104,19 +106,19 @@ export interface EditUserFailed {
 					ADD TO CART
 ============================= */
 export interface AddToCartStart {
-  type: typeof ADD_TO_CART_START;
-  payload: CartItem;
+	type: typeof ADD_TO_CART_START;
+	payload: CartItem;
 }
 
 export interface AddToCartSuccess {
-  type: typeof ADD_TO_CART_SUCCESS;
-  payload: string;
+	type: typeof ADD_TO_CART_SUCCESS;
+	payload: string;
 }
 
 export interface AddToCartFailed {
-  type: typeof ADD_TO_CART_FAILED;
-  payload: string;
-  item: CartItem;
+	type: typeof ADD_TO_CART_FAILED;
+	payload: string;
+	item: CartItem;
 }
 /* ============================
 					ADD TO CART
@@ -126,18 +128,22 @@ export interface AddToCartFailed {
 				REMOVE FROM CART
 ============================= */
 export interface RemoveFromCartStart {
-  type: typeof REMOVE_FROM_CART_START;
-  payload: CartItem;
+	type: typeof REMOVE_FROM_CART_START;
+	payload: CartItem;
 }
 
 export interface RemoveFromCartSuccess {
-  type: typeof REMOVE_FROM_CART_SUCCESS;
+	type: typeof REMOVE_FROM_CART_SUCCESS;
 }
 
 export interface RemoveFromCartFailed {
-  type: typeof REMOVE_FROM_CART_FAILED;
-  payload: string;
-  item: CartItem;
+	type: typeof REMOVE_FROM_CART_FAILED;
+	payload: string;
+	item: CartItem;
+}
+
+export interface ClearCart {
+	type: typeof CLEAR_CART;
 }
 /* ============================
 				REMOVE FROM CART
@@ -151,9 +157,10 @@ export type AddToCartDispatchType = AddToCartStart | AddToCartSuccess | AddToCar
 export type RemoveFromCartDispatchType = RemoveFromCartStart | RemoveFromCartSuccess | RemoveFromCartFailed;
 
 export type UserDispatchType =
-  | LoginDispatchType
-  | LogoutDispatchType
-  | RegisterDispatchType
-  | EditUserDispatchType
-  | AddToCartDispatchType
-  | RemoveFromCartDispatchType;
+	| LoginDispatchType
+	| LogoutDispatchType
+	| RegisterDispatchType
+	| EditUserDispatchType
+	| AddToCartDispatchType
+	| RemoveFromCartDispatchType
+	| ClearCart;

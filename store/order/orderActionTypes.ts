@@ -1,5 +1,6 @@
 import { AddressType } from '../address/addressActionTypes';
 import { CartItem } from '../cart/cartReducer';
+import { ClearCart } from '../user/userActionTypes';
 
 export const ADD_ORDER_START = 'ADD_ORDER_START';
 export const ADD_ORDER_SUCCESS = 'ADD_ORDER_SUCCESS';
@@ -27,4 +28,5 @@ export interface AddOrderFailed {
 	payload: string;
 }
 
-export type OrderDispatchType = AddOrderFailed | AddOrderStart | AddOrderSuccess;
+export type CreateOrderDispatchType = AddOrderFailed | AddOrderStart | AddOrderSuccess | ClearCart;
+export type OrderDispatchType = CreateOrderDispatchType;

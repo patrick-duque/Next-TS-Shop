@@ -3,7 +3,6 @@ import axios from '../../helpers/api/axios';
 import { Dispatch } from 'redux';
 import { User } from './userReducer';
 import Router from 'next/router';
-import Product from '../../models/product';
 import { CartItem } from '../cart/cartReducer';
 
 // @desc Login User
