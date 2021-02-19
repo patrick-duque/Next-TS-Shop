@@ -1,4 +1,4 @@
-import { Fragment, useState, FormEvent } from 'react';
+import { Fragment, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row, Container, Button, Form, Alert } from 'react-bootstrap';
 import Head from '../../components/Head';

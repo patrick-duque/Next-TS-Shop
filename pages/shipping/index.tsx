@@ -1,6 +1,7 @@
-import { FormEvent, Fragment, useState } from 'react';
+import { useEffect, Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
+import { useForm } from 'react-hook-form';
 
 import CheckoutSteps from '../../components/CheckoutSteps';
 import { Form, Button } from 'react-bootstrap';
@@ -12,17 +13,29 @@ import { addAddress } from '../../store/address/addressActions';
 
 interface Props {}
 
+interface ShippingData {
+	address: string;
+	city: string;
+	postalCode: string;
+}
+
 const Shipping: React.FC<Props> = () => {
 	const dispatch = useDispatch();
 	const savedAddress = useSelector<RootStore>(state => state.address.address) as string;
 	const savedCity = useSelector<RootStore>(state => state.address.city) as string;
 	const savedPostalCode = useSelector<RootStore>(state => state.address.postalCode) as string;
-	const [ address, setAddress ] = useState<string>(savedAddress ? savedAddress : '');
-	const [ city, setCity ] = useState<string>(savedCity ? savedCity : '');
-	const [ postalCode, setPostalCode ] = useState<string>(savedPostalCode ? savedPostalCode : '');
+	const { register, handleSubmit, setValue } = useForm<ShippingData>();
 
-	const handleSubmitShippingForm = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	useEffect(() => {
+		if (savedAddress && savedCity && savedPostalCode) {
+			setValue('address', savedAddress);
+			setValue('city', savedCity);
+			setValue('postalCode', savedPostalCode);
+		}
+	}, []);
+
+	const handleSubmitShippingForm = (data: ShippingData) => {
+		const { address, city, postalCode } = data;
 		dispatch(addAddress({ address, city, postalCode }));
 		Router.push('/payments');
 	};
@@ -33,20 +46,15 @@ const Shipping: React.FC<Props> = () => {
 			<CheckoutSteps step1 />
 			<FormContainer>
 				<h1>Shipping Info</h1>
-				<Form onSubmit={handleSubmitShippingForm}>
+				<Form onSubmit={handleSubmit(handleSubmitShippingForm)}>
 					<Form.Group controlId='address'>
 						<Form.Label>Address</Form.Label>
-						<Form.Control
-							type='text'
-							placeholder='Enter address'
-							value={address}
-							onChange={e => setAddress(e.target.value)}
-						/>
+						<Form.Control type='text' placeholder='Enter address' name='address' ref={register({ required: true })} />
 					</Form.Group>
 
 					<Form.Group controlId='city'>
 						<Form.Label>City</Form.Label>
-						<Form.Control type='text' placeholder='Enter city' value={city} onChange={e => setCity(e.target.value)} />
+						<Form.Control type='text' placeholder='Enter city' name='city' ref={register({ required: true })} />
 					</Form.Group>
 
 					<Form.Group controlId='postal-code'>
@@ -54,12 +62,12 @@ const Shipping: React.FC<Props> = () => {
 						<Form.Control
 							type='number'
 							placeholder='Enter postal code'
-							value={postalCode}
-							onChange={e => setPostalCode(e.target.value)}
+							name='postalCode'
+							ref={register({ required: true })}
 						/>
 					</Form.Group>
 
-					<Button type='submit'>Select Payment Method</Button>
+					<Button type='submit'>Add Address</Button>
 				</Form>
 			</FormContainer>
 		</Fragment>
