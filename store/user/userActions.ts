@@ -81,8 +81,12 @@ export const editUserAction = (body: { name?: string; email?: string }) => async
 ) => {
 	dispatch({ type: actionTypes.EDIT_USER_START });
 	try {
-		axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-		const editedUser: User = (await axios.put(`/users/editUser`, body)).data;
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		};
+		const editedUser: User = (await axios.put(`/users/editUser`, body, config)).data;
 		dispatch({ type: actionTypes.EDIT_USER_SUCCESS, payload: editedUser });
 		localStorage.removeItem('user');
 		localStorage.removeItem('token');
@@ -116,11 +120,19 @@ export const addToCartItem = (newProduct: CartItem) => async (
 ) => {
 	dispatch({ type: actionTypes.ADD_TO_CART_START, payload: newProduct });
 	try {
-		axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-		const newCart = (await axios.post('/users/cart', {
-			product: newProduct.product._id,
-			quantity: newProduct.quantity
-		})).data;
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		};
+		const newCart = (await axios.post(
+			'/users/cart',
+			{
+				product: newProduct.product._id,
+				quantity: newProduct.quantity
+			},
+			config
+		)).data;
 		localStorage.removeItem('cart');
 		dispatch({ type: actionTypes.ADD_TO_CART_SUCCESS, payload: 'Added to cart' });
 		localStorage.setItem('cart', JSON.stringify(newCart.cart));
@@ -139,8 +151,12 @@ export const removeFromCart = (product: CartItem) => async (
 ) => {
 	dispatch({ type: actionTypes.REMOVE_FROM_CART_START, payload: product });
 	try {
-		axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-		const newCart = (await axios.get(`/users/cart/${product.product._id}`)).data;
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		};
+		const newCart = (await axios.get(`/users/cart/${product.product._id}`, config)).data;
 		dispatch({ type: actionTypes.REMOVE_FROM_CART_SUCCESS, payload: 'Added to cart' });
 		localStorage.setItem('cart', JSON.stringify(newCart.cart));
 		Router.push('/cart');

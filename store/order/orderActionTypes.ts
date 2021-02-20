@@ -6,6 +6,10 @@ export const ADD_ORDER_START = 'ADD_ORDER_START';
 export const ADD_ORDER_SUCCESS = 'ADD_ORDER_SUCCESS';
 export const ADD_ORDER_FAILED = 'ADD_ORDER_FAILED';
 
+export const GET_ORDER_START = 'GET_ORDER_START';
+export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
+export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
+
 export interface OrderType {
 	orderItems: CartItem[];
 	shippingAddress: AddressType;
@@ -14,19 +18,34 @@ export interface OrderType {
 	totalPrice: number;
 }
 
-export interface AddOrderStart {
+interface AddOrderStart {
 	type: typeof ADD_ORDER_START;
 }
 
-export interface AddOrderSuccess {
+interface AddOrderSuccess {
 	type: typeof ADD_ORDER_SUCCESS;
 	payload: OrderType;
 }
 
-export interface AddOrderFailed {
+interface AddOrderFailed {
 	type: typeof ADD_ORDER_FAILED;
 	payload: string;
 }
 
+interface GetOrderStart {
+	type: typeof GET_ORDER_START;
+}
+
+interface GetOrderSuccess {
+	type: typeof GET_ORDER_SUCCESS;
+	payload: OrderType[];
+}
+
+interface GetOrderFailed {
+	type: typeof GET_ORDER_FAILED;
+	payload: string;
+}
+
 export type CreateOrderDispatchType = AddOrderFailed | AddOrderStart | AddOrderSuccess | ClearCart;
-export type OrderDispatchType = CreateOrderDispatchType;
+export type GetOrderDispatchType = GetOrderStart | GetOrderSuccess | GetOrderFailed;
+export type OrderDispatchType = CreateOrderDispatchType | GetOrderDispatchType;
