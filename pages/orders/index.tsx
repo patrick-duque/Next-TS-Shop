@@ -26,20 +26,33 @@ const Order: React.FC<Props> = () => {
 			{orders.map(order => (
 				<ListGroup key={order._id} className='mt-2'>
 					<ListGroup.Item>
-						{order.isPaid ? <Alert variant='success'>Paid</Alert> : <Alert variant='danger'>Not Paid</Alert>}
-						<p>
-							<strong>Delivery Address:</strong> {order.shippingAddress.address}, {order.shippingAddress.city},{' '}
-							{order.shippingAddress.postalCode}
-						</p>
-						<p>
-							<strong>Payment Method:</strong> {order.paymentMethod}
-						</p>
-						<p>
-							<strong>Paid:</strong> {order.isPaid ? 'Yes' : 'No'}
-						</p>
-						<p>
-							<strong>Delivered:</strong> {order.isDelivered ? 'Yes' : 'No'}
-						</p>
+						<Row>
+							<Col md={8}>
+								<p>
+									<strong>Delivery Address:</strong> {order.shippingAddress.address}, {order.shippingAddress.city},{' '}
+									{order.shippingAddress.postalCode}
+								</p>
+							</Col>
+							<Col>
+								{order.isDelivered ? (
+									<Alert variant='success'>Delivered</Alert>
+								) : (
+									<Alert variant='danger'>Not Delivered</Alert>
+								)}
+							</Col>
+						</Row>
+						<Row>
+							<Col>
+								<p>
+									<strong>Payment Method:</strong> {order.paymentMethod}
+								</p>
+							</Col>
+							<Col />
+							<Col>
+								{order.isPaid ? <Alert variant='success'>Paid</Alert> : <Alert variant='danger'>Not Paid</Alert>}
+							</Col>
+						</Row>
+
 						<ListGroup>
 							{order.orderItems.map(item => <OrderItem key={item.product._id} item={item} />)}
 							<ListGroup.Item>
