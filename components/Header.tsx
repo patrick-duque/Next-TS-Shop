@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FiShoppingCart, FiUser, FiUserPlus, FiUserX } from 'react-icons/fi';
+import { FiShoppingCart, FiUser, FiUserPlus, FiUserX, FiPackage } from 'react-icons/fi';
 import { Navbar, Nav, Image, Modal, Button, Col, Container, NavDropdown } from 'react-bootstrap';
 import NavLink from './NavLink';
 import Link from 'next/link';
@@ -9,91 +9,92 @@ import { logoutAction } from '../store/user/userActions';
 import { User } from '../store/user/userReducer';
 
 const HomeButton = () => {
-  return (
-    <Link href='/' passHref>
-      <Navbar.Brand>
-        <Image src='/images/icons.png' /> Pro-Shop
-      </Navbar.Brand>
-    </Link>
-  );
+	return (
+		<Link href='/' passHref>
+			<Navbar.Brand>
+				<Image src='/images/icons.png' /> Pro-Shop
+			</Navbar.Brand>
+		</Link>
+	);
 };
 
 const Header: React.FC = () => {
-  const user = useSelector<RootStore>(state => state.user.user) as User;
-  const [ showLogoutModal, setShowLogoutModal ] = useState<boolean>(false);
+	const user = useSelector<RootStore>(state => state.user.user) as User;
+	const [ showLogoutModal, setShowLogoutModal ] = useState<boolean>(false);
 
-  const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    dispatch(logoutAction());
-    setShowLogoutModal(false);
-  };
+	const handleLogout = () => {
+		dispatch(logoutAction());
+		setShowLogoutModal(false);
+	};
 
-  const handleShowModal = () => {
-    setShowLogoutModal(true);
-  };
+	const handleShowModal = () => {
+		setShowLogoutModal(true);
+	};
 
-  let link = (
-    <Fragment>
-      <NavLink href='/login' icon={<FiUser />} title='Login' />
-      <NavLink href='/register' icon={<FiUserPlus />} title='Register' />
-    </Fragment>
-  );
+	let link = (
+		<Fragment>
+			<NavLink href='/login' icon={<FiUser />} title='Login' />
+			<NavLink href='/register' icon={<FiUserPlus />} title='Register' />
+		</Fragment>
+	);
 
-  if (user) {
-    link = (
-      <Fragment>
-        <Nav.Item>
-          <NavDropdown title={user.name} id='username'>
-            <NavDropdown.Item>
-              <Link href='/profile'>
-                <Container>
-                  <Col>
-                    <FiUser />
-                    <span className='mx-2'>Profile</span>
-                  </Col>
-                </Container>
-              </Link>
-            </NavDropdown.Item>
-            <NavDropdown.Item>
-              <Container onClick={handleShowModal}>
-                <Col>
-                  <FiUserX />
-                  <span className='mx-2'>Logout</span>
-                </Col>
-              </Container>
-            </NavDropdown.Item>
-          </NavDropdown>
-        </Nav.Item>
-        <NavLink href='/cart' icon={<FiShoppingCart />} title='Cart' />
-      </Fragment>
-    );
-  }
+	if (user) {
+		link = (
+			<Fragment>
+				<Nav.Item>
+					<NavDropdown title={user.name} id='username'>
+						<NavDropdown.Item>
+							<Link href='/profile'>
+								<Container>
+									<Col>
+										<FiUser />
+										<span className='mx-2'>Profile</span>
+									</Col>
+								</Container>
+							</Link>
+						</NavDropdown.Item>
+						<NavDropdown.Item>
+							<Container onClick={handleShowModal}>
+								<Col>
+									<FiUserX />
+									<span className='mx-2'>Logout</span>
+								</Col>
+							</Container>
+						</NavDropdown.Item>
+					</NavDropdown>
+				</Nav.Item>
+				<NavLink href='/cart' icon={<FiShoppingCart />} title='Cart' />
+				<NavLink href='/orders' icon={<FiPackage />} title='Orders' />
+			</Fragment>
+		);
+	}
 
-  return (
-    <header>
-      <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
-        <HomeButton />
-        <Navbar.Toggle aria-controls='basic-navbar-nav' />
-        <Navbar.Collapse id='basic-navbar-nav'>
-          <Nav className='ml-auto'>{link}</Nav>
-        </Navbar.Collapse>
-      </Navbar>
-      <Modal show={showLogoutModal} onHide={() => setShowLogoutModal(false)}>
-        <Modal.Body>
-          <Modal.Title>Are you sure you want to logout?</Modal.Title>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='danger' onClick={() => setShowLogoutModal(false)}>
-            No
-          </Button>
-          <Button variant='success' onClick={handleLogout}>
-            Yes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </header>
-  );
+	return (
+		<header>
+			<Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
+				<HomeButton />
+				<Navbar.Toggle aria-controls='basic-navbar-nav' />
+				<Navbar.Collapse id='basic-navbar-nav'>
+					<Nav className='ml-auto'>{link}</Nav>
+				</Navbar.Collapse>
+			</Navbar>
+			<Modal show={showLogoutModal} onHide={() => setShowLogoutModal(false)}>
+				<Modal.Body>
+					<Modal.Title>Are you sure you want to logout?</Modal.Title>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant='danger' onClick={() => setShowLogoutModal(false)}>
+						No
+					</Button>
+					<Button variant='success' onClick={handleLogout}>
+						Yes
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		</header>
+	);
 };
 
 export default Header;

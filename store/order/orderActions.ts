@@ -20,7 +20,7 @@ export const addOrder = (order: actionTypes.OrderType) => async (
 		const newOrder = (await axios.post(`/orders/`, order, config)).data;
 		dispatch({ type: actionTypes.ADD_ORDER_SUCCESS, payload: newOrder });
 		dispatch({ type: CLEAR_CART });
-		localStorage.removeItem('cart');
+		localStorage.setItem('cart', JSON.stringify([]));
 		Router.push('/');
 	} catch (error) {
 		let payload = 'Something went wrong';

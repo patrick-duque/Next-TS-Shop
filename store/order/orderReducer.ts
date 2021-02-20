@@ -1,7 +1,7 @@
 import * as actionTypes from './orderActionTypes';
 
 export interface OrderState {
-	orders: actionTypes.OrderType[];
+	orders: actionTypes.OrdersFromDB[];
 	loading: boolean;
 	error: string;
 }

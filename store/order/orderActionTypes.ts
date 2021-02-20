@@ -18,6 +18,14 @@ export interface OrderType {
 	totalPrice: number;
 }
 
+export interface OrdersFromDB extends OrderType {
+	createdAt: string;
+	isDelivered: boolean;
+	isPaid: boolean;
+	updatedAt: string;
+	_id: string;
+}
+
 interface AddOrderStart {
 	type: typeof ADD_ORDER_START;
 }
@@ -38,7 +46,7 @@ interface GetOrderStart {
 
 interface GetOrderSuccess {
 	type: typeof GET_ORDER_SUCCESS;
-	payload: OrderType[];
+	payload: OrdersFromDB[];
 }
 
 interface GetOrderFailed {

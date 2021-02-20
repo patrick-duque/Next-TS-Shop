@@ -6,6 +6,7 @@ import CheckoutSteps from '../../components/CheckoutSteps';
 import { Button, Col, Container, ListGroup, Image, Card, Row, Modal, Alert } from 'react-bootstrap';
 import Head from '../../components/Head';
 import Spinner from '../../components/Spinner';
+import OrderItem from '../../components/OrderItem';
 import authCheck from '../../hoc/authCheck';
 import { RootStore } from '../../store';
 
@@ -69,21 +70,7 @@ const PlaceOrder: React.FC<Props> = () => {
 							<ListGroup.Item>
 								<h2>Order {cart.length > 1 ? 'Items' : 'Item'}</h2>
 								<ListGroup variant='flush'>
-									{cart.map(item => (
-										<ListGroup.Item key={item.product._id}>
-											<Row>
-												<Col md={2} lg={1}>
-													<Image src={item.product.image} alt={item.product.name} fluid rounded />
-												</Col>
-												<Col>
-													<Link href={`/products/${item.product._id}`}>{item.product.name}</Link>
-												</Col>
-												<Col md={4}>
-													{item.quantity} x &#8369;{item.product.price} = &#8369;{+item.quantity * +item.product.price}
-												</Col>
-											</Row>
-										</ListGroup.Item>
-									))}
+									{cart.map(item => <OrderItem key={item.product._id} item={item} />)}
 								</ListGroup>
 							</ListGroup.Item>
 						</ListGroup>
