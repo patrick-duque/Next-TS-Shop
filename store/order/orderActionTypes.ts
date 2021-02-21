@@ -12,13 +12,6 @@ export const GET_ORDER_START = 'GET_ORDER_START';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 
-// UPDATE PAY ORDER
-export const PAY_ORDER_START = 'PAY_ORDER_START';
-export const PAY_ORDER_SUCCESS = 'PAY_ORDER_SUCCESS';
-export const PAY_ORDER_FAILED = 'PAY_ORDER_FAILED';
-
-export const PAY_ORDER_RESET = 'PAY_ORDER_RESET';
-
 export interface OrderType {
 	orderItems: CartItem[];
 	shippingAddress: AddressType;
@@ -63,21 +56,6 @@ interface GetOrderFailed {
 	payload: string;
 }
 
-interface PayOrderStart {
-	type: typeof PAY_ORDER_START;
-}
-
-interface PayOrderSuccess {
-	type: typeof PAY_ORDER_SUCCESS;
-	payload: OrdersFromDB[];
-}
-
-interface PayOrderFailed {
-	type: typeof PAY_ORDER_FAILED;
-	payload: string;
-}
-
 export type CreateOrderDispatchType = AddOrderFailed | AddOrderStart | AddOrderSuccess | ClearCart;
 export type GetOrderDispatchType = GetOrderStart | GetOrderSuccess | GetOrderFailed;
-export type PayOrderDispatchType = PayOrderStart | PayOrderSuccess | PayOrderFailed;
-export type OrderDispatchType = CreateOrderDispatchType | GetOrderDispatchType | PayOrderDispatchType;
+export type OrderDispatchType = CreateOrderDispatchType | GetOrderDispatchType;
