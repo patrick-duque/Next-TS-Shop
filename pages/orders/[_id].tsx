@@ -65,8 +65,6 @@ const PayOrder: React.FC<Props> = () => {
 		);
 	}
 
-	console.log(order);
-
 	return (
 		<Fragment>
 			<Head title='Pay Order' />
