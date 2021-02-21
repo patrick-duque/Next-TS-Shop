@@ -24,8 +24,9 @@ export const payOrder = (id: string, paymentResult: PaymentResult) => async (
 				Authorization: `Bearer ${localStorage.getItem('token')}`
 			}
 		};
-		const pay = (await axios.put(`/orders/${id}/pay`, paymentResult, config)).data;
+		await axios.put(`/orders/${id}/pay`, paymentResult, config);
 		dispatch({ type: actionTypes.PAY_ORDER_SUCCESS, payload: true });
+		Router.push('/orders');
 	} catch (error) {
 		let payload = 'Something went wrong';
 		dispatch({ type: actionTypes.PAY_ORDER_FAILED, payload });

@@ -23,7 +23,6 @@ const Login: React.FC<Props> = () => {
 	const { register, handleSubmit } = useForm<LoginData>();
 
 	const handleLoginSubmit = (data: LoginData) => {
-		console.log(data);
 		dispatch(loginAction({ email: data.email, password: data.password }));
 	};
 

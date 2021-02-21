@@ -52,11 +52,9 @@ const Order: React.FC<Props> = () => {
 									</p>
 								</Col>
 								<Col>
-									{!order.isPaid && (
-										<Button variant='success' block onClick={() => Router.push(`/orders/${order._id}`)}>
-											Pay now
-										</Button>
-									)}
+									<Button variant='dark' block onClick={() => Router.push(`/orders/${order._id}`)}>
+										{order.isPaid ? 'Check order' : 'Pay now'}
+									</Button>
 								</Col>
 								<Col>
 									{order.isPaid ? <Alert variant='success'>Paid</Alert> : <Alert variant='danger'>Not Paid</Alert>}

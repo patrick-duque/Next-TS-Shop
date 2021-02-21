@@ -1,16 +1,18 @@
 import { Fragment, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import dateFormat from 'dateformat';
 import { useRouter } from 'next/router';
 import { PayPalButton } from 'react-paypal-button-v2';
 import axios from '../../helpers/api/axios';
-import { Col, Container, ListGroup, Card, Row } from 'react-bootstrap';
+import { Col, Container, ListGroup, Card, Row, Alert, Modal } from 'react-bootstrap';
 import Head from '../../components/Head';
 import Spinner from '../../components/Spinner';
 import OrderItem from '../../components/OrderItem';
 import authCheck from '../../hoc/authCheck';
 import { RootStore } from '../../store';
-import { CartItem } from '../../store/cart/cartReducer';
 import { OrdersFromDB } from '../../store/order/orderActionTypes';
+import { PAY_ORDER_RESET } from '../../store/pay/payActionTypes';
+import { payOrder } from '../../store/pay/payActions';
 
 interface Props {}
 
@@ -21,10 +23,9 @@ const PayOrder: React.FC<Props> = () => {
 	const order = useSelector<RootStore>(
 		state => state.order.orders.filter(order => order._id === router.query._id.toString())[0]
 	) as OrdersFromDB;
-	const cart = useSelector<RootStore>(state => state.user.user.cart) as CartItem[];
-
-	const itemsPrice = cart.reduce((acc, curr) => +curr.product.price * curr.quantity + acc, 0);
-	const shippingPrice = itemsPrice > 5000 ? 0 : 200;
+	const success = useSelector<RootStore>(state => state.pay.success) as boolean;
+	const payLoading = useSelector<RootStore>(state => state.pay.loading) as boolean;
+	const payError = useSelector<RootStore>(state => state.pay.error) as string;
 
 	useEffect(() => {
 		const getClientId = async () => {
@@ -32,50 +33,80 @@ const PayOrder: React.FC<Props> = () => {
 			setClientId(clientId);
 		};
 
+		if (!order || success) {
+			dispatch({ type: PAY_ORDER_RESET });
+		}
+
 		getClientId();
 	}, []);
 
+	const handleSuccessPay = details => {
+		const { status, id, update_time } = details;
+		console.log(details);
+		dispatch(
+			payOrder(order._id, {
+				email_address: details.payer.email_address,
+				id,
+				status,
+				update_time
+			})
+		);
+	};
+
 	let paypalButton = <Spinner />;
 	if (clientId !== '') {
-		paypalButton = (
+		paypalButton = order.isPaid ? null : (
 			<PayPalButton
-				amount={order.totalPrice}
+				amount={order.totalPrice + order.shippingPrice}
 				shippingPreference='NO_SHIPPING'
-				onSuccess={(details, data) => {
-					console.log({ details });
-					console.log({ data });
-				}}
-				options={{ clientId }}
+				onSuccess={handleSuccessPay}
+				options={{ clientId, currency: 'PHP' }}
 			/>
 		);
 	}
 
+	console.log(order);
+
 	return (
 		<Fragment>
-			<Head title='Place Order' />
+			<Head title='Pay Order' />
 			<Container>
 				<h1>Pay Order</h1>
+				{payError && <Alert variant='danger'>{payError}</Alert>}
+				<Modal show={payLoading}>
+					<Container style={{ height: '40vh' }} className='d-flex align-items-center justify-content-center'>
+						<Spinner />
+					</Container>
+				</Modal>
 				<Row>
 					<Col md={8}>
-						<ListGroup variant='flush'>
+						<ListGroup>
 							<ListGroup.Item>
 								<h2>Shipping</h2>
 								<p>
 									<strong>Address:</strong> {order.shippingAddress.address}, {order.shippingAddress.city},
 									{order.shippingAddress.postalCode}
 								</p>
+								{order.isDelivered ? (
+									<Alert variant='success'>Delivered.</Alert>
+								) : (
+									<Alert variant='danger'>Not Delivered.</Alert>
+								)}
 							</ListGroup.Item>
 							<ListGroup.Item>
 								<h2>Payment</h2>
 								<p>
 									<strong>Method:</strong> {order.paymentMethod}
 								</p>
+								{order.isPaid ? (
+									<Alert variant='success'>Paid last {dateFormat(order.updatedAt, 'mmm dd, yyyy')}.</Alert>
+								) : (
+									<Alert variant='danger'>Not Paid.</Alert>
+								)}
 							</ListGroup.Item>
 							<ListGroup.Item>
-								<h2>Order {cart.length > 1 ? 'Items' : 'Item'}</h2>
-								<ListGroup variant='flush'>
-									{order.orderItems.map(item => <OrderItem key={item.product._id} item={item} />)}
-								</ListGroup>
+								<h2>Order {order.orderItems.length > 1 ? 'Items' : 'Item'}</h2>
+								<ListGroup>{order.orderItems.map(item => <OrderItem key={item.product._id} item={item} />)}</ListGroup>
 							</ListGroup.Item>
 						</ListGroup>
 					</Col>
@@ -94,7 +125,7 @@ const PayOrder: React.FC<Props> = () => {
 								<ListGroup.Item>
 									<Row>
 										<Col>Shipping</Col>
-										<Col>&#8369;{shippingPrice.toFixed(2)}</Col>
+										<Col>&#8369;{order.shippingPrice.toFixed(2)}</Col>
 									</Row>
 								</ListGroup.Item>
 								<ListGroup.Item>

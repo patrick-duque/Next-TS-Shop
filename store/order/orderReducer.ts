@@ -1,27 +1,15 @@
 import * as actionTypes from './orderActionTypes';
 
-interface Pay {
-	success: boolean;
-	loading: boolean;
-	error: string;
-}
-
 export interface OrderState {
 	orders: actionTypes.OrdersFromDB[];
 	loading: boolean;
 	error: string;
-	pay: Pay;
 }
 
 const initialState: OrderState = {
 	orders: [],
 	loading: false,
-	error: null,
-	pay: {
-		loading: false,
-		error: null,
-		success: false
-	}
+	error: null
 };
 
 const orderReducer = (state = initialState, action: actionTypes.OrderDispatchType): OrderState => {
