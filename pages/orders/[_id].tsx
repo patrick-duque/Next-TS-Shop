@@ -13,6 +13,7 @@ import { RootStore } from '../../store';
 import { OrdersFromDB } from '../../store/order/orderActionTypes';
 import { PAY_ORDER_RESET } from '../../store/pay/payActionTypes';
 import { payOrder } from '../../store/pay/payActions';
+import { PayState } from '../../store/pay/payReducer';
 
 interface Props {}
 
@@ -23,9 +24,8 @@ const PayOrder: React.FC<Props> = () => {
 	const order = useSelector<RootStore>(
 		state => state.order.orders.filter(order => order._id === router.query._id.toString())[0]
 	) as OrdersFromDB;
-	const success = useSelector<RootStore>(state => state.pay.success) as boolean;
-	const payLoading = useSelector<RootStore>(state => state.pay.loading) as boolean;
-	const payError = useSelector<RootStore>(state => state.pay.error) as string;
+	const state = useSelector<RootStore>(state => state.pay) as PayState;
+	const { success, loading, error } = state;
 
 	useEffect(() => {
 		const getClientId = async () => {
@@ -70,8 +70,8 @@ const PayOrder: React.FC<Props> = () => {
 			<Head title='Pay Order' />
 			<Container>
 				<h1>Pay Order</h1>
-				{payError && <Alert variant='danger'>{payError}</Alert>}
-				<Modal show={payLoading}>
+				{error && <Alert variant='danger'>{error}</Alert>}
+				<Modal show={loading}>
 					<Container style={{ height: '40vh' }} className='d-flex align-items-center justify-content-center'>
 						<Spinner />
 					</Container>

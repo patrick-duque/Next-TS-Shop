@@ -9,13 +9,13 @@ import { useRouter } from 'next/router';
 import Item from '../../components/CartItem';
 
 import authCheck from '../../hoc/authCheck';
-import { User } from '../../store/user/userReducer';
+import { UserState } from '../../store/user/userReducer';
 
 interface Props {}
 
 const Cart: React.FC<Props> = () => {
-	const user = useSelector<RootStore>(state => state.user.user) as User;
-	const error = useSelector<RootStore>(state => state.user.error) as boolean;
+	const state = useSelector<RootStore>(state => state.user) as UserState;
+	const { user, error } = state;
 	const cartItems = user ? user.cart : [];
 	const router = useRouter();
 

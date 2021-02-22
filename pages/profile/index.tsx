@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Head from '../../components/Head';
 import Spinner from '../../components/Spinner';
 import { RootStore } from '../../store';
-import { User } from '../../store/user/userReducer';
+import { UserState } from '../../store/user/userReducer';
 import { editUserAction } from '../../store/user/userActions';
 import Router from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -19,9 +19,8 @@ interface ProfileData {
 
 const Profile: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const user = useSelector<RootStore>(state => state.user.user) as User;
-	const error = useSelector<RootStore>(state => state.user.error) as string;
-	const loading = useSelector<RootStore>(state => state.user.loading) as boolean;
+	const state = useSelector<RootStore>(state => state.user) as UserState;
+	const { loading, error, user } = state;
 	const { register, handleSubmit, setValue } = useForm<ProfileData>();
 
 	useEffect(

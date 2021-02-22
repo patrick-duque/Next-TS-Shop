@@ -10,6 +10,7 @@ import FormContainer from '../../components/FormContainer';
 import authCheck from '../../hoc/authCheck';
 import { RootStore } from '../../store';
 import { addAddress } from '../../store/address/addressActions';
+import { AddressState } from '../../store/address/addressReducer';
 
 interface Props {}
 
@@ -21,22 +22,20 @@ interface ShippingData {
 
 const Shipping: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const savedAddress = useSelector<RootStore>(state => state.address.address) as string;
-	const savedCity = useSelector<RootStore>(state => state.address.city) as string;
-	const savedPostalCode = useSelector<RootStore>(state => state.address.postalCode) as string;
+	const state = useSelector<RootStore>(state => state.address) as AddressState;
+	const { address, city, postalCode } = state;
 	const { register, handleSubmit, setValue } = useForm<ShippingData>();
 
 	useEffect(() => {
-		if (savedAddress && savedCity && savedPostalCode) {
-			setValue('address', savedAddress);
-			setValue('city', savedCity);
-			setValue('postalCode', savedPostalCode);
+		if (address && city && postalCode) {
+			setValue('address', address);
+			setValue('city', city);
+			setValue('postalCode', postalCode);
 		}
 	}, []);
 
 	const handleSubmitShippingForm = (data: ShippingData) => {
-		const { address, city, postalCode } = data;
-		dispatch(addAddress({ address, city, postalCode }));
+		dispatch(addAddress(data));
 		Router.push('/payments');
 	};
 

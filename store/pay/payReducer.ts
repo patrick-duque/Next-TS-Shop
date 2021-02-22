@@ -1,6 +1,6 @@
 import * as actionTypes from './payActionTypes';
 
-interface PayState {
+export interface PayState {
 	success: boolean;
 	loading: boolean;
 	error: string;

@@ -9,14 +9,14 @@ import authCheck from '../../hoc/authCheck';
 import { RootStore } from '../../store';
 import { OrdersFromDB } from '../../store/order/orderActionTypes';
 import { getOrder } from '../../store/order/orderActions';
+import { OrderState } from '../../store/order/orderReducer';
 
 interface Props {}
 
 const Order: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const error = useSelector<RootStore>(state => state.order.error) as string;
-	const loading = useSelector<RootStore>(state => state.order.loading) as boolean;
-	const orders = useSelector<RootStore>(state => state.order.orders) as OrdersFromDB[];
+	const state = useSelector<RootStore>(state => state.order) as OrderState;
+	const { error, loading, orders } = state;
 
 	useEffect(() => {
 		dispatch(getOrder());

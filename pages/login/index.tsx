@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { loginAction } from '../../store/user/userActions';
 import { RootStore } from '../../store/index';
 import { useForm } from 'react-hook-form';
+import { UserState } from '../../store/user/userReducer';
 
 interface Props {}
 
@@ -18,8 +19,8 @@ interface LoginData {
 
 const Login: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const loading = useSelector<RootStore>(state => state.user.loading) as boolean;
-	const error = useSelector<RootStore>(state => state.user.error) as string;
+	const state = useSelector<RootStore>(state => state.user) as UserState;
+	const { loading, error } = state;
 	const { register, handleSubmit } = useForm<LoginData>();
 
 	const handleLoginSubmit = (data: LoginData) => {

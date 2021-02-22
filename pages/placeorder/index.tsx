@@ -12,18 +12,19 @@ import { RootStore } from '../../store';
 
 import { addOrder } from '../../store/order/orderActions';
 import { CartItem } from '../../store/cart/cartReducer';
+import { AddressState } from '../../store/address/addressReducer';
+import { OrderState } from '../../store/order/orderReducer';
 
 interface Props {}
 
 const PlaceOrder: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const address = useSelector<RootStore>(state => state.address.address) as string;
-	const city = useSelector<RootStore>(state => state.address.city) as string;
-	const postalCode = useSelector<RootStore>(state => state.address.postalCode) as string;
+	const addressState = useSelector<RootStore>(state => state.address.address) as AddressState;
+	const orderState = useSelector<RootStore>(state => state.address.address) as OrderState;
 	const paymentMethod = useSelector<RootStore>(state => state.payment.paymentMethod) as string;
 	const cart = useSelector<RootStore>(state => state.user.user.cart) as CartItem[];
-	const error = useSelector<RootStore>(state => state.order.error) as string;
-	const loading = useSelector<RootStore>(state => state.order.loading) as boolean;
+	const { address, city, postalCode } = addressState;
+	const { error, loading } = orderState;
 
 	const itemsPrice = cart.reduce((acc, curr) => +curr.product.price * curr.quantity + acc, 0);
 	const shippingPrice = itemsPrice > 5000 ? 0 : 200;
