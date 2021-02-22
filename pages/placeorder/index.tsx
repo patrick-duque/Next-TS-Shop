@@ -19,7 +19,7 @@ interface Props {}
 
 const PlaceOrder: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const addressState = useSelector<RootStore>(state => state.address.address) as AddressState;
+	const addressState = useSelector<RootStore>(state => state.address) as AddressState;
 	const orderState = useSelector<RootStore>(state => state.address.address) as OrderState;
 	const paymentMethod = useSelector<RootStore>(state => state.payment.paymentMethod) as string;
 	const cart = useSelector<RootStore>(state => state.user.user.cart) as CartItem[];
