@@ -8,13 +8,15 @@ export interface AdminState {
 	loading: boolean;
 	error: string;
 	orders: OrdersFromDB[];
+	success: boolean;
 }
 
 const initialState: AdminState = {
 	loading: false,
 	users: [],
 	error: null,
-	orders: []
+	orders: [],
+	success: false
 };
 
 const userReducer = (state: AdminState = initialState, action: actionTypes.AdminDispatchType): AdminState => {
@@ -30,6 +32,19 @@ const userReducer = (state: AdminState = initialState, action: actionTypes.Admin
 			newState.loading = false;
 			break;
 		case actionTypes.ADMIN_GET_USERS_FAILED:
+			newState.error = action.payload;
+			newState.loading = false;
+			break;
+		case actionTypes.DELETE_USER_BY_ADMIN_START:
+			newState.error = null;
+			newState.loading = true;
+			break;
+		case actionTypes.DELETE_USER_BY_ADMIN_SUCCESS:
+			newState.error = null;
+			newState.users = newState.users.filter(user => user._id !== action.payload);
+			newState.loading = false;
+			break;
+		case actionTypes.DELETE_USER_BY_ADMIN_FAILED:
 			newState.error = action.payload;
 			newState.loading = false;
 			break;

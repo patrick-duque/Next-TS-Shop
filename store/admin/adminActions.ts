@@ -26,3 +26,27 @@ export const getAllUsers = () => async (dispatch: Dispatch<actionTypes.GetUsersD
 		dispatch({ type: actionTypes.ADMIN_GET_USERS_FAILED, payload });
 	}
 };
+
+// @desc Delete User
+// @route DELETE /api/users/user/:id
+// @access Private
+export const deleteUserByAdmin = (id: string) => async (dispatch: Dispatch<actionTypes.DeleteUserDispatchType>) => {
+	dispatch({ type: actionTypes.DELETE_USER_BY_ADMIN_START });
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		};
+		await axios.delete(`/users/user/${id}`, config);
+		dispatch({ type: actionTypes.DELETE_USER_BY_ADMIN_SUCCESS, payload: id });
+	} catch (error) {
+		let payload = '';
+		if ((error.message as string).includes('401')) {
+			payload = 'Unauthorized user.';
+		} else {
+			payload = 'Something went wrong.';
+		}
+		dispatch({ type: actionTypes.DELETE_USER_BY_ADMIN_FAILED, payload });
+	}
+};

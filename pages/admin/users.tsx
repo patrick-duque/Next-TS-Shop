@@ -1,5 +1,5 @@
-import { Fragment, useEffect, useState } from 'react';
-import { Table, Container, Alert, Modal } from 'react-bootstrap';
+import { Fragment, useEffect } from 'react';
+import { Table, Container, Alert, Modal, Toast } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 
@@ -20,7 +20,7 @@ const Users: React.FC<Props> = () => {
 	const dispatch = useDispatch();
 	const state = useSelector<RootStore>(state => state.admin) as AdminState;
 	const userState = useSelector<RootStore>(state => state.user.user) as User;
-	const { loading, error, users } = state;
+	const { loading, error, users, success } = state;
 
 	useEffect(
 		() => {
@@ -39,6 +39,9 @@ const Users: React.FC<Props> = () => {
 			<Container>
 				<h1>Users</h1>
 				{error && <Alert variant='danger'>{error}</Alert>}
+				<Toast show={success}>
+					<Toast.Body>Successfully deleted profile.</Toast.Body>
+				</Toast>
 				<Modal show={loading} keyboard={false}>
 					<Container style={{ height: '40vh' }} className='d-flex align-items-center justify-content-center'>
 						<Spinner />

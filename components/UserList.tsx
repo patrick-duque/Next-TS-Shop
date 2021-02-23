@@ -1,17 +1,20 @@
 import { useState, Fragment } from 'react';
+import { useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
 import { User } from '../store/user/userReducer';
+import { deleteUserByAdmin } from '../store/admin/adminActions';
 
 interface Props {
 	user: User;
 }
 
 const UserList: React.FC<Props> = ({ user }) => {
+	const dispatch = useDispatch();
 	const [ showModal, setShowModal ] = useState<boolean>(false);
 
 	const handleDeleteAccount = () => {
-		console.log(user._id);
+		dispatch(deleteUserByAdmin(user._id));
 	};
 
 	return (

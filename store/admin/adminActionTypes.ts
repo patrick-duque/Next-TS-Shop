@@ -5,10 +5,15 @@ export const ADMIN_GET_USERS_START = 'ADMIN_GET_USERS_START';
 export const ADMIN_GET_USERS_SUCCESS = 'ADMIN_GET_USERS_SUCCESS';
 export const ADMIN_GET_USERS_FAILED = 'ADMIN_GET_USERS_FAILED';
 
-// GET ORDERS
+// GET ORDER
 export const ADMIN_GET_ORDERS_START = 'ADMIN_GET_ORDERS_START';
 export const ADMIN_GET_ORDERS_SUCCESS = 'ADMIN_GET_ORDERS_SUCCESS';
 export const ADMIN_GET_ORDERS_FAILED = 'ADMIN_GET_ORDERS_FAILED';
+
+// DELETE USER
+export const DELETE_USER_BY_ADMIN_START = 'DELETE_USER_BY_ADMIN_START';
+export const DELETE_USER_BY_ADMIN_SUCCESS = 'DELETE_USER_BY_ADMIN_SUCCESS';
+export const DELETE_USER_BY_ADMIN_FAILED = 'DELETE_USER_BY_ADMIN_FAILED';
 
 /* ============================
 						GET USERS
@@ -54,4 +59,26 @@ export type GetOrdersDispatchType = GetOrdersFailed | GetOrdersStart | GetOrders
 						GET ORDERS
 ============================= */
 
-export type AdminDispatchType = GetUsersDispatchType | GetOrdersDispatchType;
+/* ============================
+						DELETE USER
+============================= */
+interface DeleteUserStart {
+	type: typeof DELETE_USER_BY_ADMIN_START;
+}
+
+interface DeleteUserSuccess {
+	type: typeof DELETE_USER_BY_ADMIN_SUCCESS;
+	payload: string;
+}
+
+interface DeleteUserFailed {
+	type: typeof DELETE_USER_BY_ADMIN_FAILED;
+	payload: string;
+}
+
+export type DeleteUserDispatchType = DeleteUserFailed | DeleteUserStart | DeleteUserSuccess;
+/* ============================
+						DELETE USER
+============================= */
+
+export type AdminDispatchType = GetUsersDispatchType | GetOrdersDispatchType | DeleteUserDispatchType;
