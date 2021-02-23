@@ -1,7 +1,6 @@
-import { Fragment, useEffect } from 'react';
-import { Table, Button, Container, Alert, Modal } from 'react-bootstrap';
+import { Fragment, useEffect, useState } from 'react';
+import { Table, Container, Alert, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { IoMdClose, IoMdCheckmark } from 'react-icons/io';
 import Router from 'next/router';
 
 import authCheck from '../../hoc/authCheck';
@@ -13,6 +12,7 @@ import Head from '../../components/Head';
 import Spinner from '../../components/Spinner';
 import { getAllUsers } from '../../store/admin/adminActions';
 import { User } from '../../store/user/userReducer';
+import UserList from '../../components/UserList';
 
 interface Props {}
 
@@ -54,21 +54,7 @@ const Users: React.FC<Props> = () => {
 							<th />
 						</tr>
 					</thead>
-					<tbody>
-						{users.map(user => (
-							<tr key={user._id}>
-								<td>{user._id}</td>
-								<td>{user.name}</td>
-								<td>{user.email}</td>
-								<td className='text-center'>{user.isAdmin ? <IoMdCheckmark /> : <IoMdClose />}</td>
-								<td className='text-center'>
-									<Button variant='danger' size='sm' block>
-										Delete
-									</Button>
-								</td>
-							</tr>
-						))}
-					</tbody>
+					<tbody>{users.map(user => <UserList user={user} key={user._id} />)}</tbody>
 				</Table>
 			</Container>
 		</Fragment>

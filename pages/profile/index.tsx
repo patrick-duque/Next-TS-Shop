@@ -37,7 +37,7 @@ const Profile: React.FC<Props> = () => {
 	);
 
 	const handleDeleteAccount = () => {
-		dispatch(deleteUserAccount());
+		dispatch(deleteUserAccount(user._id));
 	};
 
 	const handleEditProfile = (data: ProfileData) => {

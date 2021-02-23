@@ -167,9 +167,9 @@ export const removeFromCart = (product: CartItem) => async (
 };
 
 // @desc Delete User Account
-// @route Delete /api/users/user
+// @route Delete /api/users/user/:id
 // @access Private
-export const deleteUserAccount = () => async (dispatch: Dispatch<actionTypes.DeleteUserDispatchType>) => {
+export const deleteUserAccount = (id: string) => async (dispatch: Dispatch<actionTypes.DeleteUserDispatchType>) => {
 	dispatch({ type: actionTypes.DELETE_USER_START });
 	try {
 		const config = {
@@ -177,9 +177,13 @@ export const deleteUserAccount = () => async (dispatch: Dispatch<actionTypes.Del
 				Authorization: `Bearer ${localStorage.getItem('token')}`
 			}
 		};
-		await axios.get(`/users/user`, config);
+		await axios.delete(`/users/user/${id}`, config);
 		dispatch({ type: actionTypes.DELETE_USER_SUCCESS });
 		dispatch({ type: actionTypes.LOGOUT });
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
+		localStorage.removeItem('cart');
+		localStorage.removeItem('expiry');
 		Router.push('/login');
 	} catch (error) {
 		let payload = 'Something went wrong';
