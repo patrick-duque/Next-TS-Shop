@@ -1,12 +1,12 @@
-import { Fragment, FormEvent, useState, useEffect } from 'react';
-import { Col, Row, Container, Button, Form, Alert } from 'react-bootstrap';
+import { Fragment, useState, useEffect } from 'react';
+import { Col, Row, Container, Button, Form, Alert, Modal } from 'react-bootstrap';
 import authCheck from '../../hoc/authCheck';
 import { useSelector, useDispatch } from 'react-redux';
 import Head from '../../components/Head';
 import Spinner from '../../components/Spinner';
 import { RootStore } from '../../store';
 import { UserState } from '../../store/user/userReducer';
-import { editUserAction } from '../../store/user/userActions';
+import { deleteUserAccount, editUserAction } from '../../store/user/userActions';
 import Router from 'next/router';
 import { useForm } from 'react-hook-form';
 
@@ -19,6 +19,7 @@ interface ProfileData {
 
 const Profile: React.FC<Props> = () => {
 	const dispatch = useDispatch();
+	const [ showModal, setShowModal ] = useState<boolean>(false);
 	const state = useSelector<RootStore>(state => state.user) as UserState;
 	const { loading, error, user } = state;
 	const { register, handleSubmit, setValue } = useForm<ProfileData>();
@@ -34,6 +35,10 @@ const Profile: React.FC<Props> = () => {
 		},
 		[ user ]
 	);
+
+	const handleDeleteAccount = () => {
+		dispatch(deleteUserAccount());
+	};
 
 	const handleEditProfile = (data: ProfileData) => {
 		const newName = data.name !== '' ? data.name : user.name;
@@ -71,6 +76,22 @@ const Profile: React.FC<Props> = () => {
 	return (
 		<Fragment>
 			<Head title='User Profile' />
+			<Modal show={showModal} onHide={() => setShowModal(false)}>
+				<Modal.Header>
+					<Modal.Title>Are you sure you want to deactivate your account?</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<p className='text-center'>After deactivating your account you cannot undo this action.</p>
+				</Modal.Body>
+				<Modal.Footer>
+					<Button variant='danger' onClick={() => setShowModal(false)}>
+						No
+					</Button>
+					<Button variant='success' onClick={handleDeleteAccount}>
+						Yes
+					</Button>
+				</Modal.Footer>
+			</Modal>
 			<Row className='w-100'>
 				<Col>
 					<Container>
@@ -92,6 +113,9 @@ const Profile: React.FC<Props> = () => {
 									<h3>{user && user.email}</h3>
 								</Col>
 							</Row>
+							<Container className='text-right' onClick={() => setShowModal(true)}>
+								<Button variant='danger'>DEACTIVATE MY ACCOUNT</Button>
+							</Container>
 						</Container>
 					</Container>
 				</Col>

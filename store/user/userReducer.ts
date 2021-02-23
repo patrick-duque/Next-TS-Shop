@@ -104,6 +104,19 @@ const userReducer = (state: UserState = initialState, action: actionTypes.UserDi
 		case actionTypes.CLEAR_CART:
 			newState.user.cart = [];
 			break;
+		case actionTypes.DELETE_USER_START:
+			newState.error = null;
+			newState.loading = true;
+			break;
+		case actionTypes.DELETE_USER_SUCCESS:
+			newState.error = null;
+			newState.user = null;
+			newState.loading = false;
+			break;
+		case actionTypes.DELETE_USER_FAILED:
+			newState.error = action.payload;
+			newState.loading = false;
+			break;
 	}
 
 	return newState;

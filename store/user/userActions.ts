@@ -165,3 +165,24 @@ export const removeFromCart = (product: CartItem) => async (
 		dispatch({ type: actionTypes.REMOVE_FROM_CART_FAILED, payload, item: product });
 	}
 };
+
+// @desc Delete User Account
+// @route Delete /api/users/user
+// @access Private
+export const deleteUserAccount = () => async (dispatch: Dispatch<actionTypes.DeleteUserDispatchType>) => {
+	dispatch({ type: actionTypes.DELETE_USER_START });
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		};
+		await axios.get(`/users/user`, config);
+		dispatch({ type: actionTypes.DELETE_USER_SUCCESS });
+		dispatch({ type: actionTypes.LOGOUT });
+		Router.push('/login');
+	} catch (error) {
+		let payload = 'Something went wrong';
+		dispatch({ type: actionTypes.DELETE_USER_FAILED, payload });
+	}
+};
