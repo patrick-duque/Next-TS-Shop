@@ -45,7 +45,7 @@ const Header: React.FC = () => {
 			<Fragment>
 				{user.isAdmin && (
 					<Nav.Item>
-						<NavDropdown title='Manage' id='username'>
+						<NavDropdown title='Manage' id='admin'>
 							<NavDropdown.Item>
 								<Link href='/admin/users'>
 									<Container>

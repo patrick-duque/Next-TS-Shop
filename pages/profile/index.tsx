@@ -72,15 +72,33 @@ const Profile: React.FC<Props> = () => {
 		<Fragment>
 			<Head title='User Profile' />
 			<Row className='w-100'>
-				<Col sm={12} lg={3}>
-					<Container>
-						<h1>Profile</h1>
-						{editForm}
-					</Container>
-				</Col>
 				<Col>
 					<Container>
-						<h1>My Orders</h1>
+						<h1>Profile</h1>
+						<Container>
+							<Row>
+								<Col sm={3}>
+									<h2>Name:</h2>
+								</Col>
+								<Col sm={3}>
+									<h3>{user && user.name}</h3>
+								</Col>
+							</Row>
+							<Row>
+								<Col sm={3}>
+									<h2>Email:</h2>
+								</Col>
+								<Col sm={3}>
+									<h3>{user && user.email}</h3>
+								</Col>
+							</Row>
+						</Container>
+					</Container>
+				</Col>
+				<Col sm={12} lg={3}>
+					<Container>
+						<h1>Edit Profile</h1>
+						{editForm}
 					</Container>
 				</Col>
 			</Row>
