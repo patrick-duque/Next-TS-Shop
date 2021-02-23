@@ -43,6 +43,30 @@ const Header: React.FC = () => {
 	if (user) {
 		link = (
 			<Fragment>
+				{user.isAdmin && (
+					<Nav.Item>
+						<NavDropdown title='Manage' id='username'>
+							<NavDropdown.Item>
+								<Link href='/admin/users'>
+									<Container>
+										<Col>
+											<FiUser />
+											<span className='mx-2'>Users</span>
+										</Col>
+									</Container>
+								</Link>
+							</NavDropdown.Item>
+							<NavDropdown.Item>
+								<Link href='/admin/orders'>
+									<Col>
+										<FiPackage />
+										<span className='mx-2'>Orders</span>
+									</Col>
+								</Link>
+							</NavDropdown.Item>
+						</NavDropdown>
+					</Nav.Item>
+				)}
 				<Nav.Item>
 					<NavDropdown title={user.name} id='username'>
 						<NavDropdown.Item>
