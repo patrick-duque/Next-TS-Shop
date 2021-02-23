@@ -34,7 +34,7 @@ interface AddOrderStart {
 
 interface AddOrderSuccess {
 	type: typeof ADD_ORDER_SUCCESS;
-	payload: OrderType;
+	payload: OrdersFromDB;
 }
 
 interface AddOrderFailed {

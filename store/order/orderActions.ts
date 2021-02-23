@@ -18,10 +18,13 @@ export const addOrder = (order: actionTypes.OrderType) => async (
 			}
 		};
 		const newOrder = (await axios.post(`/orders/`, order, config)).data;
-		dispatch({ type: actionTypes.ADD_ORDER_SUCCESS, payload: newOrder });
+		dispatch({
+			type: actionTypes.ADD_ORDER_SUCCESS,
+			payload: newOrder as actionTypes.OrdersFromDB
+		});
 		dispatch({ type: CLEAR_CART });
 		localStorage.setItem('cart', JSON.stringify([]));
-		Router.push('/');
+		Router.push(`/orders/${newOrder._id}`);
 	} catch (error) {
 		let payload = 'Something went wrong';
 		dispatch({ type: actionTypes.ADD_ORDER_FAILED, payload });
@@ -39,8 +42,8 @@ export const getOrder = () => async (dispatch: Dispatch<actionTypes.GetOrderDisp
 				Authorization: `Bearer ${localStorage.getItem('token')}`
 			}
 		};
-		const orders = (await axios.get('/orders/user', config)).data;
-		dispatch({ type: actionTypes.GET_ORDER_SUCCESS, payload: orders });
+		const orders = (await axios.get('/orders/user', config)).data as actionTypes.OrdersFromDB[];
+		dispatch({ type: actionTypes.GET_ORDER_SUCCESS, payload: orders.reverse() });
 	} catch (error) {
 		let payload = 'Something went wrong';
 		dispatch({ type: actionTypes.GET_ORDER_FAILED, payload });

@@ -22,6 +22,7 @@ const orderReducer = (state = initialState, action: actionTypes.OrderDispatchTyp
 		case actionTypes.ADD_ORDER_SUCCESS:
 			newState.error = null;
 			newState.loading = false;
+			newState.orders.unshift(action.payload);
 			break;
 		case actionTypes.ADD_ORDER_FAILED:
 			newState.loading = false;

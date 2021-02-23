@@ -29,12 +29,12 @@ const PayOrder: React.FC<Props> = () => {
 
 	useEffect(() => {
 		const getClientId = async () => {
-			const clientId = (await axios.get('/config/paypal')).data;
-			setClientId(clientId);
+			setClientId((await axios.get('/config/paypal')).data);
 		};
 
 		if (!order || success) {
 			dispatch({ type: PAY_ORDER_RESET });
+			router.push('/orders');
 		}
 
 		getClientId();
