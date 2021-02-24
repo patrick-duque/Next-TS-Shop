@@ -1,4 +1,5 @@
 import { User } from '../user/userReducer';
+import ProductModel from '../../models/product';
 
 // GET USERS
 export const ADMIN_GET_USERS_START = 'ADMIN_GET_USERS_START';
@@ -9,6 +10,11 @@ export const ADMIN_GET_USERS_FAILED = 'ADMIN_GET_USERS_FAILED';
 export const ADMIN_GET_ORDERS_START = 'ADMIN_GET_ORDERS_START';
 export const ADMIN_GET_ORDERS_SUCCESS = 'ADMIN_GET_ORDERS_SUCCESS';
 export const ADMIN_GET_ORDERS_FAILED = 'ADMIN_GET_ORDERS_FAILED';
+
+// GET ORDER
+export const ADMIN_GET_PRODUCTS_START = 'ADMIN_GET_PRODUCTS_START';
+export const ADMIN_GET_PRODUCTS_SUCCESS = 'ADMIN_GET_PRODUCTS_SUCCESS';
+export const ADMIN_GET_PRODUCTS_FAILED = 'ADMIN_GET_PRODUCTS_FAILED';
 
 // DELETE USER
 export const DELETE_USER_BY_ADMIN_START = 'DELETE_USER_BY_ADMIN_START';
@@ -81,4 +87,30 @@ export type DeleteUserDispatchType = DeleteUserFailed | DeleteUserStart | Delete
 						DELETE USER
 ============================= */
 
-export type AdminDispatchType = GetUsersDispatchType | GetOrdersDispatchType | DeleteUserDispatchType;
+/* ============================
+						GET USERS
+============================= */
+interface GetProductsStart {
+	type: typeof ADMIN_GET_PRODUCTS_START;
+}
+
+interface GetProductsSuccess {
+	type: typeof ADMIN_GET_PRODUCTS_SUCCESS;
+	payload: ProductModel[];
+}
+
+interface GetProductsFailed {
+	type: typeof ADMIN_GET_PRODUCTS_FAILED;
+	payload: string;
+}
+
+export type GetProductsDispatchType = GetProductsFailed | GetProductsStart | GetProductsSuccess;
+/* ============================
+						GET USERS
+============================= */
+
+export type AdminDispatchType =
+	| GetUsersDispatchType
+	| GetOrdersDispatchType
+	| DeleteUserDispatchType
+	| GetProductsDispatchType;

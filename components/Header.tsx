@@ -1,6 +1,6 @@
 import { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FiShoppingCart, FiUser, FiUserPlus, FiUserX, FiPackage } from 'react-icons/fi';
+import { FiShoppingCart, FiUser, FiUserPlus, FiUserX, FiPackage, FiDatabase } from 'react-icons/fi';
 import { Navbar, Nav, Image, Modal, Button, Col, Container, NavDropdown } from 'react-bootstrap';
 import NavLink from './NavLink';
 import Link from 'next/link';
@@ -52,6 +52,16 @@ const Header: React.FC = () => {
 										<Col>
 											<FiUser />
 											<span className='mx-2'>Users</span>
+										</Col>
+									</Container>
+								</Link>
+							</NavDropdown.Item>
+							<NavDropdown.Item>
+								<Link href='/admin/products'>
+									<Container>
+										<Col>
+											<FiDatabase />
+											<span className='mx-2'>Products</span>
 										</Col>
 									</Container>
 								</Link>

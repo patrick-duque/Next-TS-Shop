@@ -2,6 +2,7 @@ import * as actionTypes from './adminActionTypes';
 
 import { User } from '../user/userReducer';
 import { OrdersFromDB } from '../order/orderActionTypes';
+import Product from '../../models/product';
 
 export interface AdminState {
 	users: User[];
@@ -9,6 +10,7 @@ export interface AdminState {
 	error: string;
 	orders: OrdersFromDB[];
 	success: boolean;
+	products: Product[];
 }
 
 const initialState: AdminState = {
@@ -16,7 +18,8 @@ const initialState: AdminState = {
 	users: [],
 	error: null,
 	orders: [],
-	success: false
+	success: false,
+	products: []
 };
 
 const userReducer = (state: AdminState = initialState, action: actionTypes.AdminDispatchType): AdminState => {
@@ -45,6 +48,19 @@ const userReducer = (state: AdminState = initialState, action: actionTypes.Admin
 			newState.loading = false;
 			break;
 		case actionTypes.DELETE_USER_BY_ADMIN_FAILED:
+			newState.error = action.payload;
+			newState.loading = false;
+			break;
+		case actionTypes.ADMIN_GET_PRODUCTS_START:
+			newState.error = null;
+			newState.loading = true;
+			break;
+		case actionTypes.ADMIN_GET_PRODUCTS_SUCCESS:
+			newState.error = null;
+			newState.products = action.payload;
+			newState.loading = false;
+			break;
+		case actionTypes.ADMIN_GET_PRODUCTS_FAILED:
 			newState.error = action.payload;
 			newState.loading = false;
 			break;

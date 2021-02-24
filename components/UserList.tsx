@@ -21,7 +21,7 @@ const UserList: React.FC<Props> = ({ user }) => {
 		<Fragment>
 			<Modal show={showModal} onHide={() => setShowModal(false)}>
 				<Modal.Header>
-					<Modal.Title>Are you sure you want to this account?</Modal.Title>
+					<Modal.Title>Are you sure you want to delete this account?</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<p className='text-center'>After deactivating your account you cannot undo this action.</p>
@@ -35,7 +35,7 @@ const UserList: React.FC<Props> = ({ user }) => {
 					</Button>
 				</Modal.Footer>
 			</Modal>
-			<tr key={user._id}>
+			<tr>
 				<td>{user._id}</td>
 				<td>{user.name}</td>
 				<td>{user.email}</td>

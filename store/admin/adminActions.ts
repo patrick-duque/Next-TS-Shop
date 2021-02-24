@@ -50,3 +50,22 @@ export const deleteUserByAdmin = (id: string) => async (dispatch: Dispatch<actio
 		dispatch({ type: actionTypes.DELETE_USER_BY_ADMIN_FAILED, payload });
 	}
 };
+
+// @desc Get Products
+// @route DELETE /api/products
+// @access Public
+export const getProductsByAdmin = () => async (dispatch: Dispatch<actionTypes.GetProductsDispatchType>) => {
+	dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_START });
+	try {
+		const products = (await axios.get('/products')).data;
+		dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_SUCCESS, payload: products });
+	} catch (error) {
+		let payload = '';
+		if ((error.message as string).includes('401')) {
+			payload = 'Unauthorized user.';
+		} else {
+			payload = 'Something went wrong.';
+		}
+		dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_FAILED, payload });
+	}
+};
