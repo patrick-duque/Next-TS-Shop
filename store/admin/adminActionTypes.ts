@@ -21,6 +21,11 @@ export const DELETE_USER_BY_ADMIN_START = 'DELETE_USER_BY_ADMIN_START';
 export const DELETE_USER_BY_ADMIN_SUCCESS = 'DELETE_USER_BY_ADMIN_SUCCESS';
 export const DELETE_USER_BY_ADMIN_FAILED = 'DELETE_USER_BY_ADMIN_FAILED';
 
+// DELETE PRODUCT
+export const DELETE_PRODUCT_BY_ADMIN_START = 'DELETE_PRODUCT_BY_ADMIN_START';
+export const DELETE_PRODUCT_BY_ADMIN_SUCCESS = 'DELETE_PRODUCT_BY_ADMIN_SUCCESS';
+export const DELETE_PRODUCT_BY_ADMIN_FAILED = 'DELETE_PRODUCT_BY_ADMIN_FAILED';
+
 /* ============================
 						GET USERS
 ============================= */
@@ -88,7 +93,7 @@ export type DeleteUserDispatchType = DeleteUserFailed | DeleteUserStart | Delete
 ============================= */
 
 /* ============================
-						GET USERS
+						GET PRODUCT
 ============================= */
 interface GetProductsStart {
 	type: typeof ADMIN_GET_PRODUCTS_START;
@@ -109,8 +114,31 @@ export type GetProductsDispatchType = GetProductsFailed | GetProductsStart | Get
 						GET USERS
 ============================= */
 
+/* ============================
+					DELETE PRODUCT
+============================= */
+interface DeleteProductStart {
+	type: typeof DELETE_PRODUCT_BY_ADMIN_START;
+}
+
+interface DeleteProductSuccess {
+	type: typeof DELETE_PRODUCT_BY_ADMIN_SUCCESS;
+	payload: string;
+}
+
+interface DeleteProductFailed {
+	type: typeof DELETE_PRODUCT_BY_ADMIN_FAILED;
+	payload: string;
+}
+
+export type DeleteProductDispatchType = DeleteProductFailed | DeleteProductStart | DeleteProductSuccess;
+/* ============================
+					DELETE PRODUCT
+============================= */
+
 export type AdminDispatchType =
 	| GetUsersDispatchType
 	| GetOrdersDispatchType
 	| DeleteUserDispatchType
-	| GetProductsDispatchType;
+	| GetProductsDispatchType
+	| DeleteProductDispatchType;

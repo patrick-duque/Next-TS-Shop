@@ -64,6 +64,19 @@ const userReducer = (state: AdminState = initialState, action: actionTypes.Admin
 			newState.error = action.payload;
 			newState.loading = false;
 			break;
+		case actionTypes.DELETE_PRODUCT_BY_ADMIN_START:
+			newState.loading = true;
+			newState.error = null;
+			break;
+		case actionTypes.DELETE_PRODUCT_BY_ADMIN_SUCCESS:
+			newState.error = null;
+			newState.products = newState.products.filter(product => product._id !== action.payload);
+			newState.loading = false;
+			break;
+		case actionTypes.DELETE_PRODUCT_BY_ADMIN_FAILED:
+			newState.error = action.payload;
+			newState.loading = false;
+			break;
 	}
 
 	return newState;

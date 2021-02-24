@@ -52,7 +52,7 @@ export const deleteUserByAdmin = (id: string) => async (dispatch: Dispatch<actio
 };
 
 // @desc Get Products
-// @route DELETE /api/products
+// @route GET /api/products
 // @access Public
 export const getProductsByAdmin = () => async (dispatch: Dispatch<actionTypes.GetProductsDispatchType>) => {
 	dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_START });
@@ -67,5 +67,26 @@ export const getProductsByAdmin = () => async (dispatch: Dispatch<actionTypes.Ge
 			payload = 'Something went wrong.';
 		}
 		dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_FAILED, payload });
+	}
+};
+
+// @desc Delete Products
+// @route DELETE /api/products/:id
+// @access Private/Admin
+export const deleteProductByAdmin = (id: string) => async (
+	dispatch: Dispatch<actionTypes.DeleteProductDispatchType>
+) => {
+	dispatch({ type: actionTypes.DELETE_PRODUCT_BY_ADMIN_START });
+	try {
+		await axios.delete(`/products/${id}`);
+		dispatch({ type: actionTypes.DELETE_PRODUCT_BY_ADMIN_SUCCESS, payload: id });
+	} catch (error) {
+		let payload = '';
+		if ((error.message as string).includes('401')) {
+			payload = 'Unauthorized user.';
+		} else {
+			payload = 'Something went wrong.';
+		}
+		dispatch({ type: actionTypes.DELETE_PRODUCT_BY_ADMIN_FAILED, payload });
 	}
 };

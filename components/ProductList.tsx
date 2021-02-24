@@ -1,14 +1,23 @@
 import { Fragment, useState } from 'react';
-import { Modal, Button, Row, Col } from 'react-bootstrap';
-import ProductModel from '../models/product';
+import { useDispatch } from 'react-redux';
+import { Modal, Button } from 'react-bootstrap';
 import { FiEdit } from 'react-icons/fi';
+import Link from 'next/link';
+import { deleteProductByAdmin } from '../store/admin/adminActions';
+import ProductModel from '../models/product';
 
 interface Props {
 	product: ProductModel;
 }
 
 const ProductList: React.FC<Props> = ({ product }) => {
+	const dispatch = useDispatch();
 	const [ showModal, setShowModal ] = useState(false);
+
+	const handleDeleteProduct = () => {
+		dispatch(deleteProductByAdmin(product._id));
+	};
+
 	return (
 		<Fragment>
 			<Modal show={showModal} onHide={() => setShowModal(false)}>
@@ -19,7 +28,9 @@ const ProductList: React.FC<Props> = ({ product }) => {
 					<Button variant='danger' onClick={() => setShowModal(false)}>
 						No
 					</Button>
-					<Button variant='success'>Yes</Button>
+					<Button variant='success' onClick={handleDeleteProduct}>
+						Yes
+					</Button>
 				</Modal.Footer>
 			</Modal>
 			<tr>
@@ -30,9 +41,11 @@ const ProductList: React.FC<Props> = ({ product }) => {
 				<td>{product.brand}</td>
 				<td>
 					<div className='d-flex justify-content-around'>
-						<Button size='sm'>
-							<FiEdit />
-						</Button>
+						<Link href={`/admin/products/${product._id}`}>
+							<Button size='sm'>
+								<FiEdit />
+							</Button>
+						</Link>
 						<Button variant='danger' size='sm' onClick={() => setShowModal(true)}>
 							Delete
 						</Button>
