@@ -9,9 +9,9 @@ import Head from '../../../components/Head';
 import Spinner from '../../../components/Spinner';
 import FormContainer from '../../../components/FormContainer';
 import Product from '../../../models/product';
-
 import authCheck from '../../../hoc/authCheck';
-import { route } from 'next/dist/next-server/server/router';
+import { editProductByAdmin } from '../../../store/admin/adminActions';
+import capitalize from '../../../helpers/capitalize';
 
 interface Props {}
 
@@ -44,7 +44,8 @@ const EditProduct: React.FC<Props> = () => {
 	);
 
 	const handleEditProduct = (data: EditProductData) => {
-		console.log(data);
+		console.log(capitalize(data.name));
+		// dispatch(editProductByAdmin(product._id, product));
 	};
 
 	return (
@@ -55,6 +56,9 @@ const EditProduct: React.FC<Props> = () => {
 					<Spinner />
 				</Container>
 			</Modal>
+			<Container>
+				<h1 className='text-capitalize'>Edit {product.name}</h1>
+			</Container>
 			<FormContainer>
 				<Form onSubmit={handleSubmit(handleEditProduct)}>
 					{error && <Alert variant='danger'>{error}</Alert>}

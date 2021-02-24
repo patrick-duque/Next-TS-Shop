@@ -2,6 +2,8 @@ import * as actionTypes from './adminActionTypes';
 import { Dispatch } from 'redux';
 import axios from '../../helpers/api/axios';
 import { User } from '../user/userReducer';
+import Product from '../../models/product';
+import Router from 'next/router';
 
 // @desc GET Users
 // @route POST /api/users/users/admin
@@ -17,11 +19,9 @@ export const getAllUsers = () => async (dispatch: Dispatch<actionTypes.GetUsersD
 		const users: User[] = (await axios.get('/users/users/admin', config)).data;
 		dispatch({ type: actionTypes.ADMIN_GET_USERS_SUCCESS, payload: users });
 	} catch (error) {
-		let payload = '';
+		let payload = 'Something went wrong.';
 		if ((error.message as string).includes('401')) {
 			payload = 'Unauthorized user.';
-		} else {
-			payload = 'Something went wrong.';
 		}
 		dispatch({ type: actionTypes.ADMIN_GET_USERS_FAILED, payload });
 	}
@@ -41,11 +41,9 @@ export const deleteUserByAdmin = (id: string) => async (dispatch: Dispatch<actio
 		await axios.delete(`/users/user/${id}`, config);
 		dispatch({ type: actionTypes.DELETE_USER_BY_ADMIN_SUCCESS, payload: id });
 	} catch (error) {
-		let payload = '';
+		let payload = 'Something went wrong.';
 		if ((error.message as string).includes('401')) {
 			payload = 'Unauthorized user.';
-		} else {
-			payload = 'Something went wrong.';
 		}
 		dispatch({ type: actionTypes.DELETE_USER_BY_ADMIN_FAILED, payload });
 	}
@@ -60,17 +58,15 @@ export const getProductsByAdmin = () => async (dispatch: Dispatch<actionTypes.Ge
 		const products = (await axios.get('/products')).data;
 		dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_SUCCESS, payload: products });
 	} catch (error) {
-		let payload = '';
+		let payload = 'Something went wrong.';
 		if ((error.message as string).includes('401')) {
 			payload = 'Unauthorized user.';
-		} else {
-			payload = 'Something went wrong.';
 		}
 		dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_FAILED, payload });
 	}
 };
 
-// @desc Delete Products
+// @desc Delete Product
 // @route DELETE /api/products/:id
 // @access Private/Admin
 export const deleteProductByAdmin = (id: string) => async (
@@ -78,15 +74,43 @@ export const deleteProductByAdmin = (id: string) => async (
 ) => {
 	dispatch({ type: actionTypes.DELETE_PRODUCT_BY_ADMIN_START });
 	try {
-		await axios.delete(`/products/${id}`);
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		};
+		await axios.delete(`/products/${id}`, config);
 		dispatch({ type: actionTypes.DELETE_PRODUCT_BY_ADMIN_SUCCESS, payload: id });
 	} catch (error) {
-		let payload = '';
+		let payload = 'Something went wrong.';
 		if ((error.message as string).includes('401')) {
 			payload = 'Unauthorized user.';
-		} else {
-			payload = 'Something went wrong.';
 		}
 		dispatch({ type: actionTypes.DELETE_PRODUCT_BY_ADMIN_FAILED, payload });
+	}
+};
+
+// @desc Edit Product
+// @route PUT /api/products/:id
+// @access Private/Admin
+export const editProductByAdmin = (id: string, product: Product) => async (
+	dispatch: Dispatch<actionTypes.EditProductDispatchType>
+) => {
+	dispatch({ type: actionTypes.EDIT_PRODUCT_BY_ADMIN_START });
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		};
+		await axios.put(`/products/${id}`, product, config);
+		dispatch({ type: actionTypes.EDIT_PRODUCT_BY_ADMIN_SUCCESS });
+		Router.push('/admin/products');
+	} catch (error) {
+		let payload = 'Something went wrong.';
+		if ((error.message as string).includes('401')) {
+			payload = 'Unauthorized user.';
+		}
+		dispatch({ type: actionTypes.EDIT_PRODUCT_BY_ADMIN_FAILED, payload });
 	}
 };

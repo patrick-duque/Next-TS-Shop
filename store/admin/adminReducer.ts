@@ -77,6 +77,18 @@ const userReducer = (state: AdminState = initialState, action: actionTypes.Admin
 			newState.error = action.payload;
 			newState.loading = false;
 			break;
+		case actionTypes.EDIT_PRODUCT_BY_ADMIN_START:
+			newState.error = null;
+			newState.loading = true;
+			break;
+		case actionTypes.EDIT_PRODUCT_BY_ADMIN_SUCCESS:
+			newState.error = null;
+			newState.loading = false;
+			break;
+		case actionTypes.EDIT_PRODUCT_BY_ADMIN_FAILED:
+			newState.error = action.payload;
+			newState.loading = false;
+			break;
 	}
 
 	return newState;

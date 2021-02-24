@@ -1,25 +1,30 @@
 import { User } from '../user/userReducer';
-import ProductModel from '../../models/product';
+import Product from '../../models/product';
 
 // GET USERS
 export const ADMIN_GET_USERS_START = 'ADMIN_GET_USERS_START';
 export const ADMIN_GET_USERS_SUCCESS = 'ADMIN_GET_USERS_SUCCESS';
 export const ADMIN_GET_USERS_FAILED = 'ADMIN_GET_USERS_FAILED';
 
+// DELETE USER
+export const DELETE_USER_BY_ADMIN_START = 'DELETE_USER_BY_ADMIN_START';
+export const DELETE_USER_BY_ADMIN_SUCCESS = 'DELETE_USER_BY_ADMIN_SUCCESS';
+export const DELETE_USER_BY_ADMIN_FAILED = 'DELETE_USER_BY_ADMIN_FAILED';
+
 // GET ORDER
 export const ADMIN_GET_ORDERS_START = 'ADMIN_GET_ORDERS_START';
 export const ADMIN_GET_ORDERS_SUCCESS = 'ADMIN_GET_ORDERS_SUCCESS';
 export const ADMIN_GET_ORDERS_FAILED = 'ADMIN_GET_ORDERS_FAILED';
 
-// GET ORDER
+// GET PRODUCTS
 export const ADMIN_GET_PRODUCTS_START = 'ADMIN_GET_PRODUCTS_START';
 export const ADMIN_GET_PRODUCTS_SUCCESS = 'ADMIN_GET_PRODUCTS_SUCCESS';
 export const ADMIN_GET_PRODUCTS_FAILED = 'ADMIN_GET_PRODUCTS_FAILED';
 
-// DELETE USER
-export const DELETE_USER_BY_ADMIN_START = 'DELETE_USER_BY_ADMIN_START';
-export const DELETE_USER_BY_ADMIN_SUCCESS = 'DELETE_USER_BY_ADMIN_SUCCESS';
-export const DELETE_USER_BY_ADMIN_FAILED = 'DELETE_USER_BY_ADMIN_FAILED';
+// EDIT PRODUCT
+export const EDIT_PRODUCT_BY_ADMIN_START = 'EDIT_PRODUCT_BY_ADMIN_START';
+export const EDIT_PRODUCT_BY_ADMIN_SUCCESS = 'EDIT_PRODUCT_BY_ADMIN_SUCCESS';
+export const EDIT_PRODUCT_BY_ADMIN_FAILED = 'EDIT_PRODUCT_BY_ADMIN_FAILED';
 
 // DELETE PRODUCT
 export const DELETE_PRODUCT_BY_ADMIN_START = 'DELETE_PRODUCT_BY_ADMIN_START';
@@ -101,7 +106,7 @@ interface GetProductsStart {
 
 interface GetProductsSuccess {
 	type: typeof ADMIN_GET_PRODUCTS_SUCCESS;
-	payload: ProductModel[];
+	payload: Product[];
 }
 
 interface GetProductsFailed {
@@ -136,9 +141,31 @@ export type DeleteProductDispatchType = DeleteProductFailed | DeleteProductStart
 					DELETE PRODUCT
 ============================= */
 
+/* ============================
+					EDIT PRODUCT
+============================= */
+interface EditProductStart {
+	type: typeof EDIT_PRODUCT_BY_ADMIN_START;
+}
+
+interface EditProductSuccess {
+	type: typeof EDIT_PRODUCT_BY_ADMIN_SUCCESS;
+}
+
+interface EditProductFailed {
+	type: typeof EDIT_PRODUCT_BY_ADMIN_FAILED;
+	payload: string;
+}
+
+export type EditProductDispatchType = EditProductFailed | EditProductStart | EditProductSuccess;
+/* ============================
+					EDIT PRODUCT
+============================= */
+
 export type AdminDispatchType =
 	| GetUsersDispatchType
 	| GetOrdersDispatchType
 	| DeleteUserDispatchType
 	| GetProductsDispatchType
-	| DeleteProductDispatchType;
+	| DeleteProductDispatchType
+	| EditProductDispatchType;
