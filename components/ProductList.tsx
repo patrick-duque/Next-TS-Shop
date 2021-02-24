@@ -1,6 +1,7 @@
 import { Fragment, useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal, Button, Row, Col } from 'react-bootstrap';
 import ProductModel from '../models/product';
+import { FiEdit } from 'react-icons/fi';
 
 interface Props {
 	product: ProductModel;
@@ -28,9 +29,14 @@ const ProductList: React.FC<Props> = ({ product }) => {
 				<td>{product.category}</td>
 				<td>{product.brand}</td>
 				<td>
-					<Button variant='danger' size='sm' block onClick={() => setShowModal(true)}>
-						Delete
-					</Button>
+					<div className='d-flex justify-content-around'>
+						<Button size='sm'>
+							<FiEdit />
+						</Button>
+						<Button variant='danger' size='sm' onClick={() => setShowModal(true)}>
+							Delete
+						</Button>
+					</div>
 				</td>
 			</tr>
 		</Fragment>
