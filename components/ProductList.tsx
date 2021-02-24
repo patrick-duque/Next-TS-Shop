@@ -16,6 +16,7 @@ const ProductList: React.FC<Props> = ({ product }) => {
 
 	const handleDeleteProduct = () => {
 		dispatch(deleteProductByAdmin(product._id));
+		setShowModal(false);
 	};
 
 	return (
