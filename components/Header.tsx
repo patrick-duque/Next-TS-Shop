@@ -68,10 +68,12 @@ const Header: React.FC = () => {
 							</NavDropdown.Item>
 							<NavDropdown.Item>
 								<Link href='/admin/orders'>
-									<Col>
-										<FiPackage />
-										<span className='mx-2'>Orders</span>
-									</Col>
+									<Container>
+										<Col>
+											<FiPackage />
+											<span className='mx-2'>Orders</span>
+										</Col>
+									</Container>
 								</Link>
 							</NavDropdown.Item>
 						</NavDropdown>

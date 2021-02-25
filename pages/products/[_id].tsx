@@ -63,18 +63,18 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 						<Image src={product.image} alt={product.name} fluid />
 					</Col>
 					<Col md={3}>
-						<div className='bg-dark'>
+						<div>
 							<h3>{product.name}</h3>
 						</div>
-						<div className='bg-dark my-5'>
+						<div className='my-5'>
 							<Rating value={product.rating} numOfReview={product.numReviews} />
 						</div>
-						<div className='bg-dark my-5'>
+						<div className='my-5'>
 							Description: <div className='mt-2'>{product.description}</div>
 						</div>
 					</Col>
 					<Col md={3}>
-						<div className='bg-dark'>
+						<div>
 							<Row>
 								<Col>Price:</Col>
 								<Col>
@@ -82,7 +82,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 								</Col>
 							</Row>
 						</div>
-						<div className='bg-dark my-5'>
+						<div className='my-5'>
 							<Row>
 								<Col>Stocks:</Col>
 								<Col>
@@ -91,7 +91,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 							</Row>
 						</div>
 						{product.countInStock > 0 && (
-							<div className='bg-dark my-5'>
+							<div className='my-5'>
 								<Row>
 									<Col sm={5}>Quantity:</Col>
 									<Col sm={7} md={7} lg={7} className='text-center'>
@@ -99,7 +99,6 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 											<Col sm={4}>
 												<Button
 													size='sm'
-													variant='dark'
 													className='ml-sm-2 ml-md-0'
 													onClick={() => setQty(qty + 1)}
 													disabled={qty === product.countInStock}>
@@ -114,7 +113,6 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 											<Col sm={4}>
 												<Button
 													size='sm'
-													variant='dark'
 													className='mr-sm-2 mr-md-0'
 													onClick={() => setQty(qty - 1)}
 													disabled={qty <= 1}>
@@ -126,11 +124,11 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 								</Row>
 							</div>
 						)}
-						<div className='bg-dark my-5'>
+						<div className='my-5'>
 							<Row>
 								<Col>
 									<Button
-										variant='light'
+										variant='outline-dark'
 										className='btn-block'
 										onClick={handleAddToCart}
 										disabled={product.countInStock === 0}>

@@ -1,38 +1,38 @@
 @import './variables.scss';
 
 .Product {
-  height: 90vh;
+	height: 90vh;
 
-  .image {
-    cursor: pointer;
-  }
+	.image {
+		cursor: pointer;
+	}
 
-  .title {
-    cursor: pointer;
-    color: $gray-200;
-  }
+	.title {
+		cursor: pointer;
+		color: $black;
+	}
 }
 
 @media only screen and (max-width: 320px) {
-  .Product {
-    height: 110vh;
-  }
+	.Product {
+		height: 110vh;
+	}
 }
 
 @media (min-width: 480px) {
-  .Product {
-    height: 60vh;
-  }
+	.Product {
+		height: 60vh;
+	}
 }
 
 @media (min-width: 768px) {
-  .Product {
-    height: 70vh;
-  }
+	.Product {
+		height: 70vh;
+	}
 }
 
 @media (min-width: 992px) {
-  .Product {
-    height: 65vh;
-  }
+	.Product {
+		height: 65vh;
+	}
 }

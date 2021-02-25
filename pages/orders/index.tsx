@@ -25,7 +25,7 @@ const Order: React.FC<Props> = () => {
 	let screen = (
 		<Container>
 			{orders.length === 0 ? (
-				<Alert variant='light'>No orders yet.</Alert>
+				<Alert variant='info'>No orders yet.</Alert>
 			) : (
 				orders.map(order => (
 					<ListGroup key={order._id} className='mt-2'>

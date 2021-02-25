@@ -1,11 +1,12 @@
 @import './variables.scss';
 
 .active {
-  border-bottom: 2px solid $white;
-  background-image: linear-gradient(rgba($black, .7), $gray-900);
-  font-weight: 700;
+	border-bottom: 2px solid $white;
+	background-image: linear-gradient(rgba($primary, .7), $primary);
+	font-weight: 700;
+	border-radius: $btn-border-radius;
 
-  span {
-    color: $white;
-  }
+	span {
+		color: $white;
+	}
 }

@@ -19,7 +19,6 @@ a {
 
 main {
 	min-height: 88vh;
-	background-color: $dark;
 
 	font-family: 'Nunito', sans-serif;
 }
@@ -30,6 +29,7 @@ header {
 
 footer {
 	font-family: 'Nunito', sans-serif;
+	color: $white;
 }
 
 input[type='radio']:checked:after {

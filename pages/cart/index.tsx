@@ -28,7 +28,7 @@ const Cart: React.FC<Props> = () => {
 						<h1>Shopping Cart</h1>
 						{error && <Alert variant='danger'>{error}</Alert>}
 						{cartItems.length === 0 ? (
-							<Alert variant='light'>Your Cart is Empty</Alert>
+							<Alert variant='info'>Your Cart is Empty</Alert>
 						) : (
 							<ListGroup>
 								{cartItems.map(item => (

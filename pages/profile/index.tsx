@@ -68,7 +68,9 @@ const Profile: React.FC<Props> = () => {
 				</Form.Group>
 
 				<div className='text-right'>
-					<Button type='submit'>EDIT PROFILE</Button>
+					<Button type='submit' variant='outline-primary'>
+						EDIT PROFILE
+					</Button>
 				</div>
 			</Form>
 		);
@@ -115,7 +117,7 @@ const Profile: React.FC<Props> = () => {
 								</Col>
 							</Row>
 							<Container className='text-right' onClick={() => setShowModal(true)}>
-								<Button variant='danger'>DEACTIVATE MY ACCOUNT</Button>
+								<Button variant='outline-danger'>DEACTIVATE MY ACCOUNT</Button>
 							</Container>
 						</Container>
 					</Container>
