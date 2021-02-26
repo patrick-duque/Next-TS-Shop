@@ -26,6 +26,11 @@ export const EDIT_PRODUCT_BY_ADMIN_START = 'EDIT_PRODUCT_BY_ADMIN_START';
 export const EDIT_PRODUCT_BY_ADMIN_SUCCESS = 'EDIT_PRODUCT_BY_ADMIN_SUCCESS';
 export const EDIT_PRODUCT_BY_ADMIN_FAILED = 'EDIT_PRODUCT_BY_ADMIN_FAILED';
 
+// CREATE PRODUCT
+export const CREATE_PRODUCT_BY_ADMIN_START = 'CREATE_PRODUCT_BY_ADMIN_START';
+export const CREATE_PRODUCT_BY_ADMIN_SUCCESS = 'CREATE_PRODUCT_BY_ADMIN_SUCCESS';
+export const CREATE_PRODUCT_BY_ADMIN_FAILED = 'CREATE_PRODUCT_BY_ADMIN_FAILED';
+
 // DELETE PRODUCT
 export const DELETE_PRODUCT_BY_ADMIN_START = 'DELETE_PRODUCT_BY_ADMIN_START';
 export const DELETE_PRODUCT_BY_ADMIN_SUCCESS = 'DELETE_PRODUCT_BY_ADMIN_SUCCESS';
@@ -162,10 +167,33 @@ export type EditProductDispatchType = EditProductFailed | EditProductStart | Edi
 					EDIT PRODUCT
 ============================= */
 
+/* ============================
+				CREATE PRODUCT
+============================= */
+interface CreateProductStart {
+	type: typeof CREATE_PRODUCT_BY_ADMIN_START;
+}
+
+interface CreateProductSuccess {
+	type: typeof CREATE_PRODUCT_BY_ADMIN_SUCCESS;
+	payload: Product;
+}
+
+interface CreateProductFailed {
+	type: typeof CREATE_PRODUCT_BY_ADMIN_FAILED;
+	payload: string;
+}
+
+export type CreateProductDispatchType = CreateProductFailed | CreateProductStart | CreateProductSuccess;
+/* ============================
+				CREATE PRODUCT
+============================= */
+
 export type AdminDispatchType =
 	| GetUsersDispatchType
 	| GetOrdersDispatchType
 	| DeleteUserDispatchType
 	| GetProductsDispatchType
 	| DeleteProductDispatchType
-	| EditProductDispatchType;
+	| EditProductDispatchType
+	| CreateProductDispatchType;

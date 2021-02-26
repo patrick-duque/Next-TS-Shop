@@ -47,7 +47,7 @@ const Users: React.FC<Props> = () => {
 						<Spinner />
 					</Container>
 				</Modal>
-				<Table striped bordered hover responsive className='table-sm'>
+				<Table striped bordered hover responsive className='table-sm' variant='active'>
 					<thead className='text-center'>
 						<tr>
 							<th>ID</th>

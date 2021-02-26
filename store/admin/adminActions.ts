@@ -114,3 +114,28 @@ export const editProductByAdmin = (id: string, product: Product) => async (
 		dispatch({ type: actionTypes.EDIT_PRODUCT_BY_ADMIN_FAILED, payload });
 	}
 };
+
+// @desc Create Single Products
+// @route POST /api/products
+// @access Private/Admin
+export const createProductByAdmin = (product: Product) => async (
+	dispatch: Dispatch<actionTypes.CreateProductDispatchType>
+) => {
+	dispatch({ type: actionTypes.CREATE_PRODUCT_BY_ADMIN_START });
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		};
+		const newProduct = (await axios.post(`/products/`, product, config)).data;
+		console.log(newProduct);
+		dispatch({ type: actionTypes.CREATE_PRODUCT_BY_ADMIN_SUCCESS, payload: newProduct });
+	} catch (error) {
+		let payload = 'Something went wrong.';
+		if ((error.message as string).includes('401')) {
+			payload = 'Unauthorized user.';
+		}
+		dispatch({ type: actionTypes.CREATE_PRODUCT_BY_ADMIN_FAILED, payload });
+	}
+};
