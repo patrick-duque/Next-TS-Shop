@@ -60,7 +60,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 				</div>
 				<Row>
 					<Col md={5} className='text-center'>
-						<Image src={product.image} alt={product.name} fluid />
+						<Image src={`http://localhost:5000${product.image}`} alt={product.name} fluid />
 					</Col>
 					<Col md={3}>
 						<div>

@@ -35,11 +35,6 @@ const Products: React.FC<Props> = () => {
 		[ dispatch ]
 	);
 
-	const handleAddProduct = () => {
-		console.log('addProduct');
-		dispatch(createProductByAdmin(products[0]));
-	};
-
 	return (
 		<Fragment>
 			<Head title='Admin Product List' />
@@ -49,7 +44,7 @@ const Products: React.FC<Props> = () => {
 						<h1>Products</h1>
 					</Col>
 					<Col className='text-right'>
-						<Button variant='outline-dark' onClick={handleAddProduct}>
+						<Button variant='outline-dark' onClick={() => Router.push('/admin/products/add-product')}>
 							<IconContext.Provider value={{ size: '1.45em' }}>
 								<RiAddFill />
 							</IconContext.Provider>

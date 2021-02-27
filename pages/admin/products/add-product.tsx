@@ -1,5 +1,4 @@
-import { Fragment, useEffect, useState, ChangeEvent } from 'react';
-import { useRouter } from 'next/router';
+import { Fragment, useState, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Button, Form, Modal, Container, Alert } from 'react-bootstrap';
@@ -10,7 +9,7 @@ import Spinner from '../../../components/Spinner';
 import FormContainer from '../../../components/FormContainer';
 import Product from '../../../models/product';
 import authCheck from '../../../hoc/authCheck';
-import { editProductByAdmin } from '../../../store/admin/adminActions';
+import { createProductByAdmin } from '../../../store/admin/adminActions';
 import capitalize from '../../../helpers/capitalize';
 import axios from '../../../helpers/api/axios';
 
@@ -18,49 +17,33 @@ interface Props {}
 
 interface EditProductData extends Product {}
 
-const EditProduct: React.FC<Props> = () => {
-	const router = useRouter();
+const AddProduct: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const [ uploading, setUploading ] = useState<boolean>(false);
 	const state = useSelector<RootStore>(state => state.admin) as AdminState;
-	const { products, loading, error } = state;
+	const { loading, error } = state;
+	const [ uploading, setUploading ] = useState<boolean>(false);
+	const [ componentError, setComponentError ] = useState<string>(null);
 	const { register, handleSubmit, setValue } = useForm();
-	const product = products.find(prod => prod._id === router.query.id.toString());
 
-	useEffect(
-		() => {
-			if (!product) {
-				router.replace('/admin/products');
-			} else {
-				setValue('name', product.name);
-				setValue('description', product.description);
-				setValue('brand', product.brand);
-				setValue('category', product.category);
-				setValue('price', product.price);
-				setValue('countInStock', product.countInStock);
-				setValue('numReviews', product.numReviews);
-				setValue('rating', product.rating);
-				setValue('image', product.image);
-			}
-		},
-		[ product ]
-	);
-
-	const handleEditProduct = (data: EditProductData) => {
-		dispatch(
-			editProductByAdmin(product._id, {
-				name: capitalize(data.name),
-				_id: product._id,
-				brand: capitalize(data.brand),
-				category: capitalize(data.category),
-				image: data.image,
-				countInStock: +data.countInStock,
-				price: +data.price,
-				rating: product.rating,
-				numReviews: product.numReviews,
-				description: data.description
-			})
-		);
+	const handleAddProduct = (data: EditProductData) => {
+		if (!data.image) {
+			setComponentError('Please add an image');
+		} else {
+			dispatch(
+				createProductByAdmin({
+					name: capitalize(data.name),
+					_id: data._id,
+					brand: capitalize(data.brand),
+					category: capitalize(data.category),
+					image: data.image,
+					countInStock: +data.countInStock,
+					price: +data.price,
+					rating: 0,
+					numReviews: 0,
+					description: data.description
+				})
+			);
+		}
 	};
 
 	const handleUploadFile = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,17 +70,18 @@ const EditProduct: React.FC<Props> = () => {
 
 	return (
 		<Fragment>
-			<Head title={`Edit ${product.name}`} />
+			<Head title={`Add Product`} />
 			<Modal show={loading} keyboard={false}>
 				<Container style={{ height: '40vh' }} className='d-flex align-items-center justify-content-center'>
 					<Spinner />
 				</Container>
 			</Modal>
 			<Container>
-				<h1 className='text-capitalize'>Edit {product.name}</h1>
+				<h1 className='text-capitalize'>Add New Product</h1>
 			</Container>
 			<FormContainer>
-				<Form onSubmit={handleSubmit(handleEditProduct)}>
+				<Form onSubmit={handleSubmit(handleAddProduct)}>
+					{componentError && <Alert variant='danger'>{componentError}</Alert>}
 					{error && <Alert variant='danger'>{error}</Alert>}
 					<Form.Group controlId='product-name'>
 						<Form.Label>Product Name</Form.Label>
@@ -137,11 +121,11 @@ const EditProduct: React.FC<Props> = () => {
 						</Form.File>
 					</Form.Group>
 
-					<Button type='submit'>EDIT PRODUCT</Button>
+					<Button type='submit'>ADD NEW PRODUCT</Button>
 				</Form>
 			</FormContainer>
 		</Fragment>
 	);
 };
 
-export default authCheck(EditProduct);
+export default authCheck(AddProduct);

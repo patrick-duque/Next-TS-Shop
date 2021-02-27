@@ -129,8 +129,8 @@ export const createProductByAdmin = (product: Product) => async (
 			}
 		};
 		const newProduct = (await axios.post(`/products/`, product, config)).data;
-		console.log(newProduct);
 		dispatch({ type: actionTypes.CREATE_PRODUCT_BY_ADMIN_SUCCESS, payload: newProduct });
+		Router.push('/admin/products');
 	} catch (error) {
 		let payload = 'Something went wrong.';
 		if ((error.message as string).includes('401')) {
