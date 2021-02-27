@@ -27,7 +27,7 @@ const Item: React.FC<Props> = ({ item }) => {
 	return (
 		<Row>
 			<Col md={6} lg={2}>
-				<Image src={item.product.image} alt={item.product.name} fluid rounded />
+				<Image src={`http://localhost:5000${item.product.image}`} alt={item.product.name} fluid rounded />
 			</Col>
 			<Col md={3} lg={2}>
 				<Link href={`/products/${item.product._id}`}>{item.product.name}</Link>

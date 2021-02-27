@@ -12,7 +12,7 @@ const OrderItem: React.FC<Props> = ({ item }) => {
 		<ListGroup.Item>
 			<Row>
 				<Col md={2} lg={1}>
-					<Image src={item.product.image} alt={item.product.name} fluid rounded />
+					<Image src={`http://localhost:5000${item.product.image}`} alt={item.product.name} fluid rounded />
 				</Col>
 				<Col>
 					<Link href={`/products/${item.product._id}`}>{item.product.name}</Link>
