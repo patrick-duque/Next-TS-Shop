@@ -15,6 +15,7 @@ const UserList: React.FC<Props> = ({ user }) => {
 
 	const handleDeleteAccount = () => {
 		dispatch(deleteUserByAdmin(user._id));
+		setShowModal(false);
 	};
 
 	return (

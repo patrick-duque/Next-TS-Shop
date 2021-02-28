@@ -86,7 +86,7 @@ const PayOrder: React.FC<Props> = () => {
 									{order.shippingAddress.postalCode}
 								</p>
 								{order.isDelivered ? (
-									<Alert variant='success'>Delivered.</Alert>
+									<Alert variant='success'>Delivered at {dateFormat(order.deliveredAt, 'mmm dd, yyyy')}</Alert>
 								) : (
 									<Alert variant='danger'>Not Delivered.</Alert>
 								)}

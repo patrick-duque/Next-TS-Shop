@@ -10,7 +10,7 @@ import { AdminState } from '../../../store/admin/adminReducer';
 
 import Head from '../../../components/Head';
 import Spinner from '../../../components/Spinner';
-import { getAllUsers } from '../../../store/admin/adminActions';
+import { getOrderByAdmin } from '../../../store/admin/adminActions';
 import { User } from '../../../store/user/userReducer';
 import OrderList from '../../../components/OrderList';
 
@@ -25,7 +25,7 @@ const Orders: React.FC<Props> = () => {
 	useEffect(
 		() => {
 			if (userState.isAdmin) {
-				dispatch(getAllUsers());
+				dispatch(getOrderByAdmin());
 			} else {
 				Router.push('/');
 			}
@@ -48,7 +48,7 @@ const Orders: React.FC<Props> = () => {
 					<thead className='text-center'>
 						<tr>
 							<th>ID</th>
-							<th>DELIVERED</th> 
+							<th>DELIVERED</th>
 							<th>PAID</th>
 							<th>TOTAL PRICE</th>
 							<th />

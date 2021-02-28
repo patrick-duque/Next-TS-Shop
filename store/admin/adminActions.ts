@@ -165,7 +165,7 @@ export const deliverOrderByAdmin = (id: string) => async (dispatch: Dispatch<act
 // @desc Get Orders
 // @route GET /api/orders/
 // @access Private/Admin
-export const getOrderByAdmin = (id: string) => async (dispatch: Dispatch<actionTypes.GetOrdersDispatchType>) => {
+export const getOrderByAdmin = () => async (dispatch: Dispatch<actionTypes.GetOrdersDispatchType>) => {
 	dispatch({ type: actionTypes.ADMIN_GET_ORDERS_START });
 	try {
 		const config = {
