@@ -26,6 +26,7 @@ export interface OrdersFromDB extends OrderType {
 	isPaid: boolean;
 	updatedAt: string;
 	_id: string;
+	deliveredAt: Date;
 }
 
 interface AddOrderStart {

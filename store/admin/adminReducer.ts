@@ -102,6 +102,34 @@ const userReducer = (state: AdminState = initialState, action: actionTypes.Admin
 			newState.error = action.payload;
 			newState.loading = false;
 			break;
+		case actionTypes.ADMIN_UPDATE_ORDER_DELIVER_START:
+			newState.error = null;
+			newState.loading = true;
+			break;
+		case actionTypes.ADMIN_UPDATE_ORDER_DELIVER_SUCCESS:
+			newState.error = null;
+			const oldOrder = newState.orders.find(order => order._id === action.payload._id);
+			oldOrder.deliveredAt = action.payload.deliveredAt;
+			oldOrder.isDelivered = action.payload.isDelivered;
+			newState.loading = false;
+			break;
+		case actionTypes.ADMIN_UPDATE_ORDER_DELIVER_FAILED:
+			newState.error = action.payload;
+			newState.loading = false;
+			break;
+		case actionTypes.ADMIN_GET_ORDERS_START:
+			newState.error = null;
+			newState.loading = true;
+			break;
+		case actionTypes.ADMIN_GET_ORDERS_SUCCESS:
+			newState.error = null;
+			newState.orders = action.payload;
+			newState.loading = false;
+			break;
+		case actionTypes.ADMIN_GET_ORDERS_FAILED:
+			newState.error = action.payload;
+			newState.loading = false;
+			break;
 	}
 
 	return newState;

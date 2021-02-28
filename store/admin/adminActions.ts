@@ -139,3 +139,47 @@ export const createProductByAdmin = (product: Product) => async (
 		dispatch({ type: actionTypes.CREATE_PRODUCT_BY_ADMIN_FAILED, payload });
 	}
 };
+
+// @desc Deliver Order
+// @route GET /api/orders/:id/deliver
+// @access Private/Admin
+export const deliverOrderByAdmin = (id: string) => async (dispatch: Dispatch<actionTypes.DeliverOrderDispatchType>) => {
+	dispatch({ type: actionTypes.ADMIN_UPDATE_ORDER_DELIVER_START });
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		};
+		const newOrder = (await axios.get(`/orders/${id}/deliver`, config)).data;
+		dispatch({ type: actionTypes.ADMIN_UPDATE_ORDER_DELIVER_SUCCESS, payload: newOrder });
+	} catch (error) {
+		let payload = 'Something went wrong.';
+		if ((error.message as string).includes('401')) {
+			payload = 'Unauthorized user.';
+		}
+		dispatch({ type: actionTypes.ADMIN_UPDATE_ORDER_DELIVER_FAILED, payload });
+	}
+};
+
+// @desc Get Orders
+// @route GET /api/orders/
+// @access Private/Admin
+export const getOrderByAdmin = (id: string) => async (dispatch: Dispatch<actionTypes.GetOrdersDispatchType>) => {
+	dispatch({ type: actionTypes.ADMIN_GET_ORDERS_START });
+	try {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('token')}`
+			}
+		};
+		const orders = (await axios.get(`/orders/`, config)).data;
+		dispatch({ type: actionTypes.ADMIN_GET_ORDERS_SUCCESS, payload: orders });
+	} catch (error) {
+		let payload = 'Something went wrong.';
+		if ((error.message as string).includes('401')) {
+			payload = 'Unauthorized user.';
+		}
+		dispatch({ type: actionTypes.ADMIN_GET_ORDERS_FAILED, payload });
+	}
+};

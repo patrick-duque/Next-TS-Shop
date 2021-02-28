@@ -1,5 +1,6 @@
 import { User } from '../user/userReducer';
 import Product from '../../models/product';
+import { OrdersFromDB } from '../order/orderActionTypes';
 
 // GET USERS
 export const ADMIN_GET_USERS_START = 'ADMIN_GET_USERS_START';
@@ -15,6 +16,11 @@ export const DELETE_USER_BY_ADMIN_FAILED = 'DELETE_USER_BY_ADMIN_FAILED';
 export const ADMIN_GET_ORDERS_START = 'ADMIN_GET_ORDERS_START';
 export const ADMIN_GET_ORDERS_SUCCESS = 'ADMIN_GET_ORDERS_SUCCESS';
 export const ADMIN_GET_ORDERS_FAILED = 'ADMIN_GET_ORDERS_FAILED';
+
+// UPDATE ORDER
+export const ADMIN_UPDATE_ORDER_DELIVER_START = 'ADMIN_UPDATE_ORDER_DELIVER_START';
+export const ADMIN_UPDATE_ORDER_DELIVER_SUCCESS = 'ADMIN_UPDATE_ORDER_DELIVER_SUCCESS';
+export const ADMIN_UPDATE_ORDER_DELIVER_FAILED = 'ADMIN_UPDATE_ORDER_DELIVER_FAILED';
 
 // GET PRODUCTS
 export const ADMIN_GET_PRODUCTS_START = 'ADMIN_GET_PRODUCTS_START';
@@ -67,7 +73,7 @@ interface GetOrdersStart {
 
 interface GetOrdersSuccess {
 	type: typeof ADMIN_GET_ORDERS_SUCCESS;
-	payload: User[];
+	payload: OrdersFromDB[];
 }
 
 interface GetOrdersFailed {
@@ -78,6 +84,28 @@ interface GetOrdersFailed {
 export type GetOrdersDispatchType = GetOrdersFailed | GetOrdersStart | GetOrdersSuccess;
 /* ============================
 						GET ORDERS
+============================= */
+
+/* ============================
+					DELIVER ORDER
+============================= */
+interface DeliverOrderStart {
+	type: typeof ADMIN_UPDATE_ORDER_DELIVER_START;
+}
+
+interface DeliverOrderSuccess {
+	type: typeof ADMIN_UPDATE_ORDER_DELIVER_SUCCESS;
+	payload: OrdersFromDB;
+}
+
+interface DeliverOrderFailed {
+	type: typeof ADMIN_UPDATE_ORDER_DELIVER_FAILED;
+	payload: string;
+}
+
+export type DeliverOrderDispatchType = DeliverOrderFailed | DeliverOrderStart | DeliverOrderSuccess;
+/* ============================
+					DELIVER ORDER
 ============================= */
 
 /* ============================
@@ -196,4 +224,5 @@ export type AdminDispatchType =
 	| GetProductsDispatchType
 	| DeleteProductDispatchType
 	| EditProductDispatchType
-	| CreateProductDispatchType;
+	| CreateProductDispatchType
+	| DeliverOrderDispatchType;
