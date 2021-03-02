@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { RootStore } from '../store';
 import { logoutAction } from '../store/user/userActions';
 import { User } from '../store/user/userReducer';
+import SearchBox from './SearchBox';
 
 const HomeButton = () => {
 	return (
@@ -113,6 +114,7 @@ const Header: React.FC = () => {
 				<HomeButton />
 				<Navbar.Toggle aria-controls='basic-navbar-nav' />
 				<Navbar.Collapse id='basic-navbar-nav'>
+					<SearchBox />
 					<Nav className='ml-auto'>{link}</Nav>
 				</Navbar.Collapse>
 			</Navbar>
