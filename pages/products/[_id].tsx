@@ -19,6 +19,7 @@ import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 //Models
 import { GetStaticProps, GetStaticPaths } from 'next';
 import Product from '../../models/product';
+import GetProductsData from '../../models/getProductsData';
 import { RootStore } from '../../store';
 import { UserState } from '../../store/user/userReducer';
 
@@ -39,8 +40,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-	const products: Product[] = (await axios.get('/products')).data;
-	const route = products.map(prod => ({ params: { _id: prod._id } }));
+	const data: GetProductsData = (await axios.get('/products')).data;
+	const route = data.products.map(prod => ({ params: { _id: prod._id } }));
 	return {
 		paths: route,
 		fallback: false

@@ -4,6 +4,7 @@ import axios from '../../helpers/api/axios';
 import { User } from '../user/userReducer';
 import Product from '../../models/product';
 import Router from 'next/router';
+import GetProductsData from '../../models/getProductsData';
 
 // @desc GET Users
 // @route POST /api/users/users/admin
@@ -55,8 +56,8 @@ export const deleteUserByAdmin = (id: string) => async (dispatch: Dispatch<actio
 export const getProductsByAdmin = () => async (dispatch: Dispatch<actionTypes.GetProductsDispatchType>) => {
 	dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_START });
 	try {
-		const products = (await axios.get('/products')).data;
-		dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_SUCCESS, payload: products });
+		const data: GetProductsData = (await axios.get('/products')).data;
+		dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_SUCCESS, payload: data.products });
 	} catch (error) {
 		let payload = 'Something went wrong.';
 		if ((error.message as string).includes('401')) {

@@ -16,7 +16,7 @@ const SearchBox: React.FC<Props> = () => {
 		if (data.searchbox.trim() === '') {
 			Router.push('/');
 		} else {
-			Router.push(`/search/${data.searchbox.trim()}`);
+			Router.push(`/search/${data.searchbox.trim()}?pageNumber=1`);
 		}
 	};
 

@@ -3,16 +3,16 @@ import axios from '../../helpers/api/axios';
 import { Fragment } from 'react';
 import Head from '../../components/Head';
 import Product from '../../components/Product';
-import { Row, Container, Col } from 'react-bootstrap';
+import { Row, Container, Col, Pagination } from 'react-bootstrap';
 
-import ProductModel from '../../models/product';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
+import GetProductsData from '../../models/getProductsData';
 
-interface Props {
-	products: ProductModel[];
-}
+interface Props extends GetProductsData {}
 
-const QuerySearch: React.FC<Props> = ({ products }) => {
+const QuerySearch: React.FC<Props> = ({ products, page, pages }) => {
+	const itemPage = Array.from(Array(pages).keys());
 	return (
 		<Fragment>
 			<Head title='Home' />
@@ -27,16 +27,29 @@ const QuerySearch: React.FC<Props> = ({ products }) => {
 						);
 					})}
 				</Row>
+				{pages > 1 && (
+					<Container className='d-flex justify-content-end'>
+						<Pagination>
+							{itemPage.map(i => (
+								<Link href={`/?pageNumber=${i + 1}`} key={i} passHref>
+									<Pagination.Item active={i + 1 === page}>{i + 1}</Pagination.Item>
+								</Link>
+							))}
+						</Pagination>
+					</Container>
+				)}
 			</Container>
 		</Fragment>
 	);
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-	const products: ProductModel[] = (await axios.get(`/products?keywords=${params.keywords}`)).data;
+export const getServerSideProps: GetServerSideProps = async ({ params, query }) => {
+	const data: GetProductsData = (await axios.get(
+		`/products?keywords=${params.keywords}&pageNumber=${query.pageNumber}`
+	)).data;
 	return {
 		props: {
-			products
+			...data
 		}
 	};
 };
