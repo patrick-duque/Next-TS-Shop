@@ -78,7 +78,6 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 					rating: +data.rating
 				};
 				const newReview = (await axios.post(`/products/${product._id}/reviews`, body, config)).data;
-				console.log(newReview);
 				product.reviews.push(newReview.review);
 			} catch (error) {
 				setUploadError('User already reviewed this product');
