@@ -58,7 +58,8 @@ const EditProduct: React.FC<Props> = () => {
 				price: +data.price,
 				rating: product.rating,
 				numReviews: product.numReviews,
-				description: data.description
+				description: product.description,
+				reviews: product.reviews
 			})
 		);
 	};
