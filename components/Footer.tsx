@@ -7,7 +7,7 @@ const Footer: React.FC<Props> = () => {
 		<footer className='bg-primary'>
 			<Container>
 				<Row>
-					<Col className='text-center py-3'>Copyright &copy; Pro Shop</Col>
+					<Col className='text-center py-3'>Copyright &copy; Tech Shop</Col>
 				</Row>
 			</Container>
 		</footer>
