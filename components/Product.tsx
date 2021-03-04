@@ -14,7 +14,7 @@ const Product: React.FC<Props> = ({ product }) => {
 	return (
 		<Card className={`my-3 ${styles.Product}`} border='light'>
 			<Link href={`/products/${product._id}`}>
-				<Card.Img variant='top' src={`http://localhost:5000${product.image}`} className={styles.image} />
+				<Card.Img variant='top' src={`https://lit-mesa-58105.herokuapp.com${product.image}`} className={styles.image} />
 			</Link>
 			<Card.Body className='d-flex flex-column'>
 				<Link href={`/products/${product._id}`}>
