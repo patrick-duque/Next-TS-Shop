@@ -40,7 +40,8 @@ const AddProduct: React.FC<Props> = () => {
 					price: +data.price,
 					rating: 0,
 					numReviews: 0,
-					description: data.description
+					description: data.description,
+					reviews: []
 				})
 			);
 		}
