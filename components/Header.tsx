@@ -13,7 +13,7 @@ const HomeButton = () => {
 	return (
 		<Link href='/' passHref>
 			<Navbar.Brand>
-				<Image src='/images/icons.png' /> Pro-Shop
+				<Image src='/images/icons.png' /> Tech-Shop
 			</Navbar.Brand>
 		</Link>
 	);
