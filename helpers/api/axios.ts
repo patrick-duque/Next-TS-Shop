@@ -4,7 +4,6 @@ const server = typeof window === 'undefined';
 
 const instance: AxiosInstance = axios.create({
 	baseURL: 'https://lit-mesa-58105.herokuapp.com/api',
-	timeout: 5000,
 	headers: {
 		'Content-Type': 'application/json'
 	}
