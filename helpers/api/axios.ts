@@ -6,7 +6,8 @@ const instance: AxiosInstance = axios.create({
 	baseURL: 'https://lit-mesa-58105.herokuapp.com/api',
 	headers: {
 		'Content-Type': 'application/json'
-	}
+	},
+	timeout: 60000
 });
 
 if (!server) {
