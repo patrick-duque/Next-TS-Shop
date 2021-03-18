@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Image, Button, Col } from 'react-bootstrap';
 import { AiOutlinePlus, AiOutlineMinus, AiTwotoneDelete } from 'react-icons/ai';
@@ -77,4 +77,4 @@ const Item: React.FC<Props> = ({ item }) => {
 	);
 };
 
-export default Item;
+export default memo(Item);

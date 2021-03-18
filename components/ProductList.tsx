@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { FiEdit } from 'react-icons/fi';
@@ -18,6 +18,8 @@ const ProductList: React.FC<Props> = ({ product }) => {
 		dispatch(deleteProductByAdmin(product._id));
 		setShowModal(false);
 	};
+
+	console.log('rendering');
 
 	return (
 		<Fragment>
@@ -57,4 +59,4 @@ const ProductList: React.FC<Props> = ({ product }) => {
 	);
 };
 
-export default ProductList;
+export default memo(ProductList);

@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
@@ -51,4 +51,4 @@ const UserList: React.FC<Props> = ({ user }) => {
 	);
 };
 
-export default UserList;
+export default memo(UserList);
