@@ -35,10 +35,18 @@ const Rating: React.FC<Props> = ({ numOfReview, value }) => {
 				{createStar(value - 3)}
 				{createStar(value - 4)}
 			</Col>
-			{numOfReview && (
+			{!(numOfReview === 0) &&
+			numOfReview && (
 				<Col className='d-flex justify-content-end justify-content-md-start align-items-end'>
 					<p className='m-0'>
 						<span>{numOfReview > 1 ? `${numOfReview} reviews` : `${numOfReview} review`}</span>
+					</p>
+				</Col>
+			)}
+			{numOfReview === 0 && (
+				<Col className='d-flex justify-content-end justify-content-md-start align-items-end'>
+					<p className='m-0'>
+						<span>0 review</span>
 					</p>
 				</Col>
 			)}
