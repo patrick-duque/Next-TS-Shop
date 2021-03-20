@@ -11,12 +11,14 @@ import GetProductsData from '../models/getProductsData';
 interface Props extends GetProductsData {}
 
 const Home: React.FC<Props> = ({ products, pages, page }) => {
-	const itemPage = Array.from(Array(pages).keys()); 
+	const itemPage = Array.from(Array(pages).keys());
 	return (
 		<Fragment>
 			<Head title='Home' />
 			<Container>
-				<h1>LATEST PRODUCTS</h1>
+				<h1>
+					<strong>LATEST PRODUCTS</strong>
+				</h1>
 				<Row>
 					{products.map(product => {
 						return (

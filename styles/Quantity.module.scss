@@ -1,0 +1,34 @@
+@import './variables.scss';
+
+.Quantity {
+	.btnAdd {
+		border-bottom-left-radius: $btn-border-radius;
+		border-top-left-radius: $btn-border-radius;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+		border: none;
+		color: $gray;
+		transition: all .3s;
+	}
+
+	.qty {
+		border-top: 1px solid rgba($color: $gray, $alpha: 0.1);
+		border-bottom: 1px solid rgba($color: $gray, $alpha: 0.1);
+	}
+
+	.btnMinus {
+		border-top-right-radius: $btn-border-radius;
+		border-bottom-right-radius: $btn-border-radius;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+		border: none;
+		color: $gray;
+		transition: all .3s;
+	}
+
+	.btnAdd:hover,
+	.btnMinus:hover {
+		border: 1px solid rgba($color: $gray, $alpha: 0.3);
+		background-color: none;
+	}
+}

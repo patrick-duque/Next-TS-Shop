@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import axios from '../../helpers/api/axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addToCartItem } from '../../store/user/userActions';
 import dateFormat from 'dateformat';
-import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import Router from 'next/router';
 
 //Components
 import { Fragment } from 'react';
@@ -13,8 +13,9 @@ import { RiArrowGoBackLine } from 'react-icons/ri';
 import { Container, Row, Col, Image, Button, Alert, ListGroup, Form } from 'react-bootstrap';
 import Head from '../../components/Head';
 import Rating from '../../components/Rating';
+import Quantity from '../../components/Quantity';
 import { IconContext } from 'react-icons';
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
+import { FiShoppingCart } from 'react-icons/fi';
 
 //Models
 import { GetStaticProps, GetStaticPaths } from 'next';
@@ -57,8 +58,26 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 	const { register, handleSubmit } = useForm();
 
 	const handleAddToCart = () => {
-		dispatch(addToCartItem({ product: { ...product }, quantity: qty }));
+		if (!userState.user) {
+			Router.push('/login');
+		} else {
+			dispatch(addToCartItem({ product: { ...product }, quantity: qty }));
+		}
 	};
+
+	const handleAddQuantity = useCallback(
+		() => {
+			return setQty(qty + 1);
+		},
+		[ qty ]
+	);
+
+	const handleMinusQuantity = useCallback(
+		() => {
+			return setQty(qty - 1);
+		},
+		[ qty ]
+	);
 
 	const handleSubmitReview = async (data: ReviewData) => {
 		setFormError(null);
@@ -89,41 +108,66 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 	return (
 		<Fragment>
 			<Head title={product.name} />
-			<Container fluid>
-				<div className='my-3 mx-0'>
-					<Link href='/'>
-						<a>
-							<IconContext.Provider value={{ size: '2em' }}>
-								<RiArrowGoBackLine />
-							</IconContext.Provider>
-						</a>
-					</Link>
-				</div>
+			<div className='ml-4'>
+				<Link href='/'>
+					<a>
+						<IconContext.Provider value={{ size: '2em' }}>
+							<RiArrowGoBackLine />
+						</IconContext.Provider>
+					</a>
+				</Link>
+			</div>
+			<Container>
+				<div className='my-3 mx-0' />
 				<Row>
 					<Col md={5} className='text-center'>
 						<Image src={`https://lit-mesa-58105.herokuapp.com${product.image}`} alt={product.name} fluid />
 					</Col>
-					<Col md={3}>
+					<Col md={7}>
 						<div>
-							<h3>{product.name}</h3>
-						</div>
-						<div className='my-5'>
+							<p className='text-primary mb-0'>{product.category}</p>
+							<h3>
+								<strong>{product.name}</strong>
+							</h3>
 							<Rating value={product.rating} numOfReview={product.numReviews} />
 						</div>
-						<div className='my-5'>
-							Description: <div className='mt-2'>{product.description}</div>
+						<div className='my-4'>
+							<p>
+								<strong>Description:</strong>
+							</p>{' '}
+							<div className='mt-2'>{product.description}</div>
 						</div>
-					</Col>
-					<Col md={3}>
 						<div>
 							<Row>
-								<Col>Price:</Col>
-								<Col>
-									<strong>₱{product.price}</strong>
+								<Col xs={12} lg={6} className='d-flex align-items-end'>
+									<h4>
+										<strong>₱{product.price}</strong>
+									</h4>
 								</Col>
+								{product.countInStock > 0 && (
+									<Col xs={12} lg={6} className='mt-3 mt-lg-0'>
+										<Row>
+											<Col className='p-0 d-flex align-items-end'>
+												<Quantity
+													qty={qty}
+													addQuantity={handleAddQuantity}
+													minusQuantity={handleMinusQuantity}
+													countInStock={product.countInStock}
+												/>
+											</Col>
+											<Col className='p-0'>
+												<Button onClick={handleAddToCart} disabled={product.countInStock === 0}>
+													<strong>
+														Add to cart <FiShoppingCart />
+													</strong>
+												</Button>
+											</Col>
+										</Row>
+									</Col>
+								)}
 							</Row>
 						</div>
-						<div className='my-5'>
+						<div className='my-3'>
 							<Row>
 								<Col>Stocks:</Col>
 								<Col>
@@ -131,56 +175,10 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 								</Col>
 							</Row>
 						</div>
-						{product.countInStock > 0 && (
-							<div className='my-5'>
-								<Row>
-									<Col sm={5}>Quantity:</Col>
-									<Col sm={7} md={7} lg={7} className='text-center'>
-										<Row>
-											<Col sm={4}>
-												<Button
-													size='sm'
-													className='ml-sm-2 ml-md-0'
-													onClick={() => setQty(qty + 1)}
-													disabled={qty === product.countInStock}>
-													<AiOutlinePlus />
-												</Button>
-											</Col>
-											<Col sm={2}>
-												<p>
-													<strong>{qty}</strong>
-												</p>
-											</Col>
-											<Col sm={4}>
-												<Button
-													size='sm'
-													className='mr-sm-2 mr-md-0'
-													onClick={() => setQty(qty - 1)}
-													disabled={qty <= 1}>
-													<AiOutlineMinus />
-												</Button>
-											</Col>
-										</Row>
-									</Col>
-								</Row>
-							</div>
-						)}
-						<div className='my-5'>
-							<Row>
-								<Col>
-									<Button
-										variant='outline-dark'
-										className='btn-block'
-										onClick={handleAddToCart}
-										disabled={product.countInStock === 0}>
-										ADD TO CART
-									</Button>
-								</Col>
-							</Row>
-						</div>
+						<div className='my-5' />
 					</Col>
 				</Row>
-				<Row>
+				<Row className='mt-5'>
 					<Col md={6}>
 						<h2>Reviews</h2>
 						{product.reviews.length === 0 ? (

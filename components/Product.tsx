@@ -1,5 +1,6 @@
-import { Card } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
 import Link from 'next/link';
+import Router from 'next/router';
 import Rating from './Rating';
 
 import ProductModel from '../models/product';
@@ -11,18 +12,29 @@ interface Props {
 }
 
 const Product: React.FC<Props> = ({ product }) => {
+	const routeName = `/products/${product._id}`;
+
 	return (
-		<Card className={`my-3 ${styles.Product}`} border='light'>
-			<Link href={`/products/${product._id}`}>
+		<Card className={`my-3 ${styles.Product}`}>
+			<Link href={routeName}>
 				<Card.Img variant='top' src={`https://lit-mesa-58105.herokuapp.com${product.image}`} className={styles.image} />
 			</Link>
-			<Card.Body className='d-flex flex-column'>
-				<Link href={`/products/${product._id}`}>
-					<Card.Title className={styles.title}>{product.name}</Card.Title>
-				</Link>
-				<Card.Subtitle className='my-2'>₱{product.price}</Card.Subtitle>
-				<Card.Text>{product.description}</Card.Text>
+			<Card.Body>
+				<div className='mb-5'>
+					<Link href={routeName}>
+						<p className='m-0'>
+							<strong>{product.name}</strong>
+						</p>
+					</Link>
+					<p className='text-muted m-0'>{product.brand}</p>
+				</div>
 				<Rating value={product.rating} numOfReview={product.numReviews} />
+				<div className='d-flex justify-content-between mt-2'>
+					<p className='my-2'>
+						<strong>₱{product.price}</strong>
+					</p>
+					<Button onClick={() => Router.push(routeName)}>Check Product</Button>
+				</div>
 			</Card.Body>
 		</Card>
 	);

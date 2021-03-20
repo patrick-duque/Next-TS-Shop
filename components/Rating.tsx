@@ -28,7 +28,7 @@ const createStar = (value: number) => {
 const Rating: React.FC<Props> = ({ numOfReview, value }) => {
 	return (
 		<Row className={`${styles.Rating} mt-auto`}>
-			<Col sm={6} md={12} lg={12} xl={6} className='d-flex justify-content-center align-items-center'>
+			<Col className='d-flex align-items-center'>
 				{createStar(value)}
 				{createStar(value - 1)}
 				{createStar(value - 2)}
@@ -36,8 +36,10 @@ const Rating: React.FC<Props> = ({ numOfReview, value }) => {
 				{createStar(value - 4)}
 			</Col>
 			{numOfReview && (
-				<Col sm={6} md={12} lg={12} xl={6} className='d-flex justify-content-center align-items-center'>
-					<span>{numOfReview > 1 ? `${numOfReview} reviews` : `${numOfReview} review`}</span>
+				<Col className='d-flex justify-content-end justify-content-md-start align-items-end'>
+					<p className='m-0'>
+						<span>{numOfReview > 1 ? `${numOfReview} reviews` : `${numOfReview} review`}</span>
+					</p>
 				</Col>
 			)}
 		</Row>
