@@ -56,7 +56,7 @@ export const deleteUserByAdmin = (id: string) => async (dispatch: Dispatch<actio
 export const getProductsByAdmin = () => async (dispatch: Dispatch<actionTypes.GetProductsDispatchType>) => {
 	dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_START });
 	try {
-		const data: GetProductsData = (await axios.get('/products')).data;
+		const data: GetProductsData = (await axios.get('/products/all')).data;
 		dispatch({ type: actionTypes.ADMIN_GET_PRODUCTS_SUCCESS, payload: data.products });
 	} catch (error) {
 		let payload = 'Something went wrong.';

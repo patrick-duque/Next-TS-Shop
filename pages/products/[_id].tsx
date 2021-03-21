@@ -40,9 +40,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 	};
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-	const data: GetProductsData = (await axios.get('/products')).data;
+export const getStaticPaths: GetStaticPaths = async context => {
+	const data: GetProductsData = (await axios.get('/products/all')).data;
 	const route = data.products.map(prod => ({ params: { _id: prod._id } }));
+	console.log(context);
 	return {
 		paths: route,
 		fallback: false
