@@ -47,7 +47,10 @@ const Login: React.FC<Props> = () => {
 				</Form.Group>
 				<Row>
 					<Col className='pt-4'>
-						New customer? <Link href='/register'>Register</Link>
+						New customer?{' '}
+						<Link href='/register'>
+							<a className='text-primary'>Register</a>
+						</Link>
 					</Col>
 					<Col className='text-right'>
 						<Button type='submit'>Login</Button>

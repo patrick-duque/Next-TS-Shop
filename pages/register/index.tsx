@@ -86,7 +86,10 @@ const Register: React.FC<Props> = () => {
 				{errors.confirmPassword && <Alert variant='danger'>Please confirm your password</Alert>}
 				<Row>
 					<Col className='pt-4'>
-						Already have an account? <Link href='/login'>Login</Link>
+						Already have an account?{' '}
+						<Link href='/login'>
+							<a className='text-primary'>Login</a>
+						</Link>
 					</Col>
 					<Col className='text-right'>
 						<Button type='submit'>Create Account</Button>

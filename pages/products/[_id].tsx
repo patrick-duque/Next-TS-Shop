@@ -110,13 +110,11 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 		<Fragment>
 			<Head title={product.name} />
 			<div className='ml-4'>
-				<Link href='/'>
-					<a>
-						<IconContext.Provider value={{ size: '2em' }}>
-							<RiArrowGoBackLine />
-						</IconContext.Provider>
-					</a>
-				</Link>
+				<Button variant='outline-primary' onClick={() => Router.back()}>
+					<IconContext.Provider value={{ size: '2em' }}>
+						<RiArrowGoBackLine />
+					</IconContext.Provider>
+				</Button>
 			</div>
 			<Container>
 				<div className='my-3 mx-0' />

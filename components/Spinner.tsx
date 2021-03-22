@@ -5,7 +5,7 @@ interface Props {}
 const Loader: React.FC<Props> = () => {
 	return (
 		<Container className='text-center'>
-			<Spinner animation='grow' variant='dark' role='status' style={{ height: '100px', width: '100px' }} />
+			<Spinner animation='grow' variant='primary' role='status' style={{ height: '100px', width: '100px' }} />
 		</Container>
 	);
 };
