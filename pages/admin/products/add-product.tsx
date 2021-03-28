@@ -1,4 +1,4 @@
-import { Fragment, useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { Button, Form, Modal, Container, Alert } from 'react-bootstrap';
@@ -19,10 +19,10 @@ interface EditProductData extends Product {}
 
 const AddProduct: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const state = useSelector<RootStore>(state => state.admin) as AdminState;
+	const state = useSelector<RootStore>((state) => state.admin) as AdminState;
 	const { loading, error } = state;
-	const [ uploading, setUploading ] = useState<boolean>(false);
-	const [ componentError, setComponentError ] = useState<string>(null);
+	const [uploading, setUploading] = useState<boolean>(false);
+	const [componentError, setComponentError] = useState<string>(null);
 	const { register, handleSubmit, setValue } = useForm();
 
 	const handleAddProduct = (data: EditProductData) => {
@@ -70,7 +70,7 @@ const AddProduct: React.FC<Props> = () => {
 	};
 
 	return (
-		<Fragment>
+		<>
 			<Head title={`Add Product`} />
 			<Modal show={loading} keyboard={false}>
 				<Container style={{ height: '40vh' }} className='d-flex align-items-center justify-content-center'>
@@ -125,7 +125,7 @@ const AddProduct: React.FC<Props> = () => {
 					<Button type='submit'>ADD NEW PRODUCT</Button>
 				</Form>
 			</FormContainer>
-		</Fragment>
+		</>
 	);
 };
 

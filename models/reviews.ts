@@ -5,4 +5,4 @@ export default interface Reviews {
 	rating: number;
 	name: string;
 	createdAt: Date;
-};
+}

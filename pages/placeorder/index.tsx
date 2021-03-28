@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 
@@ -19,10 +18,10 @@ interface Props {}
 
 const PlaceOrder: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const addressState = useSelector<RootStore>(state => state.address) as AddressState;
-	const orderState = useSelector<RootStore>(state => state.order) as OrderState;
-	const paymentMethod = useSelector<RootStore>(state => state.payment.paymentMethod) as string;
-	const cart = useSelector<RootStore>(state => state.user.user.cart) as CartItem[];
+	const addressState = useSelector<RootStore>((state) => state.address) as AddressState;
+	const orderState = useSelector<RootStore>((state) => state.order) as OrderState;
+	const paymentMethod = useSelector<RootStore>((state) => state.payment.paymentMethod) as string;
+	const cart = useSelector<RootStore>((state) => state.user.user.cart) as CartItem[];
 	const { address, city, postalCode } = addressState;
 	const { error, loading } = orderState;
 
@@ -42,7 +41,7 @@ const PlaceOrder: React.FC<Props> = () => {
 	};
 
 	return (
-		<Fragment>
+		<>
 			<Head title='Place Order' />
 			<CheckoutSteps step1 step2 step3 />
 			<Modal show={loading} keyboard={false}>
@@ -71,7 +70,9 @@ const PlaceOrder: React.FC<Props> = () => {
 							<ListGroup.Item>
 								<h2>Order {cart.length > 1 ? 'Items' : 'Item'}</h2>
 								<ListGroup variant='flush'>
-									{cart.map(item => <OrderItem key={item.product._id} item={item} />)}
+									{cart.map((item) => (
+										<OrderItem key={item.product._id} item={item} />
+									))}
 								</ListGroup>
 							</ListGroup.Item>
 						</ListGroup>
@@ -110,7 +111,7 @@ const PlaceOrder: React.FC<Props> = () => {
 					</Col>
 				</Row>
 			</Container>
-		</Fragment>
+		</>
 	);
 };
 

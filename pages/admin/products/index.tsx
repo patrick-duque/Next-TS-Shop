@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Table, Container, Alert, Modal, Row, Col, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
@@ -20,23 +20,20 @@ interface Props {}
 
 const Products: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const state = useSelector<RootStore>(state => state.admin) as AdminState;
-	const userState = useSelector<RootStore>(state => state.user.user) as User;
+	const state = useSelector<RootStore>((state) => state.admin) as AdminState;
+	const userState = useSelector<RootStore>((state) => state.user.user) as User;
 	const { loading, error, users, success, products } = state;
 
-	useEffect(
-		() => {
-			if (userState.isAdmin) {
-				dispatch(getProductsByAdmin());
-			} else {
-				Router.push('/');
-			}
-		},
-		[ dispatch ]
-	);
+	useEffect(() => {
+		if (userState.isAdmin) {
+			dispatch(getProductsByAdmin());
+		} else {
+			Router.push('/');
+		}
+	}, [dispatch]);
 
 	return (
-		<Fragment>
+		<>
 			<Head title='Admin Product List' />
 			<Container>
 				<Row>
@@ -69,10 +66,14 @@ const Products: React.FC<Props> = () => {
 							<th />
 						</tr>
 					</thead>
-					<tbody>{products.map(product => <ProductList product={product} key={product._id} />)}</tbody>
+					<tbody>
+						{products.map((product) => (
+							<ProductList product={product} key={product._id} />
+						))}
+					</tbody>
 				</Table>
 			</Container>
-		</Fragment>
+		</>
 	);
 };
 

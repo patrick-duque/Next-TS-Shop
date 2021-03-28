@@ -1,4 +1,4 @@
-import { useState, Fragment, memo } from 'react';
+import { useState, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
@@ -11,7 +11,7 @@ interface Props {
 
 const UserList: React.FC<Props> = ({ user }) => {
 	const dispatch = useDispatch();
-	const [ showModal, setShowModal ] = useState<boolean>(false);
+	const [showModal, setShowModal] = useState<boolean>(false);
 
 	const handleDeleteAccount = () => {
 		dispatch(deleteUserByAdmin(user._id));
@@ -19,7 +19,7 @@ const UserList: React.FC<Props> = ({ user }) => {
 	};
 
 	return (
-		<Fragment>
+		<>
 			<Modal show={showModal} onHide={() => setShowModal(false)}>
 				<Modal.Header>
 					<Modal.Title>Are you sure you want to delete this account?</Modal.Title>
@@ -47,7 +47,7 @@ const UserList: React.FC<Props> = ({ user }) => {
 					</Button>
 				</td>
 			</tr>
-		</Fragment>
+		</>
 	);
 };
 

@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import dateFormat from 'dateformat';
 import { useRouter } from 'next/router';
@@ -20,11 +20,11 @@ interface Props {}
 const PayOrder: React.FC<Props> = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const [ clientId, setClientId ] = useState<string>('');
+	const [clientId, setClientId] = useState<string>('');
 	const order = useSelector<RootStore>(
-		state => state.order.orders.filter(order => order._id === router.query._id.toString())[0]
+		(state) => state.order.orders.filter((order) => order._id === router.query._id.toString())[0]
 	) as OrdersFromDB;
-	const state = useSelector<RootStore>(state => state.pay) as PayState;
+	const state = useSelector<RootStore>((state) => state.pay) as PayState;
 	const { success, loading, error } = state;
 
 	useEffect(() => {
@@ -40,7 +40,7 @@ const PayOrder: React.FC<Props> = () => {
 		getClientId();
 	}, []);
 
-	const handleSuccessPay = details => {
+	const handleSuccessPay = (details) => {
 		const { status, id, update_time } = details;
 		console.log(details);
 		dispatch(
@@ -66,7 +66,7 @@ const PayOrder: React.FC<Props> = () => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			<Head title='Pay Order' />
 			<Container>
 				<h1>Pay Order</h1>
@@ -104,7 +104,11 @@ const PayOrder: React.FC<Props> = () => {
 							</ListGroup.Item>
 							<ListGroup.Item>
 								<h2>Order {order.orderItems.length > 1 ? 'Items' : 'Item'}</h2>
-								<ListGroup>{order.orderItems.map(item => <OrderItem key={item.product._id} item={item} />)}</ListGroup>
+								<ListGroup>
+									{order.orderItems.map((item) => (
+										<OrderItem key={item.product._id} item={item} />
+									))}
+								</ListGroup>
 							</ListGroup.Item>
 						</ListGroup>
 					</Col>
@@ -138,7 +142,7 @@ const PayOrder: React.FC<Props> = () => {
 					</Col>
 				</Row>
 			</Container>
-		</Fragment>
+		</>
 	);
 };
 

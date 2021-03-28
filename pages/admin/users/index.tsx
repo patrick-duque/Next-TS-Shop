@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Table, Container, Alert, Modal, Toast } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
@@ -18,23 +18,20 @@ interface Props {}
 
 const Users: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const state = useSelector<RootStore>(state => state.admin) as AdminState;
-	const userState = useSelector<RootStore>(state => state.user.user) as User;
+	const state = useSelector<RootStore>((state) => state.admin) as AdminState;
+	const userState = useSelector<RootStore>((state) => state.user.user) as User;
 	const { loading, error, users, success } = state;
 
-	useEffect(
-		() => {
-			if (userState.isAdmin) {
-				dispatch(getAllUsers());
-			} else {
-				Router.push('/');
-			}
-		},
-		[ dispatch ]
-	);
+	useEffect(() => {
+		if (userState.isAdmin) {
+			dispatch(getAllUsers());
+		} else {
+			Router.push('/');
+		}
+	}, [dispatch]);
 
 	return (
-		<Fragment>
+		<>
 			<Head title='Admin User List' />
 			<Container>
 				<h1>Users</h1>
@@ -57,10 +54,14 @@ const Users: React.FC<Props> = () => {
 							<th />
 						</tr>
 					</thead>
-					<tbody>{users.map(user => <UserList user={user} key={user._id} />)}</tbody>
+					<tbody>
+						{users.map((user) => (
+							<UserList user={user} key={user._id} />
+						))}
+					</tbody>
 				</Table>
 			</Container>
-		</Fragment>
+		</>
 	);
 };
 

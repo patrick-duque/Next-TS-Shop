@@ -1,4 +1,3 @@
-import { FormEvent, useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Head from '../../components/Head';
 import FormContainer from '../../components/FormContainer';
@@ -19,7 +18,7 @@ interface LoginData {
 
 const Login: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const state = useSelector<RootStore>(state => state.user) as UserState;
+	const state = useSelector<RootStore>((state) => state.user) as UserState;
 	const { loading, error } = state;
 	const { register, handleSubmit } = useForm<LoginData>();
 
@@ -61,21 +60,17 @@ const Login: React.FC<Props> = () => {
 	);
 
 	if (loading) {
-		form = (
-			<Fragment>
-				<Spinner />
-			</Fragment>
-		);
+		form = <Spinner />;
 	}
 
 	return (
-		<Fragment>
+		<>
 			<Head title='Login' />
 			<Container>
 				<h1 className='text-right'>Login</h1>
 			</Container>
 			{form}
-		</Fragment>
+		</>
 	);
 };
 

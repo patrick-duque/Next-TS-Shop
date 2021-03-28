@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Col, Row, Container, Button, Form, Alert, Modal } from 'react-bootstrap';
 import authCheck from '../../hoc/authCheck';
 import { useSelector, useDispatch } from 'react-redux';
@@ -19,22 +19,19 @@ interface ProfileData {
 
 const Profile: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const [ showModal, setShowModal ] = useState<boolean>(false);
-	const state = useSelector<RootStore>(state => state.user) as UserState;
+	const [showModal, setShowModal] = useState<boolean>(false);
+	const state = useSelector<RootStore>((state) => state.user) as UserState;
 	const { loading, error, user } = state;
 	const { register, handleSubmit, setValue } = useForm<ProfileData>();
 
-	useEffect(
-		() => {
-			if (!user || !user.email || !user.name) {
-				Router.push('/login');
-			} else {
-				setValue('email', user.email);
-				setValue('name', user.name);
-			}
-		},
-		[ user ]
-	);
+	useEffect(() => {
+		if (!user || !user.email || !user.name) {
+			Router.push('/login');
+		} else {
+			setValue('email', user.email);
+			setValue('name', user.name);
+		}
+	}, [user]);
 
 	const handleDeleteAccount = () => {
 		dispatch(deleteUserAccount(user._id));
@@ -77,7 +74,7 @@ const Profile: React.FC<Props> = () => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			<Head title='User Profile' />
 			<Modal show={showModal} onHide={() => setShowModal(false)}>
 				<Modal.Header>
@@ -129,7 +126,7 @@ const Profile: React.FC<Props> = () => {
 					</Container>
 				</Col>
 			</Row>
-		</Fragment>
+		</>
 	);
 };
 

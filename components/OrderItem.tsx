@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import Link from 'next/link';
 import { ListGroup, Col, Row, Image } from 'react-bootstrap';
 import { CartItem } from '../store/cart/cartReducer';

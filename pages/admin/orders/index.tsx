@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Table, Container, Alert, Modal } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
@@ -18,23 +18,20 @@ interface Props {}
 
 const Orders: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const state = useSelector<RootStore>(state => state.admin) as AdminState;
-	const userState = useSelector<RootStore>(state => state.user.user) as User;
+	const state = useSelector<RootStore>((state) => state.admin) as AdminState;
+	const userState = useSelector<RootStore>((state) => state.user.user) as User;
 	const { loading, error, orders, success } = state;
 
-	useEffect(
-		() => {
-			if (userState.isAdmin) {
-				dispatch(getOrderByAdmin());
-			} else {
-				Router.push('/');
-			}
-		},
-		[ dispatch ]
-	);
+	useEffect(() => {
+		if (userState.isAdmin) {
+			dispatch(getOrderByAdmin());
+		} else {
+			Router.push('/');
+		}
+	}, [dispatch]);
 
 	return (
-		<Fragment>
+		<>
 			<Head title='Admin User List' />
 			<Container>
 				<h1>Orders</h1>
@@ -54,10 +51,14 @@ const Orders: React.FC<Props> = () => {
 							<th />
 						</tr>
 					</thead>
-					<tbody>{orders.map(order => <OrderList order={order} key={order._id} />)}</tbody>
+					<tbody>
+						{orders.map((order) => (
+							<OrderList order={order} key={order._id} />
+						))}
+					</tbody>
 				</Table>
 			</Container>
-		</Fragment>
+		</>
 	);
 };
 

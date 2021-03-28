@@ -1,4 +1,4 @@
-import { Fragment, memo, useState } from 'react';
+import { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, Button } from 'react-bootstrap';
 import { FiEdit } from 'react-icons/fi';
@@ -12,7 +12,7 @@ interface Props {
 
 const ProductList: React.FC<Props> = ({ product }) => {
 	const dispatch = useDispatch();
-	const [ showModal, setShowModal ] = useState(false);
+	const [showModal, setShowModal] = useState(false);
 
 	const handleDeleteProduct = () => {
 		dispatch(deleteProductByAdmin(product._id));
@@ -22,7 +22,7 @@ const ProductList: React.FC<Props> = ({ product }) => {
 	console.log('rendering');
 
 	return (
-		<Fragment>
+		<>
 			<Modal show={showModal} onHide={() => setShowModal(false)}>
 				<Modal.Header>
 					<Modal.Title>Are you sure you want to delete this product?</Modal.Title>
@@ -55,7 +55,7 @@ const ProductList: React.FC<Props> = ({ product }) => {
 					</div>
 				</td>
 			</tr>
-		</Fragment>
+		</>
 	);
 };
 

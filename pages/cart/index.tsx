@@ -1,5 +1,3 @@
-import React, { Fragment, useEffect } from 'react';
-import Router from 'next/router';
 import Head from '../../components/Head';
 import { RootStore } from '../../store/index';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,13 +12,13 @@ import { UserState } from '../../store/user/userReducer';
 interface Props {}
 
 const Cart: React.FC<Props> = () => {
-	const state = useSelector<RootStore>(state => state.user) as UserState;
+	const state = useSelector<RootStore>((state) => state.user) as UserState;
 	const { user, error } = state;
 	const cartItems = user ? user.cart : [];
 	const router = useRouter();
 
 	return (
-		<Fragment>
+		<>
 			<Head title='Cart' />
 			<Container>
 				<Row>
@@ -54,7 +52,7 @@ const Cart: React.FC<Props> = () => {
 							<Alert variant='info'>Your Cart is Empty</Alert>
 						) : (
 							<ListGroup>
-								{cartItems.map(item => (
+								{cartItems.map((item) => (
 									<ListGroup.Item key={item.product._id}>
 										<Item item={item} />
 									</ListGroup.Item>
@@ -80,7 +78,7 @@ const Cart: React.FC<Props> = () => {
 					</Col>
 				</Row>
 			</Container>
-		</Fragment>
+		</>
 	);
 };
 

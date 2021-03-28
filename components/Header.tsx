@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FiShoppingCart, FiUser, FiUserPlus, FiUserX, FiPackage, FiDatabase } from 'react-icons/fi';
 import { Navbar, Nav, Image, Modal, Button, Col, Container, NavDropdown } from 'react-bootstrap';
@@ -20,8 +20,8 @@ const HomeButton = () => {
 };
 
 const Header: React.FC = () => {
-	const user = useSelector<RootStore>(state => state.user.user) as User;
-	const [ showLogoutModal, setShowLogoutModal ] = useState<boolean>(false);
+	const user = useSelector<RootStore>((state) => state.user.user) as User;
+	const [showLogoutModal, setShowLogoutModal] = useState<boolean>(false);
 
 	const dispatch = useDispatch();
 
@@ -35,15 +35,15 @@ const Header: React.FC = () => {
 	};
 
 	let link = (
-		<Fragment>
+		<>
 			<NavLink href='/login' icon={<FiUser />} title='Login' />
 			<NavLink href='/register' icon={<FiUserPlus />} title='Register' />
-		</Fragment>
+		</>
 	);
 
 	if (user) {
 		link = (
-			<Fragment>
+			<>
 				{user.isAdmin && (
 					<Nav.Item className='mr-3'>
 						<NavDropdown title='Manage' id='admin'>
@@ -104,7 +104,7 @@ const Header: React.FC = () => {
 				</Nav.Item>
 				<NavLink href='/cart' icon={<FiShoppingCart />} title='Cart' />
 				<NavLink href='/orders' icon={<FiPackage />} title='Orders' />
-			</Fragment>
+			</>
 		);
 	}
 

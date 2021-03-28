@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import axios from '../helpers/api/axios';
 import Link from 'next/link';
 import Head from '../components/Head';
@@ -13,14 +12,14 @@ interface Props extends GetProductsData {}
 const Home: React.FC<Props> = ({ products, pages, page }) => {
 	const itemPage = Array.from(Array(pages).keys());
 	return (
-		<Fragment>
+		<>
 			<Head title='Home' />
 			<Container>
 				<h1>
 					<strong>LATEST PRODUCTS</strong>
 				</h1>
 				<Row>
-					{products.map(product => {
+					{products.map((product) => {
 						return (
 							<Col sm={12} md={6} lg={4} key={product._id}>
 								<Product product={product} />
@@ -31,7 +30,7 @@ const Home: React.FC<Props> = ({ products, pages, page }) => {
 				{pages > 1 && (
 					<Container className='d-flex justify-content-end'>
 						<Pagination>
-							{itemPage.map(i => (
+							{itemPage.map((i) => (
 								<Link href={`/?pageNumber=${i + 1}`} key={i} passHref>
 									<Pagination.Item active={i + 1 === page}>{i + 1}</Pagination.Item>
 								</Link>
@@ -40,7 +39,7 @@ const Home: React.FC<Props> = ({ products, pages, page }) => {
 					</Container>
 				)}
 			</Container>
-		</Fragment>
+		</>
 	);
 };
 

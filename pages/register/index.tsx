@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Col, Row, Container, Button, Form, Alert } from 'react-bootstrap';
 import Head from '../../components/Head';
@@ -20,9 +20,9 @@ interface RegisterData {
 
 const Register: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const [ formError, setFormError ] = useState<string>(null);
-	const loading = useSelector<RootStore>(state => state.user.loading) as boolean;
-	const error = useSelector<RootStore>(state => state.user.error) as string;
+	const [formError, setFormError] = useState<string>(null);
+	const loading = useSelector<RootStore>((state) => state.user.loading) as boolean;
+	const error = useSelector<RootStore>((state) => state.user.error) as string;
 	const { register, handleSubmit, errors } = useForm<RegisterData>();
 
 	const handleRegisterSubmit = (data: RegisterData) => {
@@ -104,13 +104,13 @@ const Register: React.FC<Props> = () => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			<Head title='Register' />
 			<Container>
 				<h1 className='text-right'>Register</h1>
 			</Container>
 			{form}
-		</Fragment>
+		</>
 	);
 };
 

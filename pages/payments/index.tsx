@@ -1,4 +1,4 @@
-import { FormEvent, Fragment, useState, useEffect } from 'react';
+import { FormEvent, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { changePaymentMethod } from '../../store/payment/paymentActions';
@@ -14,9 +14,9 @@ interface Props {}
 
 const Payment: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const address = useSelector<RootStore>(state => state.address.address);
-	const userMethod = useSelector<RootStore>(state => state.payment.paymentMethod) as string;
-	const [ paymentMethod, setPaymentMethod ] = useState<string>(userMethod ? userMethod : 'PayPal');
+	const address = useSelector<RootStore>((state) => state.address.address);
+	const userMethod = useSelector<RootStore>((state) => state.payment.paymentMethod) as string;
+	const [paymentMethod, setPaymentMethod] = useState<string>(userMethod ? userMethod : 'PayPal');
 
 	useEffect(() => {
 		if (!address) {
@@ -31,7 +31,7 @@ const Payment: React.FC<Props> = () => {
 	};
 
 	return (
-		<Fragment>
+		<>
 			<Head title='Payment' />
 			<CheckoutSteps step1 step2 />
 			<FormContainer>
@@ -48,7 +48,7 @@ const Payment: React.FC<Props> = () => {
 							name='paymentMethod'
 							value='PayPal'
 							checked={paymentMethod === 'PayPal'}
-							onChange={e => setPaymentMethod(e.target.value)}
+							onChange={(e) => setPaymentMethod(e.target.value)}
 						/>
 						<Form.Check
 							type='radio'
@@ -57,7 +57,7 @@ const Payment: React.FC<Props> = () => {
 							name='paymentMethod'
 							value='Stripe'
 							checked={paymentMethod === 'Stripe'}
-							onChange={e => setPaymentMethod(e.target.value)}
+							onChange={(e) => setPaymentMethod(e.target.value)}
 						/>
 					</Col>
 
@@ -66,7 +66,7 @@ const Payment: React.FC<Props> = () => {
 					</Button>
 				</Form>
 			</FormContainer>
-		</Fragment>
+		</>
 	);
 };
 

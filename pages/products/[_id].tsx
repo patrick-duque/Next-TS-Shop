@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form';
 import Router from 'next/router';
 
 //Components
-import { Fragment } from 'react';
 import Link from 'next/link';
 import { RiArrowGoBackLine } from 'react-icons/ri';
 import { Container, Row, Col, Image, Button, Alert, ListGroup, Form } from 'react-bootstrap';
@@ -40,9 +39,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 	};
 };
 
-export const getStaticPaths: GetStaticPaths = async context => {
+export const getStaticPaths: GetStaticPaths = async (context) => {
 	const data: GetProductsData = (await axios.get('/products/all')).data;
-	const route = data.products.map(prod => ({ params: { _id: prod._id } }));
+	const route = data.products.map((prod) => ({ params: { _id: prod._id } }));
 	console.log(context);
 	return {
 		paths: route,
@@ -52,10 +51,10 @@ export const getStaticPaths: GetStaticPaths = async context => {
 
 const ProductDetails: React.FC<Props> = ({ product }) => {
 	const dispatch = useDispatch();
-	const [ qty, setQty ] = useState<number>(1);
-	const [ formError, setFormError ] = useState<string>(null);
-	const [ uploadError, setUploadError ] = useState<string>(null);
-	const userState = useSelector<RootStore>(state => state.user) as UserState;
+	const [qty, setQty] = useState<number>(1);
+	const [formError, setFormError] = useState<string>(null);
+	const [uploadError, setUploadError] = useState<string>(null);
+	const userState = useSelector<RootStore>((state) => state.user) as UserState;
 	const { register, handleSubmit } = useForm();
 
 	const handleAddToCart = () => {
@@ -66,19 +65,13 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 		}
 	};
 
-	const handleAddQuantity = useCallback(
-		() => {
-			return setQty(qty + 1);
-		},
-		[ qty ]
-	);
+	const handleAddQuantity = useCallback(() => {
+		return setQty(qty + 1);
+	}, [qty]);
 
-	const handleMinusQuantity = useCallback(
-		() => {
-			return setQty(qty - 1);
-		},
-		[ qty ]
-	);
+	const handleMinusQuantity = useCallback(() => {
+		return setQty(qty - 1);
+	}, [qty]);
 
 	const handleSubmitReview = async (data: ReviewData) => {
 		setFormError(null);
@@ -107,7 +100,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 	};
 
 	return (
-		<Fragment>
+		<>
 			<Head title={product.name} />
 			<div className='ml-4'>
 				<Button variant='outline-primary' onClick={() => Router.back()}>
@@ -184,7 +177,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 							<Alert variant='dark'>No reviews</Alert>
 						) : (
 							<ListGroup>
-								{product.reviews.map(review => (
+								{product.reviews.map((review) => (
 									<ListGroup.Item key={review._id}>
 										<Row>
 											<Col sm={12} md={4}>
@@ -245,7 +238,7 @@ const ProductDetails: React.FC<Props> = ({ product }) => {
 					</Col>
 				</Row>
 			</Container>
-		</Fragment>
+		</>
 	);
 };
 

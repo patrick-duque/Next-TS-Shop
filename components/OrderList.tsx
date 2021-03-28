@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
 import { IoMdCheckmark, IoMdClose } from 'react-icons/io';
@@ -12,7 +12,7 @@ interface Props {
 
 const OrderList: React.FC<Props> = ({ order }) => {
 	const dispatch = useDispatch();
-	const [ showModalDeliver, setShowModalDeliver ] = useState<boolean>(false);
+	const [showModalDeliver, setShowModalDeliver] = useState<boolean>(false);
 
 	const handleDeliverOrder = () => {
 		dispatch(deliverOrderByAdmin(order._id));
@@ -20,7 +20,7 @@ const OrderList: React.FC<Props> = ({ order }) => {
 	};
 
 	return (
-		<Fragment>
+		<>
 			<Modal show={showModalDeliver} onHide={() => setShowModalDeliver(false)}>
 				<Modal.Header>
 					<Modal.Title>Is this order delivered?</Modal.Title>
@@ -47,7 +47,7 @@ const OrderList: React.FC<Props> = ({ order }) => {
 					)}
 				</td>
 			</tr>
-		</Fragment>
+		</>
 	);
 };
 

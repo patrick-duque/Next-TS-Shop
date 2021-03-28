@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { Col, Container, ListGroup, Row, Alert, Button } from 'react-bootstrap';
@@ -15,7 +15,7 @@ interface Props {}
 
 const Order: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const state = useSelector<RootStore>(state => state.order) as OrderState;
+	const state = useSelector<RootStore>((state) => state.order) as OrderState;
 	const { error, loading, orders } = state;
 
 	useEffect(() => {
@@ -27,7 +27,7 @@ const Order: React.FC<Props> = () => {
 			{orders.length === 0 ? (
 				<Alert variant='info'>No orders yet.</Alert>
 			) : (
-				orders.map(order => (
+				orders.map((order) => (
 					<ListGroup key={order._id} className='mt-2'>
 						<ListGroup.Item>
 							<Row>
@@ -62,7 +62,9 @@ const Order: React.FC<Props> = () => {
 							</Row>
 
 							<ListGroup>
-								{order.orderItems.map(item => <OrderItem key={item.product._id} item={item} />)}
+								{order.orderItems.map((item) => (
+									<OrderItem key={item.product._id} item={item} />
+								))}
 								<ListGroup.Item>
 									<Row>
 										<Col>
@@ -94,14 +96,14 @@ const Order: React.FC<Props> = () => {
 	}
 
 	return (
-		<Fragment>
+		<>
 			<Head title='Orders' />
 			<Container>
 				<h1>My Orders</h1>
 				{error && <Alert variant='danger'>{error}</Alert>}
 				{screen}
 			</Container>
-		</Fragment>
+		</>
 	);
 };
 

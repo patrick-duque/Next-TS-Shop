@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { Form, Col, Row, Button } from 'react-bootstrap';
 import Router from 'next/router';
@@ -21,7 +20,7 @@ const SearchBox: React.FC<Props> = () => {
 	};
 
 	return (
-		<Fragment>
+		<>
 			<Form onSubmit={handleSubmit(handleSearch)}>
 				<Row>
 					<Col>
@@ -34,7 +33,7 @@ const SearchBox: React.FC<Props> = () => {
 					</Col>
 				</Row>
 			</Form>
-		</Fragment>
+		</>
 	);
 };
 

@@ -1,7 +1,6 @@
 import { useState, useCallback, memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Image, Button, Col } from 'react-bootstrap';
-import { AiOutlinePlus, AiOutlineMinus, AiTwotoneDelete } from 'react-icons/ai';
 import Link from 'next/link';
 import { addToCartItem, removeFromCart } from '../store/user/userActions';
 import { CartItem } from '../store/cart/cartReducer';
@@ -14,23 +13,17 @@ interface Props {
 
 const Item: React.FC<Props> = ({ item }) => {
 	const dispatch = useDispatch();
-	const [ qty, setQty ] = useState(item.quantity);
+	const [qty, setQty] = useState(item.quantity);
 
-	const handleAddQuantity = useCallback(
-		() => {
-			setQty(qty + 1);
-			dispatch(addToCartItem({ ...item, quantity: 1 }));
-		},
-		[ qty ]
-	);
+	const handleAddQuantity = useCallback(() => {
+		setQty(qty + 1);
+		dispatch(addToCartItem({ ...item, quantity: 1 }));
+	}, [qty]);
 
-	const handleMinusQuantity = useCallback(
-		() => {
-			setQty(qty - 1);
-			dispatch(addToCartItem({ ...item, quantity: -1 }));
-		},
-		[ qty ]
-	);
+	const handleMinusQuantity = useCallback(() => {
+		setQty(qty - 1);
+		dispatch(addToCartItem({ ...item, quantity: -1 }));
+	}, [qty]);
 
 	return (
 		<Row>

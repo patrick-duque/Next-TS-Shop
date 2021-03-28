@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState, ChangeEvent } from 'react';
+import { useEffect, useState, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
@@ -21,30 +21,27 @@ interface EditProductData extends Product {}
 const EditProduct: React.FC<Props> = () => {
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const [ uploading, setUploading ] = useState<boolean>(false);
-	const state = useSelector<RootStore>(state => state.admin) as AdminState;
+	const [uploading, setUploading] = useState<boolean>(false);
+	const state = useSelector<RootStore>((state) => state.admin) as AdminState;
 	const { products, loading, error } = state;
 	const { register, handleSubmit, setValue } = useForm();
-	const product = products.find(prod => prod._id === router.query.id.toString());
+	const product = products.find((prod) => prod._id === router.query.id.toString());
 
-	useEffect(
-		() => {
-			if (!product) {
-				router.replace('/admin/products');
-			} else {
-				setValue('name', product.name);
-				setValue('description', product.description);
-				setValue('brand', product.brand);
-				setValue('category', product.category);
-				setValue('price', product.price);
-				setValue('countInStock', product.countInStock);
-				setValue('numReviews', product.numReviews);
-				setValue('rating', product.rating);
-				setValue('image', product.image);
-			}
-		},
-		[ product ]
-	);
+	useEffect(() => {
+		if (!product) {
+			router.replace('/admin/products');
+		} else {
+			setValue('name', product.name);
+			setValue('description', product.description);
+			setValue('brand', product.brand);
+			setValue('category', product.category);
+			setValue('price', product.price);
+			setValue('countInStock', product.countInStock);
+			setValue('numReviews', product.numReviews);
+			setValue('rating', product.rating);
+			setValue('image', product.image);
+		}
+	}, [product]);
 
 	const handleEditProduct = (data: EditProductData) => {
 		dispatch(
@@ -87,7 +84,7 @@ const EditProduct: React.FC<Props> = () => {
 	};
 
 	return (
-		<Fragment>
+		<>
 			<Head title={`Edit ${product.name}`} />
 			<Modal show={loading} keyboard={false}>
 				<Container style={{ height: '40vh' }} className='d-flex align-items-center justify-content-center'>
@@ -141,7 +138,7 @@ const EditProduct: React.FC<Props> = () => {
 					<Button type='submit'>EDIT PRODUCT</Button>
 				</Form>
 			</FormContainer>
-		</Fragment>
+		</>
 	);
 };
 

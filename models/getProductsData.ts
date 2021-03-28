@@ -4,4 +4,4 @@ export default interface GetProductsData {
 	products: Product[];
 	page: number;
 	pages: number;
-};
+}
